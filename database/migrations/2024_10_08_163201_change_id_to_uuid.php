@@ -39,6 +39,11 @@ return new class extends Migration
             $table->foreign('student_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('exercise_id')->references('id')->on('exercises')->onDelete('cascade');
         });
+
+        // Personal access tokens
+        Schema::table('personal_access_tokens', function (Blueprint $table) {
+            $table->string('tokenable_id', 36)->change();
+        });
     }
 
     /**
@@ -66,6 +71,11 @@ return new class extends Migration
             $table->unsignedBigInteger('exercise_id')->change();
             $table->foreign('student_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('exercise_id')->references('id')->on('exercises')->onDelete('cascade');
+        });
+
+        // Reverse changes to 'personal_access_tokens'
+        Schema::table('personal_access_tokens', function (Blueprint $table) {
+            $table->integer('tokenable_id')->change(); // Change back to the original type if necessary
         });
     }
 };
