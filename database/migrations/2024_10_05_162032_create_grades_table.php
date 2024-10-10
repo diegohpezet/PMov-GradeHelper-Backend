@@ -12,13 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('grades', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('student_id');
-            $table->unsignedBigInteger('exercise_id');
+            $table->uuid('id')->primary();
+            $table->foreignUuid('student_id')->constrained();
+            $table->foreignUuid('exercise_id')->constrained();
             $table->integer('score');
             $table->string('comment')->nullable();
-            $table->foreign('student_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('exercise_id')->references('id')->on('exercises')->onDelete('cascade');
             $table->timestamps();
         });
     }
