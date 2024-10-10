@@ -12,10 +12,12 @@ use App\Http\Controllers\GithubAuthController;
 Route::get('/auth/github', [GithubAuthController::class, 'redirectToGithub']);
 Route::get('/auth/github/callback', [GithubAuthController::class, 'handleGithubCallback']);
 
-Route::apiResource('users', UserController::class)->middleware('auth:sanctum');
-Route::apiResource('courses', CourseController::class)->middleware('auth:sanctum');
-Route::apiResource('exercises', ExerciseController::class)->middleware('auth:sanctum');
-Route::apiResource('grades', GradeController::class)->middleware('auth:sanctum');
+Route::middleware(['auth:sanctum'])->group(function (){
+    Route::apiResource('users', UserController::class);
+    Route::apiResource('courses', CourseController::class);
+    Route::apiResource('exercises', ExerciseController::class);
+    Route::apiResource('grades', GradeController::class);
+});
 
 // Additional routes for grades
 Route::get('grades/student/{studentId}', [GradeController::class, 'gradesByStudent']);
