@@ -33,6 +33,6 @@ class GithubAuthController extends Controller
         // Generate API token
         $token = $user->createToken('github-auth-token')->plainTextToken;
 
-        return response()->json(['token' => $token]);
+        return redirect(env('APP_FRONTEND_URL') . '/?token=' . $token);
     }
 }
