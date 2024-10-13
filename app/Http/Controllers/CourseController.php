@@ -22,7 +22,7 @@ class CourseController extends Controller
      */
     public function store(StoreCourseRequest $request)
     {
-        $course = Course::create($request->all());
+        $course = Course::create($request->validated());
 
         return response()->json($course, 201);
     }
@@ -52,7 +52,7 @@ class CourseController extends Controller
             return response()->json(['message' => 'Course not found'], 404);
         }
 
-        $course->update($request->all());
+        $course->update($request->validated());
 
         return response()->json($course);
     }
