@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCourseRequest;
+use App\Http\Requests\UpdateCourseRequest;
 use App\Models\Course;
 use Illuminate\Http\Request;
 
@@ -18,12 +20,8 @@ class CourseController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreCourseRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-        ]);
-
         $course = Course::create($request->all());
 
         return response()->json($course, 201);
@@ -46,17 +44,13 @@ class CourseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateCourseRequest $request, string $id)
     {
         $course = Course::find($id);
 
         if (!$course) {
             return response()->json(['message' => 'Course not found'], 404);
         }
-
-        $request->validate([
-            'name' => 'required',
-        ]);
 
         $course->update($request->all());
 
