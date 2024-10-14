@@ -12,7 +12,9 @@ class CourseController extends Controller
      */
     public function index()
     {
-        return Course::all();
+        $courses = Course::all();
+
+        return response()->json($courses);
     }
 
     /**
@@ -32,28 +34,16 @@ class CourseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Course $course)
     {
-        $course = Course::find($id);
-
-        if (!$course) {
-            return response()->json(['message' => 'Course not found'], 404);
-        }
-
         return response()->json($course);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Course $course)
     {
-        $course = Course::find($id);
-
-        if (!$course) {
-            return response()->json(['message' => 'Course not found'], 404);
-        }
-
         $request->validate([
             'name' => 'required',
         ]);
@@ -66,14 +56,8 @@ class CourseController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Course $course)
     {
-        $course = Course::find($id);
-
-        if (!$course) {
-            return response()->json(['message' => 'Course not found'], 404);
-        }
-
         $course->delete();
 
         return response()->json(null, 204);
