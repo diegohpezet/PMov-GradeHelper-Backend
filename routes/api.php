@@ -20,9 +20,9 @@ Route::middleware(['auth:sanctum'])->group(function (){
 });
 
 // Additional routes for grades
-Route::get('grades/student/{studentId}', [GradeController::class, 'gradesByStudent']);
-Route::get('grades/exercise/{exerciseId}', [GradeController::class, 'gradesByExercise']);
-Route::get('grades/student/{studentId}/exercise/{exerciseId}', [GradeController::class, 'gradesByStudentAndExercise']);
+Route::get('grades/student/{student}', [GradeController::class, 'gradesByStudent']);
+Route::get('grades/exercise/{exercise}', [GradeController::class, 'gradesByExercise']);
+Route::get('grades/student/{student}/exercise/{exercise}', [GradeController::class, 'gradesByStudentAndExercise']);
 
 Route::get('/user', function (Request $request) {
     return $request->user();

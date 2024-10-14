@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use App\Models\Course;
+use App\Models\Exercise;
+use App\Models\Grade;
+use App\Models\Student;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,7 +15,23 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(ExerciseSeeder::class);
-        $this->call(CourseSeeder::class);
+        $courses = Course::factory()
+            ->count(3)
+            ->create();
+
+        $students = Student::factory(20)
+            ->recycle($courses)
+            ->create();
+
+        $exercises = Exercise::factory(5)
+            ->hasAttached($courses)
+            ->create();
+
+        $students->each(function (Student $student) {
+            Grade::factory(3)
+                ->for($student)
+                ->recycle($student->course->exercises)
+                ->create();
+        });
     }
 }
