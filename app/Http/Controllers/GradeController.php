@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Grade;
+use App\Http\Requests\StoreGradeRequest;
+use App\Http\Requests\UpdateGradeRequest;
 use Illuminate\Http\Request;
 
 class GradeController extends Controller
@@ -12,13 +14,15 @@ class GradeController extends Controller
      */
     public function index()
     {
-        return Grade::all();
+        $grades = Grade::all();
+
+        return $grades;
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreGradeRequest $request)
     {
         $request->validate([
             'student_id' => 'required|exists:students,id',
@@ -27,7 +31,7 @@ class GradeController extends Controller
             'comment' => 'nullable|string|max:255',
         ]);
 
-        $course = Grade::create($request->all());
+        $course = Grade::create($request->validated());
 
         return response()->json($course, 201);
     }
@@ -35,15 +39,9 @@ class GradeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Grade $grade)
     {
-        $course = Grade::find($id);
-
-        if (!$course) {
-            return response()->json(['message' => 'Grade not found'], 404);
-        }
-
-        return response()->json($course);
+        return response()->json($grade);
     }
 
     /**
@@ -99,14 +97,8 @@ class GradeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateGradeRequest $request, Grade $grade)
     {
-        $course = Grade::find($id);
-
-        if (!$course) {
-            return response()->json(['message' => 'Grade not found'], 404);
-        }
-
         $request->validate([
             'student_id' => 'sometimes|required|exists:students,id',
             'exercise_id' => 'sometimes|required|exists:exercises,id',
@@ -114,23 +106,17 @@ class GradeController extends Controller
             'comment' => 'nullable|string|max:255',
         ]);
 
-        $course->update($request->all());
+        $grade->update($request->validated());
 
-        return response()->json($course);
+        return response()->json($grade);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Grade $grade)
     {
-        $course = Grade::find($id);
-
-        if (!$course) {
-            return response()->json(['message' => 'Grade not found'], 404);
-        }
-
-        $course->delete();
+        $grade->delete();
 
         return response()->json(null, 204);
     }

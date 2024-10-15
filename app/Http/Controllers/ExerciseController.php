@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Exercise;
+use App\Http\Requests\StoreExerciseRequest;
+use App\Http\Requests\UpdateExerciseRequest;
 use Illuminate\Http\Request;
 
 class ExerciseController extends Controller
@@ -12,20 +14,22 @@ class ExerciseController extends Controller
      */
     public function index()
     {
-        return Exercise::all();
+        $exercises = Exercise::all();
+        
+        return $exercises;
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreExerciseRequest $request)
     {
         $request->validate([
             'title' => 'required',
             'path' => 'required',
         ]);
 
-        $exercise = Exercise::create($request->all());
+        $exercise = Exercise::create($request->validated());
 
         return response()->json($exercise, 201);
     }
@@ -33,34 +37,22 @@ class ExerciseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Exercise $exercise)
     {
-        $exercise = Exercise::find($id);
-
-        if (!$exercise) {
-            return response()->json(['message' => 'Exercise not found'], 404);
-        }
-
         return response()->json($exercise);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateExerciseRequest $request, Exercise $exercise)
     {
-        $exercise = Exercise::find($id);
-
-        if (!$exercise) {
-            return response()->json(['message' => 'Exercise not found'], 404);
-        }
-
         $request->validate([
             'title' => 'required',
             'path' => 'required',
         ]);
 
-        $exercise->update($request->all());
+        $exercise->update($request->validated());
 
         return response()->json($exercise);
     }
@@ -68,14 +60,8 @@ class ExerciseController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Exercise $exercise)
     {
-        $exercise = Exercise::find($id);
-
-        if (!$exercise) {
-            return response()->json(['message' => 'Exercise not found'], 404);
-        }
-
         $exercise->delete();
 
         return response()->json(null, 204);
