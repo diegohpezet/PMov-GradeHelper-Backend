@@ -31,7 +31,7 @@ class GradeController extends Controller
             'comment' => 'nullable|string|max:255',
         ]);
 
-        $course = Grade::create($request->all());
+        $course = Grade::create($request->validated());
 
         return response()->json($course, 201);
     }
@@ -106,7 +106,7 @@ class GradeController extends Controller
             'comment' => 'nullable|string|max:255',
         ]);
 
-        $grade->update($request->all());
+        $grade->update($request->validated());
 
         return response()->json($grade);
     }

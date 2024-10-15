@@ -29,7 +29,7 @@ class ExerciseController extends Controller
             'path' => 'required',
         ]);
 
-        $exercise = Exercise::create($request->all());
+        $exercise = Exercise::create($request->validated());
 
         return response()->json($exercise, 201);
     }
@@ -52,7 +52,7 @@ class ExerciseController extends Controller
             'path' => 'required',
         ]);
 
-        $exercise->update($request->all());
+        $exercise->update($request->validated());
 
         return response()->json($exercise);
     }
