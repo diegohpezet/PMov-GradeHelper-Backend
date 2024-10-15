@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Grade;
+use App\Http\Requests\StoreGradeRequest;
+use App\Http\Requests\UpdateGradeRequest;
 use Illuminate\Http\Request;
 
 class GradeController extends Controller
@@ -20,7 +22,7 @@ class GradeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreGradeRequest $request)
     {
         $request->validate([
             'student_id' => 'required|exists:students,id',
@@ -95,7 +97,7 @@ class GradeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Grade $grade)
+    public function update(UpdateGradeRequest $request, Grade $grade)
     {
         $request->validate([
             'student_id' => 'sometimes|required|exists:students,id',
