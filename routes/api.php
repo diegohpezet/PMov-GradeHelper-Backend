@@ -4,6 +4,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\GradeController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,12 +18,13 @@ Route::middleware(['auth:sanctum'])->group(function (){
     Route::apiResource('courses', CourseController::class);
     Route::apiResource('exercises', ExerciseController::class);
     Route::apiResource('grades', GradeController::class);
+    Route::apiResource('students', StudentController::class);
 });
 
 // Additional routes for grades
-Route::get('grades/student/{studentId}', [GradeController::class, 'gradesByStudent']);
-Route::get('grades/exercise/{exerciseId}', [GradeController::class, 'gradesByExercise']);
-Route::get('grades/student/{studentId}/exercise/{exerciseId}', [GradeController::class, 'gradesByStudentAndExercise']);
+Route::get('grades/student/{student}', [GradeController::class, 'gradesByStudent']);
+Route::get('grades/exercise/{exercise}', [GradeController::class, 'gradesByExercise']);
+Route::get('grades/student/{student}/exercise/{exercise}', [GradeController::class, 'gradesByStudentAndExercise']);
 
 Route::get('/user', function (Request $request) {
     return $request->user();
