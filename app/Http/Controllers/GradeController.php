@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Exercise;
 use App\Models\Grade;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class GradeController extends Controller
@@ -49,9 +51,9 @@ class GradeController extends Controller
     /**
      * Display the grades for a specific student.
      */
-    public function gradesByStudent($studentId)
+    public function gradesByStudent(Student $student)
     {
-        $grades = Grade::where('student_id', $studentId)
+        $grades = $student->grades()
             ->with(['exercise'])
             ->get();
 
@@ -65,9 +67,9 @@ class GradeController extends Controller
     /**
      * Display the grades for a specific exercise.
      */
-    public function gradesByExercise($exerciseId)
+    public function gradesByExercise(Exercise $exercise)
     {
-        $grades = Grade::where('exercise_id', $exerciseId)
+        $grades = $exercise->grades()
             ->with(['student'])
             ->get();
 
@@ -81,10 +83,10 @@ class GradeController extends Controller
     /**
      * Display the grades for a specific student and exercise.
      */
-    public function gradesByStudentAndExercise($studentId, $exerciseId)
+    public function gradesByStudentAndExercise(Student $student, Exercise $exercise)
     {
-        $grades = Grade::where('student_id', $studentId)
-            ->where('exercise_id', $exerciseId)
+        $grades = $student->grades()
+            ->whereBelongsTo($exercise)
             ->with(['student', 'exercise'])
             ->get();
 
