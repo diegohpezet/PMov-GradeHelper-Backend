@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use App\Models\Course;
 use App\Models\Exercise;
 use App\Models\Grade;
@@ -15,6 +16,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $users = User::factory()
+            ->count(3)
+            ->create();
+
         $courses = Course::factory()
             ->count(3)
             ->create();

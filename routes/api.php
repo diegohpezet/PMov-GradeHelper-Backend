@@ -4,6 +4,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\GradeController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,7 @@ Route::middleware(['auth:sanctum'])->group(function (){
     Route::apiResource('courses', CourseController::class);
     Route::apiResource('exercises', ExerciseController::class);
     Route::apiResource('grades', GradeController::class);
+    Route::apiResource('students', StudentController::class);
 });
 
 // Additional routes for grades
