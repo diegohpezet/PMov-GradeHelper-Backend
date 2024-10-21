@@ -24,13 +24,6 @@ class GradeController extends Controller
      */
     public function store(StoreGradeRequest $request)
     {
-        $request->validate([
-            'student_id' => 'required|exists:students,id',
-            'exercise_id' => 'required|exists:exercises,id',
-            'score' => 'required|integer',
-            'comment' => 'nullable|string|max:255',
-        ]);
-
         $course = Grade::create($request->validated());
 
         return response()->json($course, 201);
@@ -99,13 +92,6 @@ class GradeController extends Controller
      */
     public function update(UpdateGradeRequest $request, Grade $grade)
     {
-        $request->validate([
-            'student_id' => 'sometimes|required|exists:students,id',
-            'exercise_id' => 'sometimes|required|exists:exercises,id',
-            'score' => 'sometimes|required|integer',
-            'comment' => 'nullable|string|max:255',
-        ]);
-
         $grade->update($request->validated());
 
         return response()->json($grade);

@@ -24,11 +24,6 @@ class ExerciseController extends Controller
      */
     public function store(StoreExerciseRequest $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'path' => 'required',
-        ]);
-
         $exercise = Exercise::create($request->validated());
 
         return response()->json($exercise, 201);
@@ -47,11 +42,6 @@ class ExerciseController extends Controller
      */
     public function update(UpdateExerciseRequest $request, Exercise $exercise)
     {
-        $request->validate([
-            'title' => 'required',
-            'path' => 'required',
-        ]);
-
         $exercise->update($request->validated());
 
         return response()->json($exercise);
