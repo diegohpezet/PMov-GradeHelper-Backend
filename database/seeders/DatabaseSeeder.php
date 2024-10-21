@@ -16,15 +16,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $users = User::factory()
-            ->count(3)
-            ->create();
-
         $courses = Course::factory()
             ->count(3)
             ->create();
 
-        $students = Student::factory(20)
+        $students = Student::factory(10)
             ->recycle($courses)
             ->create();
 

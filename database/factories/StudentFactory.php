@@ -23,7 +23,6 @@ class StudentFactory extends Factory
             'last_name' => fake()->lastName(),
             'githubUsername' => fake()->userName(),
 
-            'user_id' => User::factory(),
             'course_id' => Course::factory(),
         ];
     }
