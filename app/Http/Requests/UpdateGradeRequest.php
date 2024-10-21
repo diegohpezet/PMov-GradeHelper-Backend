@@ -22,10 +22,8 @@ class UpdateGradeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'student_id' => 'required|exists:students,id',
-            'exercise_id' => 'required|exists:exercises,id',
-            'score' => 'nullable|integer|between:0,100',
-            'comment' => 'nullable|string|max:255'
+            'score' => 'nullable|required_without:comment|integer|between:0,100',
+            'comment' => 'nullable|required_without:score|string|max:255'
       ];
     }
 }

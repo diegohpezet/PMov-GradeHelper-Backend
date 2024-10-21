@@ -22,8 +22,8 @@ class UpdateExerciseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required',
-            'path' => 'required|regex:/^[a-z0-9-]+$/'  // Slug regex
+            'title' => 'nullable|required_without:path',
+            'path' => 'nullable|required_without:title|regex:/^[a-z0-9-]+$/'  // Slug regex
         ];
     }
 }
