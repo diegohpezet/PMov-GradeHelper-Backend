@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Exercise;
 use App\Models\Grade;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class GradeController extends Controller
@@ -12,7 +14,9 @@ class GradeController extends Controller
      */
     public function index()
     {
-        return Grade::all();
+        $grades = Grade::all();
+
+        return $grades;
     }
 
     /**
@@ -35,23 +39,17 @@ class GradeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Grade $grade)
     {
-        $course = Grade::find($id);
-
-        if (!$course) {
-            return response()->json(['message' => 'Grade not found'], 404);
-        }
-
-        return response()->json($course);
+        return response()->json($grade);
     }
 
     /**
      * Display the grades for a specific student.
      */
-    public function gradesByStudent($studentId)
+    public function gradesByStudent(Student $student)
     {
-        $grades = Grade::where('student_id', $studentId)
+        $grades = $student->grades()
             ->with(['exercise'])
             ->get();
 
@@ -65,9 +63,9 @@ class GradeController extends Controller
     /**
      * Display the grades for a specific exercise.
      */
-    public function gradesByExercise($exerciseId)
+    public function gradesByExercise(Exercise $exercise)
     {
-        $grades = Grade::where('exercise_id', $exerciseId)
+        $grades = $exercise->grades()
             ->with(['student'])
             ->get();
 
@@ -81,10 +79,10 @@ class GradeController extends Controller
     /**
      * Display the grades for a specific student and exercise.
      */
-    public function gradesByStudentAndExercise($studentId, $exerciseId)
+    public function gradesByStudentAndExercise(Student $student, Exercise $exercise)
     {
-        $grades = Grade::where('student_id', $studentId)
-            ->where('exercise_id', $exerciseId)
+        $grades = $student->grades()
+            ->whereBelongsTo($exercise)
             ->with(['student', 'exercise'])
             ->get();
 
@@ -99,14 +97,8 @@ class GradeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Grade $grade)
     {
-        $course = Grade::find($id);
-
-        if (!$course) {
-            return response()->json(['message' => 'Grade not found'], 404);
-        }
-
         $request->validate([
             'student_id' => 'sometimes|required|exists:students,id',
             'exercise_id' => 'sometimes|required|exists:exercises,id',
@@ -114,23 +106,17 @@ class GradeController extends Controller
             'comment' => 'nullable|string|max:255',
         ]);
 
-        $course->update($request->all());
+        $grade->update($request->all());
 
-        return response()->json($course);
+        return response()->json($grade);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Grade $grade)
     {
-        $course = Grade::find($id);
-
-        if (!$course) {
-            return response()->json(['message' => 'Grade not found'], 404);
-        }
-
-        $course->delete();
+        $grade->delete();
 
         return response()->json(null, 204);
     }

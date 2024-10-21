@@ -12,7 +12,9 @@ class ExerciseController extends Controller
      */
     public function index()
     {
-        return Exercise::all();
+        $exercises = Exercise::all();
+        
+        return $exercises;
     }
 
     /**
@@ -33,28 +35,16 @@ class ExerciseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Exercise $exercise)
     {
-        $exercise = Exercise::find($id);
-
-        if (!$exercise) {
-            return response()->json(['message' => 'Exercise not found'], 404);
-        }
-
         return response()->json($exercise);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Exercise $exercise)
     {
-        $exercise = Exercise::find($id);
-
-        if (!$exercise) {
-            return response()->json(['message' => 'Exercise not found'], 404);
-        }
-
         $request->validate([
             'title' => 'required',
             'path' => 'required',
@@ -68,14 +58,8 @@ class ExerciseController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Exercise $exercise)
     {
-        $exercise = Exercise::find($id);
-
-        if (!$exercise) {
-            return response()->json(['message' => 'Exercise not found'], 404);
-        }
-
         $exercise->delete();
 
         return response()->json(null, 204);
