@@ -22,7 +22,8 @@ class StoreCourseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
+            'name' => 'required|min:3',
+            'school_year' => 'required|min:4|max:4'
         ];
     }
 }

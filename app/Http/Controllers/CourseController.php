@@ -6,6 +6,7 @@ use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
 use App\Models\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class CourseController extends Controller
 {
@@ -24,6 +25,7 @@ class CourseController extends Controller
      */
     public function store(StoreCourseRequest $request)
     {
+        Log::info($request->all());
         $course = Course::create($request->validated());
 
         return response()->json($course, 201);

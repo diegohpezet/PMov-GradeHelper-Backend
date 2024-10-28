@@ -18,7 +18,8 @@ class CourseFactory extends Factory
         $name = '7mo' . self::$division++ . $suffix . 'a';
 
         return [
-            'name' => $name
+            'name' => $name,
+            'school_year' => "2024"
         ];
     }
 }
