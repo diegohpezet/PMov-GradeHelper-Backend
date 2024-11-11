@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('grades', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('student_id')->constrained();
-            $table->foreignUuid('exercise_id')->constrained();
+            $table->foreignUuid('student_id')->constrained()->onDelete('cascade');
+            $table->foreignUuid('exercise_id')->constrained()->onDelete('cascade');
             $table->integer('score');
             $table->string('comment')->nullable();
             $table->timestamps();
