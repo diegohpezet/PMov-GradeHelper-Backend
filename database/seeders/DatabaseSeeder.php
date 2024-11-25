@@ -7,6 +7,7 @@ use App\Models\Course;
 use App\Models\Exercise;
 use App\Models\Grade;
 use App\Models\Student;
+use Database\Seeders\RoleSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -34,5 +35,7 @@ class DatabaseSeeder extends Seeder
                 ->recycle($student->course->exercises)
                 ->create();
         });
+
+        $this->call(RoleSeeder::class);
     }
 }
