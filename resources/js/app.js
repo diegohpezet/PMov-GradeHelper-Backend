@@ -4,6 +4,7 @@ import Layout from './Layouts/Layout.vue'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min.js'
+import 'remixicon/fonts/remixicon.css'
 
 createInertiaApp({
   resolve: name => {
