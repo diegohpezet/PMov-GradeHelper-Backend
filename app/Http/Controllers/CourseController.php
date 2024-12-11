@@ -21,6 +21,13 @@ class CourseController extends Controller
     }
 
     /**
+     * Display a listing of students for a specific course.
+     */
+    public function courseStudents(Course $course) {
+        return response()->json($course->students);
+    }
+
+    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreCourseRequest $request)

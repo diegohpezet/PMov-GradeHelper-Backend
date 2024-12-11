@@ -20,6 +20,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('grades', GradeController::class)->except(['store', 'update', 'destroy']);
     Route::apiResource('students', StudentController::class)->except(['store', 'update', 'destroy']);
 
+    // Additional routes for courses
+    Route::get('courses/{course}/students', [CourseController::class, 'courseStudents']);
+
     Route::middleware(['admin'])->group(function () {
         Route::apiResource('courses', CourseController::class)->only(['store', 'update', 'destroy']);
         Route::apiResource('exercises', ExerciseController::class)->only(['store', 'update', 'destroy']);
