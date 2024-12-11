@@ -7,6 +7,9 @@ import { Link } from '@inertiajs/vue3';
       <Link class="list-group-item" href="/courses">
         <span><i class="ri-file-list-3-line me-2"></i>Courses</span>
       </Link>
+      <Link class="list-group-item" href="/exercises">
+        <span><i class="ri-question-answer-line me-2"></i>Exercises</span>
+      </Link>
       <Link class="list-group-item" href="/students">
         <span><i class="ri-graduation-cap-line me-2"></i>Students</span>
       </Link>
