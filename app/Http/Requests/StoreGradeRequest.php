@@ -24,8 +24,8 @@ class StoreGradeRequest extends FormRequest
         return [
             'student_id' => 'required|exists:students,id',
             'exercise_id' => 'required|exists:exercises,id',
-            'score' => 'nullable|integer|between:0,100',
-            'comment' => 'nullable|string|max:255'
+            'score' => 'required_without:comment|integer|between:0,100',
+            'comment' => 'required_without:score|string|max:255'
         ];
     }
 }
