@@ -29,7 +29,7 @@ class GradeController extends Controller
                     'grades' => $exerciseGrades->map(function ($grade) {
                         return [
                             'id' => $grade->id,
-                            'score' => $grade->score,
+                            'result' => $grade->result,
                             'comment' => $grade->comment,
                             'created_at' => $grade->created_at,
                         ];

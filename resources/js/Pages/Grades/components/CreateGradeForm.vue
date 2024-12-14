@@ -5,7 +5,7 @@ import { useForm } from '@inertiajs/vue3';
 const props = defineProps({
   student: Object,
   exercise: Object,
-  resultOptions: [String],
+  gradeResultOptions: [String],
 });
 
 const form = useForm({
@@ -44,7 +44,7 @@ const saveGrade = () => {
       </div>
       <div class="col-6">
         <label for="score" class="visually-hidden">Result</label>
-        <div class="form-check" v-for="option in resultOptions">
+        <div class="form-check" v-for="option in gradeResultOptions">
           <input
             class="form-check-input"
             type="radio"

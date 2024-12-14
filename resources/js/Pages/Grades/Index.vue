@@ -52,7 +52,7 @@ const setGradeFormValues = (student, exercise) => {
   <CreateGradeForm
     :student="studentToGrade"
     :exercise="exerciseToGrade"
-    :result-options="gradeResultOptions"
+    :grade-result-options="gradeResultOptions"
   />
   <GradesHistory :student="studentToGrade" :exercise="exerciseToGrade" />
   
