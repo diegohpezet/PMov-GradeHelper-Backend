@@ -5,7 +5,11 @@ import CheckOnlineStatus from './components/CheckOnlineStatus.vue';
 import CreateGradeForm from './components/CreateGradeForm.vue';
 import GradesHistory from './components/GradesHistory.vue';
 
-const props = defineProps({ students: [Object], exercises: [Object] });
+const props = defineProps({
+    students: [Object],
+    exercises: [Object],
+    gradeResultOptions: [String],
+});
 
 // Filter functionality
 const selectedExercise = ref(null);
@@ -45,7 +49,11 @@ const setGradeFormValues = (student, exercise) => {
 </script>
 
 <template>
-  <CreateGradeForm :student="studentToGrade" :exercise="exerciseToGrade" />
+  <CreateGradeForm
+    :student="studentToGrade"
+    :exercise="exerciseToGrade"
+    :result-options="gradeResultOptions"
+  />
   <GradesHistory :student="studentToGrade" :exercise="exerciseToGrade" />
   
   <table class="table table-striped border">

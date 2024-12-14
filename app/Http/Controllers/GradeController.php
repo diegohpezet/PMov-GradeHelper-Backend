@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Enums\GradeResult;
 use App\Models\Exercise;
 use App\Models\Grade;
 use App\Models\Student;
@@ -48,6 +49,7 @@ class GradeController extends Controller
         return Inertia::render('Grades/Index', [
             'exercises' => $exercises,
             'students' => $tableData,
+            'gradeResultOptions' => GradeResult::values(),
         ]);
     }
 
