@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\Enums\GradeResult;
 use App\Models\Exercise;
 use App\Models\Student;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -21,7 +22,7 @@ class GradeFactory extends Factory
         return [
             'student_id' => Student::factory(),
             'exercise_id' => Exercise::factory(),
-            'score' => fake()->numberBetween(1, 10),
+            'result' => fake()->randomElement(GradeResult::values()),
             'comment' => fake()->text(),
         ];
     }
