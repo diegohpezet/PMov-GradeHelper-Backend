@@ -54,10 +54,9 @@ function submit() {
       </div>
     </div>
 
-    <span v-if="form.errors.last_name" class="text-danger">{{ form.errors.last_name }}</span>
-    <span v-if="form.errors.first_name" class="text-danger">{{ form.errors.first_name }}</span>
-    <span v-if="form.errors.githubUsername" class="text-danger">{{ form.errors.githubUsername }}</span>
-    <span v-if="form.errors.course_id" class="text-danger">{{ form.errors.course_id }}</span>
+    <ul v-if="form.errors">
+      <li v-for="error in form.errors" :key="error" class="text-danger">{{ error }}</li>
+    </ul>
   </form>
 </template>
 
