@@ -75,7 +75,7 @@ const setGradeFormValues = (student, exercise) => {
           <div class="d-flex">
             <CheckOnlineStatus :studentUsername="student.githubUsername" :exercisePath="exercise?.path"/>
             <span>
-              <a v-if="exercise" :href="`https://${student.githubUsername}.github.io/plataformas-moviles-entregas/${exercise.path}`"class="mx-1">
+              <a v-if="exercise" :href="`https://${student.githubUsername}.github.io/plataformas-moviles-entregas/${exercise.path}`" class="mx-1">
                 Link
               </a> | {{ getLastGrade(student, exercise)?.result ?? '-' }}
             </span>
