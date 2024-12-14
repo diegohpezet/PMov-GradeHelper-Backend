@@ -77,7 +77,7 @@ const setGradeFormValues = (student, exercise) => {
             <span>
               <a v-if="exercise" :href="`https://${student.githubUsername}.github.io/plataformas-moviles-entregas/${exercise.path}`"class="mx-1">
                 Link
-              </a> | {{ getLastGrade(student, exercise)?.score ?? '-' }}
+              </a> | {{ getLastGrade(student, exercise)?.result ?? '-' }}
             </span>
           </div>
         </td>
