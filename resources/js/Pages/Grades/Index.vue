@@ -49,11 +49,8 @@ const setGradeFormValues = (student, exercise) => {
 </script>
 
 <template>
-  <CreateGradeForm
-    :student="studentToGrade"
-    :exercise="exerciseToGrade"
-    :grade-result-options="gradeResultOptions"
-  />
+  <h1 class="h2">Grades</h1>
+  <CreateGradeForm :student="studentToGrade" :exercise="exerciseToGrade" :grade-result-options="gradeResultOptions" />
   <GradesHistory :student="studentToGrade" :exercise="exerciseToGrade" />
   
   <table class="table table-striped border">

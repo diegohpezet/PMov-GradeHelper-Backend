@@ -12,7 +12,7 @@ const deleteStudent = (id) => {
 </script>
 
 <template>
-  <h1 class="mb-3">Students</h1>
+  <h1 class="h2">Students</h1>
 
   <details class="my-3">
     <summary role="button" class="btn btn-primary text-white">

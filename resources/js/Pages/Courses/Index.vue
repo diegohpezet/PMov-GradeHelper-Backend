@@ -16,6 +16,7 @@ const deleteCourse = (id) => {
 </script>
 
 <template>
+  <h1 class="h2">Courses</h1>
 
   <details class="my-3">
     <summary role="button" class="btn btn-primary text-white">
