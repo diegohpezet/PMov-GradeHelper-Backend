@@ -14,7 +14,7 @@ class ExerciseController extends Controller
      */
     public function index()
     {
-        $exercises = Exercise::all();
+        $exercises = Exercise::with('courses')->get();
         
         return Inertia::render('Exercises/Index', [
             'exercises' => $exercises
@@ -46,7 +46,7 @@ class ExerciseController extends Controller
      */
     public function edit(Exercise $exercise) {
         return Inertia::render('Exercises/Edit', [
-            'exercise' => $exercise
+            'exercise' => $exercise->load('courses')
         ]);
     }
 
@@ -55,7 +55,12 @@ class ExerciseController extends Controller
      */
     public function update(UpdateExerciseRequest $request, Exercise $exercise)
     {
-        $exercise->update($request->validated());
+        $exercise->update([
+            'title' => $request->input('title'),
+            'path' => $request->input('path'),
+        ]);
+
+        $exercise->courses()->sync($request->input('courses', []));
 
         return redirect()->route('exercises.index')->with('success', 'Exercise updated successfully');
     }
