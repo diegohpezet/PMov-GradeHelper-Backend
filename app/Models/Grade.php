@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Enums\GradeResult;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,9 +15,16 @@ class Grade extends Model
     protected $fillable = [
         'student_id',
         'exercise_id',
-        'score',
+        'result',
         'comment',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'result' => GradeResult::class,
+        ];
+    }
 
     public function student():BelongsTo
     {

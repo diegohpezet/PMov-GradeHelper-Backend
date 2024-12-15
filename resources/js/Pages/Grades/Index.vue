@@ -5,7 +5,11 @@ import CheckOnlineStatus from './components/CheckOnlineStatus.vue';
 import CreateGradeForm from './components/CreateGradeForm.vue';
 import GradesHistory from './components/GradesHistory.vue';
 
-const props = defineProps({ students: [Object], exercises: [Object] });
+const props = defineProps({
+    students: [Object],
+    exercises: [Object],
+    gradeResultOptions: [String],
+});
 
 // Filter functionality
 const selectedExercise = ref(null);
@@ -46,7 +50,7 @@ const setGradeFormValues = (student, exercise) => {
 
 <template>
   <h1 class="h2">Grades</h1>
-  <CreateGradeForm :student="studentToGrade" :exercise="exerciseToGrade" />
+  <CreateGradeForm :student="studentToGrade" :exercise="exerciseToGrade" :grade-result-options="gradeResultOptions" />
   <GradesHistory :student="studentToGrade" :exercise="exerciseToGrade" />
   
   <table class="table table-striped border">
@@ -68,9 +72,9 @@ const setGradeFormValues = (student, exercise) => {
           <div class="d-flex">
             <CheckOnlineStatus :studentUsername="student.githubUsername" :exercisePath="exercise?.path"/>
             <span>
-              <a v-if="exercise" :href="`https://${student.githubUsername}.github.io/plataformas-moviles-entregas/${exercise.path}`"class="mx-1">
+              <a v-if="exercise" :href="`https://${student.githubUsername}.github.io/plataformas-moviles-entregas/${exercise.path}`" class="mx-1">
                 Link
-              </a> | {{ getLastGrade(student, exercise)?.score ?? '-' }}
+              </a> | {{ getLastGrade(student, exercise)?.result ?? '-' }}
             </span>
           </div>
         </td>
