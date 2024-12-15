@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Exercise;
 use App\Http\Requests\StoreExerciseRequest;
 use App\Http\Requests\UpdateExerciseRequest;
-use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ExerciseController extends Controller
 {
@@ -16,7 +16,9 @@ class ExerciseController extends Controller
     {
         $exercises = Exercise::all();
         
-        return $exercises;
+        return Inertia::render('Exercises/Index', [
+            'exercises' => $exercises
+        ]);
     }
 
     /**
@@ -24,9 +26,9 @@ class ExerciseController extends Controller
      */
     public function store(StoreExerciseRequest $request)
     {
-        $exercise = Exercise::create($request->validated());
+        Exercise::create($request->validated());
 
-        return response()->json($exercise, 201);
+        return redirect()->back()->with('success', 'Exercise created successfully');
     }
 
     /**
@@ -34,7 +36,18 @@ class ExerciseController extends Controller
      */
     public function show(Exercise $exercise)
     {
-        return response()->json($exercise);
+        return Inertia::render('Exercises/Show', [
+            'exercise' => $exercise
+        ]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Exercise $exercise) {
+        return Inertia::render('Exercises/Edit', [
+            'exercise' => $exercise
+        ]);
     }
 
     /**
@@ -44,7 +57,7 @@ class ExerciseController extends Controller
     {
         $exercise->update($request->validated());
 
-        return response()->json($exercise);
+        return redirect()->route('exercises.index')->with('success', 'Exercise updated successfully');
     }
 
     /**
@@ -54,6 +67,6 @@ class ExerciseController extends Controller
     {
         $exercise->delete();
 
-        return response()->json(null, 204);
+        return redirect()->back()->with('success', 'Exercise deleted successfully');
     }
 }

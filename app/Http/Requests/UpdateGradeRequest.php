@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\Enums\GradeResult;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateGradeRequest extends FormRequest
 {
@@ -22,8 +24,12 @@ class UpdateGradeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'score' => 'nullable|required_without:comment|integer|between:0,100',
-            'comment' => 'nullable|required_without:score|string|max:255'
+            'comment' => 'nullable|required_without:result|string|max:255',
+            'result' => [
+                'nullable',
+                'required_without:comment',
+                Rule::enum(GradeResult::class)
+            ],
       ];
     }
 }

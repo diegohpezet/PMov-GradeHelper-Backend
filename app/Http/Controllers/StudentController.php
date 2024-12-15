@@ -6,7 +6,7 @@ use App\Models\Student;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class StudentController extends Controller
 {
@@ -15,9 +15,11 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::all();
+        $students = Student::with('course')->get();
 
-        return $students;
+        return Inertia::render('Students/Index', [
+            'students' => $students
+        ]);
     }
 
     /**
@@ -25,9 +27,9 @@ class StudentController extends Controller
      */
     public function store(StoreStudentRequest $request)
     {
-        $student = Student::create($request->validated());
+        Student::create($request->validated());
 
-        return response()->json($student, 201);
+        return redirect()->back()->with('success', 'Student created successfully');
     }
 
     /**
@@ -35,7 +37,18 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
-        return response()->json($student);
+        return Inertia::render('Students/Show', [
+            'student' => $student
+        ]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Student $student) {
+        return Inertia::render('Students/Edit', [
+            'student' => $student
+        ]);
     }
 
     /**
@@ -45,7 +58,7 @@ class StudentController extends Controller
     {
         $student->update($request->validated());
 
-        return response()->json($student);
+        return redirect()->route('students.index')->with('success', 'Student updated successfully');
     }
 
     /**
@@ -55,6 +68,6 @@ class StudentController extends Controller
     {
         $student->delete();
 
-        return response()->json(null, 204);
+        return redirect()->back()->with('success', 'Student deleted successfully');
     }
 }

@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
 use App\Models\Course;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use Inertia\Inertia;
 
 class CourseController extends Controller
 {
@@ -17,7 +16,9 @@ class CourseController extends Controller
     {
         $courses = Course::all();
 
-        return response()->json($courses);
+        return Inertia::render('Courses/Index', [
+            'courses' => $courses
+        ]);
     }
 
     /**
@@ -32,10 +33,9 @@ class CourseController extends Controller
      */
     public function store(StoreCourseRequest $request)
     {
-        Log::info($request->all());
-        $course = Course::create($request->validated());
+        Course::create($request->validated());
 
-        return response()->json($course, 201);
+        return redirect()->back()->with('success', 'Course created successfully');
     }
 
     /**
@@ -43,7 +43,18 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-        return response()->json($course);
+        return Inertia::render('Courses/Show', [
+            'course' => $course
+        ]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Course $course) {
+        return Inertia::render('Courses/Edit', [
+            'course' => $course
+        ]);
     }
 
     /**
@@ -53,7 +64,7 @@ class CourseController extends Controller
     {
         $course->update($request->validated());
 
-        return response()->json($course);
+        return redirect()->route('courses.index')->with('success', 'Course updated successfully');
     }
 
     /**
@@ -63,6 +74,6 @@ class CourseController extends Controller
     {
         $course->delete();
 
-        return response()->json(null, 204);
+        return redirect()->back()->with('success', 'Course deleted successfully');
     }
 }

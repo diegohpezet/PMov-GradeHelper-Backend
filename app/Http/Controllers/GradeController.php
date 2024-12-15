@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Enums\GradeResult;
 use App\Models\Exercise;
 use App\Models\Grade;
 use App\Models\Student;
 use App\Http\Requests\StoreGradeRequest;
 use App\Http\Requests\UpdateGradeRequest;
-use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class GradeController extends Controller
 {
@@ -16,9 +17,40 @@ class GradeController extends Controller
      */
     public function index()
     {
-        $grades = Grade::all();
+        $students = Student::with('grades')->get();
+        $exercises = Exercise::all();
 
-        return $grades;
+        $tableData = $students->map(function ($student) use ($exercises) {
+            $grades = $exercises->map(function ($exercise) use ($student) {
+                $exerciseGrades = $student->grades->where('exercise_id', $exercise->id);
+
+                return [
+                    'exercise_id' => $exercise->id,
+                    'grades' => $exerciseGrades->map(function ($grade) {
+                        return [
+                            'id' => $grade->id,
+                            'result' => $grade->result,
+                            'comment' => $grade->comment,
+                            'created_at' => $grade->created_at,
+                        ];
+                    })->values()->toArray(),
+                ];
+            });
+
+            return [
+                'id' => $student->id,
+                'first_name' => $student->first_name,
+                'last_name' => $student->last_name,
+                'githubUsername' => $student->githubUsername,
+                'grades' => $grades,
+            ];
+        });
+
+        return Inertia::render('Grades/Index', [
+            'exercises' => $exercises,
+            'students' => $tableData,
+            'gradeResultOptions' => GradeResult::values(),
+        ]);
     }
 
     /**
@@ -26,9 +58,9 @@ class GradeController extends Controller
      */
     public function store(StoreGradeRequest $request)
     {
-        $course = Grade::create($request->validated());
+        Grade::create($request->validated());
 
-        return response()->json($course, 201);
+        return redirect()->back()->with('success', 'Grade created successfully');
     }
 
     /**
@@ -40,53 +72,13 @@ class GradeController extends Controller
     }
 
     /**
-     * Display the grades for a specific student.
+     * Show the form for editing the specified resource.
      */
-    public function gradesByStudent(Student $student)
+    public function edit(Grade $grade)
     {
-        $grades = $student->grades()
-            ->with(['exercise'])
-            ->get();
-
-        if ($grades->isEmpty()) {
-            return response()->json(['message' => 'No grades found for this student.'], 404);
-        }
-
-        return response()->json($grades);
-    }
-
-    /**
-     * Display the grades for a specific exercise.
-     */
-    public function gradesByExercise(Exercise $exercise)
-    {
-        $grades = $exercise->grades()
-            ->with(['student'])
-            ->get();
-
-        if ($grades->isEmpty()) {
-            return response()->json(['message' => 'No grades found for this exercise.'], 404);
-        }
-
-        return response()->json($grades);
-    }
-
-    /**
-     * Display the grades for a specific student and exercise.
-     */
-    public function gradesByStudentAndExercise(Student $student, Exercise $exercise)
-    {
-        $grades = $student->grades()
-            ->whereBelongsTo($exercise)
-            ->with(['student', 'exercise'])
-            ->get();
-
-        // Verifica si hay notas para el estudiante y ejercicio específicos
-        if ($grades->isEmpty()) {
-            return response()->json(['message' => 'No grades found for this student and exercise.'], 404);
-        }
-
-        return response()->json($grades);
+        return Inertia::render('Grades/Edit', [
+            'grade' => $grade
+        ]);
     }
 
     /**
@@ -96,7 +88,7 @@ class GradeController extends Controller
     {
         $grade->update($request->validated());
 
-        return response()->json($grade);
+        return redirect()->route('grades.index')->with('success', 'Grade updated successfully');
     }
 
     /**
@@ -106,6 +98,6 @@ class GradeController extends Controller
     {
         $grade->delete();
 
-        return response()->json(null, 204);
+        return redirect()->back()->with('success', 'Grade deleted successfully');
     }
 }
