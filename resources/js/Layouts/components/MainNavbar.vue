@@ -3,16 +3,16 @@ import LinkList from './LinkList.vue';
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-md bg-light rounded border m-sm-3 p-sm-3">
-    <div class="container-fluid d-flex justify-content-between text-align-middle">
+  <nav class="navbar navbar-expand-md bg-light rounded border">
+    <div class="d-flex w-100 flex-wrap justify-content-between text-align-middle">
       <!-- Header -->
-      <div class="d-flex">
-        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu"
+      <div class="d-flex align-items-center">
+        <button class="navbar-toggler me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu"
           aria-controls="offcanvasMenu" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <h2 class="fs-4 pt-2 mx-3">Dashboard</h2>
+        <h2 class="fs-4 m-0">Dashboard</h2>
       </div>
       <div class="d-flex align-items-center">
         <img src="https://ui-avatars.com/api/?name=Some+User" alt="Profile picture" height="40" width="40" class="rounded-circle me-2" />
