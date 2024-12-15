@@ -26,6 +26,9 @@ const deleteExercise = (id) => {
       <div>
         <h2 class="card-title fs-4">{{ exercise.title }}</h2>
         <p class="card-text text-muted fst-italic">/{{ exercise.path }}</p>
+        <p v-if="exercise.courses.length > 0" class="card-text text-muted">
+          Assigned for: {{ exercise.courses.map(c => c.name).join(', ') }}
+        </p>
       </div>
 
       <div class="btn-group text-end my-auto">
