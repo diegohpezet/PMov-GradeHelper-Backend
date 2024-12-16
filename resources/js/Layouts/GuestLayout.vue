@@ -14,7 +14,7 @@ import { Link } from '@inertiajs/vue3';
       </div>
 
       <div>
-        <Link class="btn btn-primary" href="/auth/login">Login</Link>
+        <Link class="btn btn-primary" href="/login">Login</Link>
       </div>
     </div>
   </nav>

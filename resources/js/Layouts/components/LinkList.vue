@@ -24,9 +24,9 @@ import { Link } from '@inertiajs/vue3';
     <button class="list-group-item text-start">
       <i class="ri-sun-line me-2"></i>Switch theme
     </button>
-    <button class="list-group-item text-start">
+    <Link class="list-group-item text-start" href="/logout" method="post">
       <i class="ri-logout-circle-line me-2"></i>Log out
-    </button>
+    </Link>
   </div>
 </template>
 
