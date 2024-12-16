@@ -32,8 +32,8 @@ const editExercise = (id) => {
       <label for="courses" class="form-label">Courses:</label>
       <ul class="list-group">
         <li v-for="course in courses" :key="course.id" class="list-group-item">
-          <input type="checkbox" :value="course.id" v-model="form.courses" class="form-check-input">
-          <label class="form-check-label ms-2">{{ course.name }}</label>
+          <input type="checkbox" :value="course.id" v-model="form.courses" class="form-check-input" :id="`checkbox-${course.id}`">
+          <label class="form-check-label ms-2" :for="`checkbox-${course.id}`">{{ course.name }}</label>
         </li>
       </ul>
       <span v-if="form.errors.courses" class="text-danger">{{ form.errors.courses }}</span>
