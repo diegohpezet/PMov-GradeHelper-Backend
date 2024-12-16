@@ -1,7 +1,7 @@
 <script setup>
 const props = defineProps({ course: Object })
 
-const sortedCourseExercises = course.exercises.sort((a, b) => a.title.localeCompare(b.title))
+const sortedCourseExercises = props.course.exercises.sort((a, b) => a.title.localeCompare(b.title))
 </script>
 
 <template>
