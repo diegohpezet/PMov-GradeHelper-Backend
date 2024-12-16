@@ -1,5 +1,7 @@
 <script setup>
-defineProps({ course: Object })
+const props = defineProps({ course: Object })
+
+const sortedCourseExercises = course.exercises.sort((a, b) => a.title.localeCompare(b.title))
 </script>
 
 <template>
@@ -30,7 +32,7 @@ defineProps({ course: Object })
     <div class="tab-pane fade" id="exercises-tab-pane" role="tabpanel" aria-labelledby="exercises-tab" tabindex="0">
       <h2 class="mb-3">Exercises</h2>
       <ul class="list-group">
-        <li v-for="exercise in course.exercises.sort((a, b) => a.title.localeCompare(b.title))" :key="exercise.id" class="list-group-item">
+        <li v-for="exercise in sortedCourseExercises" :key="exercise.id" class="list-group-item">
           {{ exercise.title }}
         </li>
       </ul>
