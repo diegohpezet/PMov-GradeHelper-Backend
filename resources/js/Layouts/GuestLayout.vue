@@ -1,8 +1,10 @@
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import { Link, Head } from '@inertiajs/vue3';
 </script>
 
 <template>
+  <Head title="Welcome - Grade Helper" />
+
   <nav class="navbar bg-light shadow-sm">
     <div class="container-fluid py-2 px-sm-5 d-flex justify-content-between">
       <div>
