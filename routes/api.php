@@ -10,9 +10,6 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\GithubAuthController;
 
-Route::get('/auth/github', [GithubAuthController::class, 'redirectToGithub']);
-Route::get('/auth/github/callback', [GithubAuthController::class, 'handleGithubCallback']);
-
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('users', UserController::class);
     Route::apiResource('courses', CourseController::class)->except(['store', 'update', 'destroy']);
