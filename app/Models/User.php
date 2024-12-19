@@ -44,6 +44,11 @@ class User extends Authenticatable
         return $this->hasOne(Student::class);
     }
 
+    public function isAdmin() 
+    {
+        return $this->hasRole('admin');
+    }
+
     /**
      * Get the attributes that should be cast.
      *
