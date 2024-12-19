@@ -1,12 +1,12 @@
 <script setup>
-import { Link, router } from '@inertiajs/vue3';
+import { Link, router, usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
 import CreateCourseForm from './components/CreateCourseForm.vue';
 
-defineProps({ courses: [Object] });
+const props = defineProps({ courses: [Object] });
 
-const editCourse = (id) => {
-  
-}
+const page = usePage();
+const isAdmin = computed(() => page.props.auth.isAdmin);
 
 const deleteCourse = (id) => {
   if (confirm('Are you sure you want to delete this course?')) {
@@ -18,14 +18,14 @@ const deleteCourse = (id) => {
 <template>
   <h1 class="h2">Courses</h1>
 
-  <details class="my-3">
+  <details v-if="isAdmin" class="mt-3">
     <summary role="button" class="btn btn-primary text-white">
       <span><i class="ri-add-line"></i>Add new course</span>
     </summary>
     <CreateCourseForm />
   </details>
 
-  <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 mt-3 g-3">
     <div class="col" v-for="course in courses" :key="course.id">
       <div class="card h-100">
         <div class="card-body row">
@@ -35,7 +35,7 @@ const deleteCourse = (id) => {
             <p class="card-text text-muted">{{ course.school_year }}</p>
           </div>
 
-          <div class="col-auto btn-group text-end">
+          <div v-if="isAdmin" class="col-auto btn-group text-end">
             <button type="button" class="btn dropdown-toggle rounded-circle border my-auto" 
               data-bs-toggle="dropdown" aria-expanded="false">
             </button>

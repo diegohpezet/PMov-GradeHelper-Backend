@@ -16,10 +16,17 @@ Route::get('/', function (Request $request) {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::resource('courses', CourseController::class);
+    Route::resource('courses', CourseController::class)->except(['store', 'edit', 'update', 'destroy']);
     Route::resource('exercises', ExerciseController::class);
     Route::resource('students', StudentController::class);
     Route::resource('grades', GradeController::class);
+
+    Route::middleware('admin')->group(function () {
+        Route::resource('courses', CourseController::class)->only(['store', 'edit', 'update', 'destroy']);
+        Route::resource('exercises', ExerciseController::class);
+        Route::resource('students', StudentController::class);
+        Route::resource('grades', GradeController::class);
+    });
 });
 
 Route::get('/giveMeIOMA', function (Request $request) {
