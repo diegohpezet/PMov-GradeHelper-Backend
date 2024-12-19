@@ -1,10 +1,13 @@
 <script setup>
+import { Head } from '@inertiajs/vue3';
 import MainSidebar from './components/MainSidebar.vue';
 import MainNavbar from './components/MainNavbar.vue';
 import FooterComponent from './components/FooterComponent.vue';
 </script>
 
 <template>
+  <Head title="Grade Helper" />
+  
   <div class="m-3">
     <div class="row g-3">
       <aside class="d-none d-md-block col-4 col-lg-3 col-xxl-2">
