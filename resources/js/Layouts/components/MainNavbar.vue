@@ -1,5 +1,8 @@
 <script setup>
+import { usePage } from '@inertiajs/vue3';
 import LinkList from './LinkList.vue';
+
+const user = usePage().props.auth.user;
 </script>
 
 <template>
@@ -16,7 +19,7 @@ import LinkList from './LinkList.vue';
       </div>
       <div class="d-flex align-items-center">
         <img src="https://ui-avatars.com/api/?name=Some+User" alt="Profile picture" height="40" width="40" class="rounded-circle me-2" />
-        <span class="fs-5 d-none d-md-inline">Some user</span>
+        <span class="fs-5 d-none d-md-inline">{{ user.name }}</span>
       </div>
 
       <!-- Links (for smaller devices) -->
