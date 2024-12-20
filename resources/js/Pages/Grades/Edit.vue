@@ -1,13 +1,16 @@
 <script setup>
-import { useForm } from '@inertiajs/vue3';
+import { useForm, usePage } from '@inertiajs/vue3';
 
-const props = defineProps({ grade: Object })
+const props = defineProps({ grade: Object });
 
-const form = useForm(props.grade)
+const page = usePage();
+const gradeResultOptions = page.props.gradeResultOptions
+
+const form = useForm(props.grade);
 
 const editGrade = (gradeId) => {
-  form.put(`/grades/${gradeId}`)
-}
+  form.put(`/grades/${gradeId}`);
+};
 </script>
 
 <template>
@@ -15,9 +18,14 @@ const editGrade = (gradeId) => {
 
   <form @submit.prevent="editGrade(grade.id)">
     <div class="mb-3">
-      <label for="score" class="form-label">Score</label>
-      <input type="number" class="form-control" id="score" v-model="form.score">
-      <span v-if="form.errors.score" class="text-danger">{{ form.errors.score }}</span>
+      <label for="score" class="visually-hidden">Result</label>
+      <div class="form-check" v-for="option in gradeResultOptions">
+        <input class="form-check-input" type="radio" name="result" :id="`result-${option}`" v-model="form.result"
+          :value="option">
+        <label class="form-check-label" :for="`result-${option}`">
+          {{ option }}
+        </label>
+      </div>
     </div>
 
     <div class="mb-3">

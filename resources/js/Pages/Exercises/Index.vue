@@ -1,8 +1,11 @@
 <script setup>
-import { Link, router } from '@inertiajs/vue3';
+import { Link, router, usePage } from '@inertiajs/vue3';
 import CreateExerciseForm from './components/CreateExerciseForm.vue';
 
 defineProps({ exercises: [Object] });
+
+const page = usePage();
+const isAdmin = page.props.auth.isAdmin;
 
 const deleteExercise = (id) => {
   if (confirm('Are you sure you want to delete this exercise?')) {
@@ -14,7 +17,7 @@ const deleteExercise = (id) => {
 <template>
   <h1 class="h2">Exercises</h1>
 
-  <details class="my-3">
+  <details v-if="isAdmin" class="my-3">
     <summary role="button" class="btn btn-primary text-white">
       <span><i class="ri-add-line"></i>Add new Exercise</span>
     </summary>
@@ -31,7 +34,7 @@ const deleteExercise = (id) => {
         </p>
       </div>
 
-      <div class="btn-group text-end my-auto">
+      <div v-if="isAdmin" class="btn-group text-end my-auto">
         <Link :href="`/exercises/${exercise.id}/edit`" class="btn btn-outline-warning">
           <i class="ri ri-pencil-line"></i>
         </Link>
