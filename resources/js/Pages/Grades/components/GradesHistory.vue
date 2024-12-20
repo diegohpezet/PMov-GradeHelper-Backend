@@ -1,6 +1,9 @@
 <script setup>
-import { Link, router } from '@inertiajs/vue3';
+import { Link, router, usePage } from '@inertiajs/vue3';
 defineProps({ student: Object, exercise: Object })
+
+const page = usePage();
+const isAdmin = page.props.auth.isAdmin;
 
 function getGradesForExercise(student, exercise) {
   if (!student || !exercise) return [];
@@ -26,7 +29,7 @@ function deleteGrade(gradeId) {
           {{ new Date(grade.created_at).toLocaleString() }} | {{ grade.result }} | {{ grade.comment }}
         </p>
 
-        <div>
+        <div v-if="isAdmin">
           <button class="btn btn-sm btn-outline-danger" @click="deleteGrade(grade.id)">
             <i class="ri ri-delete-bin-line"></i>
           </button>

@@ -4,11 +4,15 @@ import { filterStudents, filterExercises } from './utils/filters';
 import CheckOnlineStatus from './components/CheckOnlineStatus.vue';
 import CreateGradeForm from './components/CreateGradeForm.vue';
 import GradesHistory from './components/GradesHistory.vue';
+import { usePage } from '@inertiajs/vue3';
 
 const props = defineProps({
     students: [Object],
     exercises: [Object],
 });
+
+const page = usePage();
+const isAdmin = page.props.auth.isAdmin;
 
 // Filter functionality
 const selectedExercise = ref(null);
@@ -49,7 +53,7 @@ const setGradeFormValues = (student, exercise) => {
 
 <template>
   <h1 class="h2">Grades</h1>
-  <CreateGradeForm :student="studentToGrade" :exercise="exerciseToGrade" />
+  <CreateGradeForm v-if="isAdmin" :student="studentToGrade" :exercise="exerciseToGrade" />
   <GradesHistory :student="studentToGrade" :exercise="exerciseToGrade" />
   
   <table class="table table-striped border">
