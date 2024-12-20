@@ -35,7 +35,7 @@ class HandleInertiaRequests extends Middleware
             'courses' => Course::all(),
             'auth' => [
                 'user' => $request->user(),
-                'isAdmin' => $request->user()->isAdmin()
+                'isAdmin' => $request->user() && $request->user()->isAdmin()
             ],
         ];
     }
