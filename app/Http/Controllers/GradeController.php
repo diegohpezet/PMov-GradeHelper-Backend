@@ -49,7 +49,6 @@ class GradeController extends Controller
         return Inertia::render('Grades/Index', [
             'exercises' => $exercises,
             'students' => $tableData,
-            'gradeResultOptions' => GradeResult::values(),
         ]);
     }
 

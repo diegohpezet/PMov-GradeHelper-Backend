@@ -8,7 +8,6 @@ import GradesHistory from './components/GradesHistory.vue';
 const props = defineProps({
     students: [Object],
     exercises: [Object],
-    gradeResultOptions: [String],
 });
 
 // Filter functionality
@@ -50,7 +49,7 @@ const setGradeFormValues = (student, exercise) => {
 
 <template>
   <h1 class="h2">Grades</h1>
-  <CreateGradeForm :student="studentToGrade" :exercise="exerciseToGrade" :grade-result-options="gradeResultOptions" />
+  <CreateGradeForm :student="studentToGrade" :exercise="exerciseToGrade" />
   <GradesHistory :student="studentToGrade" :exercise="exerciseToGrade" />
   
   <table class="table table-striped border">
