@@ -18,13 +18,13 @@ Route::get('/', function (Request $request) {
 Route::middleware('auth')->group(function () {
     Route::resource('courses', CourseController::class)->except(['store', 'edit', 'update', 'destroy']);
     Route::resource('exercises', ExerciseController::class)->except(['store', 'edit', 'update', 'destroy']);
-    Route::resource('students', StudentController::class);
+    Route::resource('students', StudentController::class)->except(['store', 'edit', 'update', 'destroy']);
     Route::resource('grades', GradeController::class);
 
     Route::middleware('admin')->group(function () {
         Route::resource('courses', CourseController::class)->only(['store', 'edit', 'update', 'destroy']);
         Route::resource('exercises', ExerciseController::class)->only(['store', 'edit', 'update', 'destroy']);
-        Route::resource('students', StudentController::class);
+        Route::resource('students', StudentController::class)->only(['store', 'edit', 'update', 'destroy']);
         Route::resource('grades', GradeController::class);
     });
 });
