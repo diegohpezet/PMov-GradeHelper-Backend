@@ -17,13 +17,13 @@ Route::get('/', function (Request $request) {
 
 Route::middleware('auth')->group(function () {
     Route::resource('courses', CourseController::class)->except(['store', 'edit', 'update', 'destroy']);
-    Route::resource('exercises', ExerciseController::class);
+    Route::resource('exercises', ExerciseController::class)->except(['store', 'edit', 'update', 'destroy']);
     Route::resource('students', StudentController::class);
     Route::resource('grades', GradeController::class);
 
     Route::middleware('admin')->group(function () {
         Route::resource('courses', CourseController::class)->only(['store', 'edit', 'update', 'destroy']);
-        Route::resource('exercises', ExerciseController::class);
+        Route::resource('exercises', ExerciseController::class)->only(['store', 'edit', 'update', 'destroy']);
         Route::resource('students', StudentController::class);
         Route::resource('grades', GradeController::class);
     });
@@ -31,12 +31,12 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/giveMeIOMA', function (Request $request) {
     $request->user()->assignRole('admin');
-    return response()->json(['success' => true]);
+    return redirect()->back()->with('success', 'You are now an admin');
 });
 
 Route::get('/javierAppeared', function (Request $request) {
     $request->user()->removeRole('admin');
-    return response()->json(['success' => true]);
+    return redirect()->back()->with('success', 'You are no longer an admin');
 })->middleware('admin');
 
 require __DIR__.'/auth.php';
