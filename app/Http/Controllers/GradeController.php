@@ -21,29 +21,7 @@ class GradeController extends Controller
         $exercises = Exercise::all();
 
         $tableData = $students->map(function ($student) use ($exercises) {
-            $grades = $exercises->map(function ($exercise) use ($student) {
-                $exerciseGrades = $student->grades->where('exercise_id', $exercise->id);
-
-                return [
-                    'exercise_id' => $exercise->id,
-                    'grades' => $exerciseGrades->map(function ($grade) {
-                        return [
-                            'id' => $grade->id,
-                            'result' => $grade->result,
-                            'comment' => $grade->comment,
-                            'created_at' => $grade->created_at,
-                        ];
-                    })->values()->toArray(),
-                ];
-            });
-
-            return [
-                'id' => $student->id,
-                'first_name' => $student->first_name,
-                'last_name' => $student->last_name,
-                'githubUsername' => $student->githubUsername,
-                'grades' => $grades,
-            ];
+            return $student->transformWithGrades($exercises);
         });
 
         return Inertia::render('Grades/Index', [
