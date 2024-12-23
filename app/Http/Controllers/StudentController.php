@@ -37,8 +37,12 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
+        $studentCourse = $student->course;
+        $exercises = $studentCourse->exercises->sortBy('name');
+
         return Inertia::render('Students/Show', [
-            'student' => $student
+            'student' => $student->transformWithGrades($exercises),
+            'exercises' => $exercises
         ]);
     }
 
