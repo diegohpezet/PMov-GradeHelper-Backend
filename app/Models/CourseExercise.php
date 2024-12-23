@@ -9,4 +9,11 @@ class CourseExercise extends Pivot
 {
     use HasUuids;
     public $timestamps = true;
+
+    protected function casts(): array
+    {
+        return [
+            'due_at' => 'datetime',
+        ];
+    }
 }

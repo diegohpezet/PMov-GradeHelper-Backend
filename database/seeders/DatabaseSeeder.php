@@ -25,9 +25,19 @@ class DatabaseSeeder extends Seeder
             ->recycle($courses)
             ->create();
 
-        $exercises = Exercise::factory(5)
-            ->hasAttached($courses)
+        $exercises = Exercise::factory()
+            ->count(3)
             ->create();
+
+        $exercises->each(function (Exercise $exercise) use ($courses) {
+            // select 2 courses to attach each exercise
+            $courses->random(2)->each(function (Course $course) use ($exercise) {
+                $exercise->courses()
+                    ->attach($course, [
+                        'due_at' => $this::getRandomFutureDate(),
+                    ]);
+            });
+        });
 
         $students->each(function (Student $student) {
             Grade::factory(3)
@@ -37,5 +47,13 @@ class DatabaseSeeder extends Seeder
         });
 
         $this->call(RoleSeeder::class);
+    }
+
+    private static function getRandomFutureDate($min = 7, $max = 60): \Illuminate\Support\Carbon
+    {
+        $randomDays = fake()->numberBetween($min, $max);
+        $randomDueDate = now()->add($randomDays, 'day');
+        logger([$randomDays, $randomDueDate]);
+        return $randomDueDate;
     }
 }
