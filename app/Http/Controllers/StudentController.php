@@ -35,8 +35,12 @@ class StudentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Student $student)
+    public function show($studentParam)
     {
+        $student = Student::where('id', $studentParam)
+        ->orWhere('githubUsername', $studentParam)
+        ->firstOrFail();
+
         $studentCourse = $student->course;
         $exercises = $studentCourse->exercises->sortBy('name');
 
