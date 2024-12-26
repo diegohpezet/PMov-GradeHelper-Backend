@@ -1,54 +1,30 @@
 <?php
 
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\ExerciseController;
-use App\Http\Controllers\CourseController;
-use App\Http\Controllers\GradeController;
-use App\Http\Controllers\StudentController;
-use Illuminate\Http\Request;
+use App\Models\Student;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\GithubAuthController;
 
-Route::middleware(['auth:sanctum'])->group(function () {
-    Route::apiResource('users', UserController::class);
-    Route::apiResource('courses', CourseController::class)->except(['store', 'update', 'destroy']);
-    Route::apiResource('exercises', ExerciseController::class)->except(['store', 'update', 'destroy']);
-    Route::apiResource('grades', GradeController::class)->except(['store', 'update', 'destroy']);
-    Route::apiResource('students', StudentController::class)->except(['store', 'update', 'destroy']);
+Route::get('/users', function () {
+    $users = User::all();
 
-    // Additional routes for courses
-    Route::get('courses/{course}/students', [CourseController::class, 'courseStudents']);
-
-    Route::middleware(['admin'])->group(function () {
-        Route::apiResource('courses', CourseController::class)->only(['store', 'update', 'destroy']);
-        Route::apiResource('exercises', ExerciseController::class)->only(['store', 'update', 'destroy']);
-        Route::apiResource('grades', GradeController::class)->only(['store', 'update', 'destroy']);
-        Route::apiResource('students', StudentController::class)->only(['store', 'update', 'destroy']);
-    });
+    return response()->json($users);
 });
 
-// Additional routes for grades
-Route::get('grades/student/{student}', [GradeController::class, 'gradesByStudent']);
-Route::get('grades/exercise/{exercise}', [GradeController::class, 'gradesByExercise']);
-Route::get('grades/student/{student}/exercise/{exercise}', [GradeController::class, 'gradesByStudentAndExercise']);
+Route::put('/students/{student}/users/{user}', function (Student $student, User $user) {
+    $student->user_id = $user->id;
+    $student->save();
 
-// God mode
-Route::middleware(['auth:sanctum'])->get('giveMePower', function (Request $request) {
-    $request->user()->assignRole('admin');
-    return response()->json(['success' => true]);
-});
-// Disable god mode
-Route::middleware(['auth:sanctum'])->get('iGotFired', function (Request $request) {
-    $request->user()->removeRole('admin');
-    return response()->json(['success' => true]);
+    return response()->json($student);
 });
 
-// Additional routes for grades
-Route::get('grades/student/{student}', [GradeController::class, 'gradesByStudent']);
-Route::get('grades/exercise/{exercise}', [GradeController::class, 'gradesByExercise']);
-Route::get('grades/student/{student}/exercise/{exercise}', [GradeController::class, 'gradesByStudentAndExercise']);
+Route::delete('/students/{student}/users/{user}', function (Student $student, User $user) {
+    if ($student->user_id !== $user->id) {
+        return response()->json(['error' => 'Student does not have the specified user'], 400);
+    }
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+    $student->user_id = null;
+    $student->save();
+
+    return response()->json($student);
+});
