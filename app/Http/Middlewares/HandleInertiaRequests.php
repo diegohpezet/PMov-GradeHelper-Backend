@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Http\Middlewares;
 
+use App\Enums\Enums\GradeResult;
 use App\Models\Course;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -33,8 +34,10 @@ class HandleInertiaRequests extends Middleware
         return [
             ...parent::share($request),
             'courses' => Course::all(),
+            'gradeResultOptions' => GradeResult::values(),
             'auth' => [
                 'user' => $request->user(),
+                'isAdmin' => $request->user() && $request->user()->isAdmin()
             ],
         ];
     }

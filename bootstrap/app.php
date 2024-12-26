@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Middleware\HandleInertiaRequests;
+use App\Http\Middlewares\HandleInertiaRequests;
 use App\Http\Middlewares\CheckAdmin;
 use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
 use Illuminate\Foundation\Application;

@@ -1,12 +1,14 @@
 <script setup>
 import { watchEffect } from 'vue';
-import { useForm } from '@inertiajs/vue3';
+import { useForm, usePage } from '@inertiajs/vue3';
 
 const props = defineProps({
   student: Object,
   exercise: Object,
-  gradeResultOptions: [String],
 });
+
+const page = usePage()
+const gradeResultOptions = page.props.gradeResultOptions
 
 const form = useForm({
   student_id: props.student?.id || '',

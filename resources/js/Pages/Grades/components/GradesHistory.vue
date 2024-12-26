@@ -1,6 +1,9 @@
 <script setup>
-import { Link, router } from '@inertiajs/vue3';
+import { Link, router, usePage } from '@inertiajs/vue3';
 defineProps({ student: Object, exercise: Object })
+
+const page = usePage();
+const isAdmin = page.props.auth.isAdmin;
 
 function getGradesForExercise(student, exercise) {
   if (!student || !exercise) return [];
@@ -20,12 +23,19 @@ function deleteGrade(gradeId) {
       <span>History</span>
     </summary>
     <ul>
-      <li v-for="grade in getGradesForExercise(student, exercise)" :key="grade.created_at">
-        {{ new Date(grade.created_at).toLocaleString() }} | {{ grade.score }} | {{ grade.comment }}
-        <Link :href="`/grades/${grade.id}/edit`" class="btn btn-sm btn-outline-warning me-2"><i class="ri ri-pencil-line"></i></Link>
-        <button class="btn btn-sm btn-outline-danger" @click="deleteGrade(grade.id)">
-          <i class="ri ri-delete-bin-line"></i>
-        </button>
+      <li v-for="grade in getGradesForExercise(student, exercise)" :key="grade.created_at"
+        class="d-flex justify-content-between">
+        <p>
+          {{ new Date(grade.created_at).toLocaleString() }} | {{ grade.result }} | {{ grade.comment }}
+        </p>
+
+        <div v-if="isAdmin">
+          <button class="btn btn-sm btn-outline-danger" @click="deleteGrade(grade.id)">
+            <i class="ri ri-delete-bin-line"></i>
+          </button>
+          <Link :href="`/grades/${grade.id}/edit`" class="btn btn-sm btn-outline-warning me-2"><i
+            class="ri ri-pencil-line"></i></Link>
+        </div>
       </li>
     </ul>
   </details>

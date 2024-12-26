@@ -1,8 +1,11 @@
 <script setup>
-import { Link, router } from '@inertiajs/vue3';
+import { Link, router, usePage } from '@inertiajs/vue3';
 import CreateStudentForm from './components/CreateStudentForm.vue';
 
 const props = defineProps({ students: [Object] });
+
+const page = usePage();
+const isAdmin = page.props.auth.isAdmin;
 
 const deleteStudent = (id) => {
   if (confirm('Are you sure you want to delete this student?')) {
@@ -14,7 +17,7 @@ const deleteStudent = (id) => {
 <template>
   <h1 class="h2">Students</h1>
 
-  <details class="my-3">
+  <details v-if="isAdmin" class="my-3">
     <summary role="button" class="btn btn-primary text-white">
       <span><i class="ri-add-line"></i>Add new Student</span>
     </summary>
@@ -30,7 +33,7 @@ const deleteStudent = (id) => {
         </p>
       </div>
 
-      <div class="btn-group text-end my-auto">
+      <div v-if="isAdmin" class="btn-group text-end my-auto">
         <Link :href="`/students/${student.id}/edit`" class="btn btn-outline-warning">
           <i class="ri ri-pencil-line"></i>
         </Link>

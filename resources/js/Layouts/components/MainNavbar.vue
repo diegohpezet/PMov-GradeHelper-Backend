@@ -2,7 +2,10 @@
 import { usePage } from '@inertiajs/vue3';
 import LinkList from './LinkList.vue';
 
-const user = usePage().props.auth.user;
+const page = usePage();
+const user = page.props.auth.user;
+const isAdmin = page.props.auth.isAdmin;
+
 </script>
 
 <template>
@@ -18,7 +21,8 @@ const user = usePage().props.auth.user;
         <h2 class="fs-4 m-0">Dashboard</h2>
       </div>
       <div class="d-flex align-items-center">
-        <img src="https://ui-avatars.com/api/?name=Some+User" alt="Profile picture" height="40" width="40" class="rounded-circle me-2" />
+        <i v-if="isAdmin" class="ri-presentation-fill fs-4 me-2"></i>
+        <i v-else class="ri-graduation-cap-line fs-4 me-2"></i>
         <span class="fs-5 d-none d-md-inline">{{ user.name }}</span>
       </div>
 
