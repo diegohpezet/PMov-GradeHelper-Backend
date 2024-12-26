@@ -15,6 +15,9 @@ return new class extends Migration
             $table->uuid('id');
             $table->foreignUuid('course_id');
             $table->foreignUuid('exercise_id');
+
+            $table->timestamp('due_at')->nullable();
+
             $table->timestamps();
         });
     }

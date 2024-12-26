@@ -33,7 +33,8 @@ const sortedCourseExercises = props.course.exercises.sort((a, b) => a.title.loca
       <h2 class="mb-3">Exercises</h2>
       <ul class="list-group">
         <li v-for="exercise in sortedCourseExercises" :key="exercise.id" class="list-group-item">
-          {{ exercise.title }}
+          <span class="lead me-3">{{  exercise.title }}</span>
+          <span class="text-muted">Due Date {{ (new Date(exercise.pivot.due_at)).toLocaleString() }}</span>
         </li>
       </ul>
     </div>

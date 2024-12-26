@@ -20,6 +20,7 @@ class Exercise extends Model
     public function courses(): BelongsToMany
     {
         return $this->belongsToMany(Course::class)
+            ->withPivot('due_at')
             ->withTimestamps()
             ->using(CourseExercise::class);
     }
