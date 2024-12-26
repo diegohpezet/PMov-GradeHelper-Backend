@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Http\Middlewares;
 
 use App\Enums\Enums\GradeResult;
 use App\Models\Course;

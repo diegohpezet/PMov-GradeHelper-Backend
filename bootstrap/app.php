@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Middleware\HandleInertiaRequests;
+use App\Http\Middlewares\HandleInertiaRequests;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use App\Http\Middleware\CheckAdmin;
+use App\Http\Middlewares\CheckAdmin;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
