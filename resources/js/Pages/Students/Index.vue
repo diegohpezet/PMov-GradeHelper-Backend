@@ -7,6 +7,8 @@ import BaseModal from '../../Layouts/components/BaseModal.vue';
 
 const props = defineProps({ students: [Object] });
 
+const sortedStudents = props.students.sort((a, b) => a.last_name.localeCompare(b.last_name));
+
 const page = usePage();
 const isAdmin = page.props.auth.isAdmin;
 
@@ -36,7 +38,7 @@ const openLinkModal = (student) => {
   </details>
 
   <ul class="list-group">
-    <li v-for="student in students" :key="student.id" class="list-group-item d-flex justify-content-between">
+    <li v-for="student in sortedStudents" :key="student.id" class="list-group-item d-flex justify-content-between">
       <div>
         <h2 class="card-title fs-4">
           <Link :href="`/students/${student.id}`" class="text-decoration-none text-dark">
