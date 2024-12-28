@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('githubUsername')->nullable()->unique();
             
-            $table->foreignUuid('user_id')->nullable()->constrained();
+            $table->foreignUuid('user_id')->nullable()->unique()->constrained();
             $table->foreignUuid('course_id')->constrained();
             $table->timestamps();
         });
