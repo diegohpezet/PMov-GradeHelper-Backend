@@ -1,7 +1,6 @@
 <script setup>
 import { useForm, usePage } from '@inertiajs/vue3';
 
-
 const form = useForm({
   first_name: '',
   last_name: '',
@@ -12,6 +11,14 @@ const form = useForm({
 // Get courses information
 const page = usePage()
 const courses = page.props.courses
+
+// Get current course if on the course page
+const courseUrlParam = page.url.split('/')[2]
+const currentCourse = courses.find(course => course.id === courseUrlParam)
+
+if (currentCourse) {
+  form.course_id = currentCourse.id
+}
 
 function submit() {
   form.post('/students', {
