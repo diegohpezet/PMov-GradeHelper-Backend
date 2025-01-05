@@ -31,10 +31,18 @@ const loadUserList = async () => {
 
 const toggleUserLink = async (user) => {
   const method = linkedUser.value === user.id ? 'DELETE' : 'PUT';
-  const response = await fetch(`/api/students/${props.student.id}/users/${user.id}`, { method });
+  const response = await fetch(`/api/students/${props.student.id}/users/${user.id}`, { 
+    method,
+    credentials: 'include',
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest',
+      'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content
+    }
+  });
 
   if (!response.ok) {
     console.error('Failed to link user');
+    return;
   }
 
   linkedUser.value = method === 'PUT' ? user.id : null;
