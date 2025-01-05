@@ -25,7 +25,9 @@ const deleteCourse = (id) => {
     <CreateCourseForm />
   </details>
 
-  <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 mt-3 g-3">
+  <p v-if="courses.length == 0" class="text-muted">There are no courses to show...</p>
+
+  <div v-else class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 mt-3 g-3">
     <div class="col" v-for="course in courses" :key="course.id">
       <div class="card h-100">
         <div class="card-body row">
