@@ -35,4 +35,26 @@ class Student extends Model
     {
         return $this->hasMany(Grade::class);
     }
+
+    public function transformWithGrades($exercises)
+    {
+        return [
+            'id' => $this->id,
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+            'githubUsername' => $this->githubUsername,
+            'grades' => $exercises->map(fn($exercise) => $this->transformExerciseGrades($exercise))
+        ];
+    }
+
+    private function transformExerciseGrades($exercise)
+    {
+        return [
+            'exercise_id' => $exercise->id,
+            'grades' => $this->grades
+                ->where('exercise_id', $exercise->id)
+                ->map->toArray()
+                ->values(),
+        ];
+    }
 }
