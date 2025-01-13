@@ -15,7 +15,7 @@ class ExerciseController extends Controller
     public function index()
     {
         $exercises = Exercise::with('courses')->get();
-        
+
         return Inertia::render('Exercises/Index', [
             'exercises' => $exercises
         ]);
@@ -44,7 +44,8 @@ class ExerciseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Exercise $exercise) {
+    public function edit(Exercise $exercise)
+    {
         return Inertia::render('Exercises/Edit', [
             'exercise' => $exercise->load('courses')
         ]);
@@ -60,7 +61,12 @@ class ExerciseController extends Controller
             'path' => $request->input('path'),
         ]);
 
-        $exercise->courses()->sync($request->input('courses', []));
+        $coursesData = [];
+        foreach ($request->input('courses', []) as $course) {
+            $coursesData[$course['course_id']] = ['due_at' => $course['due_at']];
+        }
+
+        $exercise->courses()->sync($coursesData);
 
         return redirect()->route('exercises.index')->with('success', 'Exercise updated successfully');
     }
