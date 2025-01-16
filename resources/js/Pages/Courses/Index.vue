@@ -21,11 +21,15 @@ const isAdmin = computed(() => page.props.auth.isAdmin);
     <CreateCourseForm />
   </details>
 
-  <div class="">
-    <CourseItemCard 
+  <div class="row g-2 mt-2">
+    <div
+      class="col-6"
       v-for="course in courses" 
       :key="course.id"
-      :course="course"
-    />
+    >
+      <CourseItemCard 
+        :course="course"
+      />
+    </div>
   </div>
 </template>
