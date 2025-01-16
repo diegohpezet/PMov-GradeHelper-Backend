@@ -6,7 +6,7 @@ const page = usePage();
 const isAdmin = computed(() => page.props.auth.isAdmin);
 
 const props = defineProps({ 
-  course: [Object] 
+  course: Object,
 });
 
 const deleteCourse = (id) => {
