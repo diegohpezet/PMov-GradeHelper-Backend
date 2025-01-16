@@ -28,17 +28,17 @@ const deleteCourse = (id) => {
           <div class="btn-group">
             <Link
               class="btn btn-outline-secondary" 
+              title="Edit Course"
               :href="`/courses/${course.id}/edit`"
             >
               <i class="ri ri-pencil-line"></i>
-              <span class="visually-hidden">Edit course</span>
             </Link>
             <button
               class="btn btn-outline-danger" 
+              title="Delete Course"
               @click="deleteCourse(course.id)"
             >
               <i class="ri ri-delete-bin-line"></i>
-              <span class="visually-hidden">Delete course</span>
             </button>
           </div>
         </div>
