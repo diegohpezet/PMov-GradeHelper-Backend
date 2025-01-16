@@ -23,7 +23,7 @@ const isAdmin = computed(() => page.props.auth.isAdmin);
 
   <div class="row g-2 mt-2">
     <div
-      class="col-6"
+      class="col-12 col-lg-6"
       v-for="course in courses" 
       :key="course.id"
     >
