@@ -24,7 +24,7 @@ const deleteCourse = (id) => {
           <Link :href="`/courses/${course.id}`" class="card-title fs-4 stretched-link">{{ course.name }}</Link>
           <p class="card-text text-muted">{{ course.school_year }}</p>        
         </div>
-        <div class="col-auto">
+        <div v-if="isAdmin" class="col-auto">
           <div class="btn-group">
             <Link
               class="btn btn-outline-secondary" 
