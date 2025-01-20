@@ -1,5 +1,6 @@
 <script setup>
 import StudentsList from '../Students/Index.vue';
+import AttendanceIndex from '../Attendance/Index.vue';
 
 const props = defineProps({ course: Object })
 
@@ -21,6 +22,10 @@ const sortedCourseExercises = props.course.exercises.sort((a, b) => a.title.loca
     <li class="nav-item" role="presentation">
       <button class="nav-link" id="grades-tab" data-bs-toggle="tab" data-bs-target="#grades-tab-pane" type="button"
         role="tab" aria-controls="grades-tab-pane" aria-selected="false">Grades</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="attendance-tab" data-bs-toggle="tab" data-bs-target="#attendance-tab-pane" type="button"
+        role="tab" aria-controls="attendance-tab-pane" aria-selected="false">Attendance</button>
     </li>
   </ul>
 
@@ -44,6 +49,10 @@ const sortedCourseExercises = props.course.exercises.sort((a, b) => a.title.loca
       <h2>Grades</h2>
       <!-- <GradesStudentsMatrix :course_id="course.id" /> -->
       <!-- Course id is intended to be passed to the GradesStudentsMatrix component -->
+    </div>
+
+    <div class="tab-pane fade" id="attendance-tab-pane" role="tabpanel" aria-labelledby="attendance-tab" tabindex="0">
+      <AttendanceIndex :students="course.students" :attendances="course.attendances"/>
     </div>
   </div>
 </template>
