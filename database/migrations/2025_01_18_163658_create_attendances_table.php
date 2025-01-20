@@ -12,10 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('attendances', function (Blueprint $table) {
-            $table->id();
             $table->foreignUuid('student_id')->constrained()->onDelete('cascade');
             $table->foreignUuid('course_id')->constrained()->onDelete('cascade');
             $table->date('date');
+
+            // Composite primary key: A student can only attend a course once per day
+            $table->primary(['student_id', 'course_id', 'date']);
             $table->timestamps();
         });
     }
