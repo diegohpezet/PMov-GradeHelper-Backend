@@ -50,7 +50,7 @@ const updateAttendance = (student_id, date, isNowChecked) => {
     },
     body: JSON.stringify({
       student_id,
-      course_id: '9dfc4179-cf9d-4e61-802e-91f000787980',
+      course_id: page.props.course.id,
       date: date.toISOString().slice(0, 10)
     })
   });
