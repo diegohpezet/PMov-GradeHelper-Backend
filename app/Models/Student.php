@@ -36,6 +36,11 @@ class Student extends Model
         return $this->hasMany(Grade::class);
     }
 
+    public function attendances(): HasManyThrough
+    {
+        return $this->hasManyThrough(Attendance::class, Course::class);
+    }
+
     public function transformWithGrades($exercises)
     {
         return [
