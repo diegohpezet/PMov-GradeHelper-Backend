@@ -83,7 +83,7 @@ const updateAttendance = (student_id, date, isNowChecked) => {
         <td class="text-center">0%</td>
         <td class="text-center" v-for="date in sortedDates">
           <input type="checkbox" class="form-check-input" :checked="isStudentPresent(student.id, date)"
-            @change="updateAttendance(student.id, date, $event.target.checked)">
+            :disabled="!isAdmin" @change="updateAttendance(student.id, date, $event.target.checked)">
         </td>
       </tr>
     </tbody>
