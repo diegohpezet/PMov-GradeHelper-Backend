@@ -21,7 +21,7 @@ class CourseController extends Controller
             $courses = Course::all();
         }
 
-        if ($user->student->course_id) {
+        if ($user->student && $user->student->course_id) {
             $courses = [Course::where('id', $user->student->course_id)->first()];
         }
 
