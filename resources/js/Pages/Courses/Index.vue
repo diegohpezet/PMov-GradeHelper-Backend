@@ -21,7 +21,9 @@ const isAdmin = computed(() => page.props.auth.isAdmin);
     <CreateCourseForm />
   </details>
 
-  <div class="row g-2 mt-2">
+  <p v-if="!courses.length" class="text-muted">There are no courses to show...</p>
+  
+  <div v-else class="row g-2 mt-2">
     <div
       class="col-12 col-lg-6"
       v-for="course in courses" 

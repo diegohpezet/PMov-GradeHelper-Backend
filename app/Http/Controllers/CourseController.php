@@ -14,7 +14,16 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::all();
+        $user = request()->user()->load('student');
+
+        $courses = [];
+        if ($user->isAdmin()) {
+            $courses = Course::all();
+        }
+
+        if ($user->student && $user->student->course_id) {
+            $courses = [Course::where('id', $user->student->course_id)->first()];
+        }
 
         return Inertia::render('Courses/Index', [
             'courses' => $courses

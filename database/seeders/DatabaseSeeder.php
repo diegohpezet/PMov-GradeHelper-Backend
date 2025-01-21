@@ -47,6 +47,18 @@ class DatabaseSeeder extends Seeder
         });
 
         $this->call(RoleSeeder::class);
+
+        // creates a new user and relates it to a student
+        $studentUser = User::factory()->create([
+            'email' => 'student@example.com',
+        ]);
+        $studentUser->student()->save($students->random());
+
+        // creates a new admin user and assign role
+        $adminUser = User::factory()->create([
+            'email' => 'admin@example.com',
+        ]);
+        $adminUser->assignRole('admin');
     }
 
     private static function getRandomFutureDate($min = 7, $max = 60): \Illuminate\Support\Carbon

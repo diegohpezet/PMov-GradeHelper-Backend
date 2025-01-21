@@ -18,9 +18,9 @@ Route::get('/', function (Request $request) {
 
 Route::middleware('auth')->group(function () {
     Route::resource('courses', CourseController::class)->except(['store', 'edit', 'update', 'destroy']);
-    Route::resource('exercises', ExerciseController::class)->except(['store', 'edit', 'update', 'destroy']);
-    Route::resource('students', StudentController::class)->except(['store', 'edit', 'update', 'destroy']);
-    Route::resource('grades', GradeController::class)->except(['store', 'edit', 'update', 'destroy']);
+    Route::resource('exercises', ExerciseController::class)->except(['index','store', 'edit', 'update', 'destroy']);
+    Route::resource('students', StudentController::class)->except(['index', 'store', 'edit', 'update', 'destroy']);
+    Route::resource('grades', GradeController::class)->except(['index', 'store', 'edit', 'update', 'destroy']);
 
     Route::middleware('admin')->group(function () {
         Route::resource('courses', CourseController::class)->only(['store', 'edit', 'update', 'destroy']);
