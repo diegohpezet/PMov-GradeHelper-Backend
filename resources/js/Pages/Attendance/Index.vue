@@ -1,6 +1,7 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { usePage } from '@inertiajs/vue3';
+import AttendanceRow from './components/AttendanceRow.vue';
 
 const props = defineProps({ students: [Object], attendances: [Object] });
 
@@ -12,30 +13,28 @@ const error = ref('');
 const sortedStudents = props.students.sort((a, b) => a.last_name.localeCompare(b.last_name));
 const sortedDates = ref(
   props.attendances
-    .map(attendance => new Date(attendance.date))
-    .filter((date, index, self) => self.findIndex(d => d.getTime() === date.getTime()) === index)
+    .map((attendance) => new Date(attendance.date))
+    .filter(
+      (date, index, self) => self.findIndex((d) => d.getTime() === date.getTime()) === index
+    )
     .sort((a, b) => a.getTime() - b.getTime())
 );
 
-const formatDate = (date) => date.toISOString().slice(0, 10).split('-').slice(1).reverse().join('-');
-
-const isStudentPresent = (student_id, date) => {
-  return Boolean(props.attendances.find(attendance => attendance.date === date.toISOString().slice(0, 10) && attendance.student_id === student_id));
-};
+const formatDate = (date) =>
+  date.toISOString().slice(0, 10).split('-').slice(1).reverse().join('-');
 
 const createAttendanceDate = () => {
-  // DD-MM
   const today = new Date();
   const todayString = today.toISOString().slice(0, 10);
 
-  if (sortedDates.value.find(date => date.toISOString().slice(0, 10) === todayString)) {
-    return error.value = 'You already took attendance today';
+  if (sortedDates.value.find((date) => date.toISOString().slice(0, 10) === todayString)) {
+    return (error.value = 'You already took attendance today');
   }
 
   sortedDates.value.push(today);
 };
 
-const updateAttendance = (student_id, date, isNowChecked) => {
+const updateAttendance = ({ studentId, date, isNowChecked }) => {
   const method = isNowChecked ? 'POST' : 'DELETE';
 
   fetch(`/attendances`, {
@@ -44,17 +43,31 @@ const updateAttendance = (student_id, date, isNowChecked) => {
     headers: {
       'X-Requested-With': 'XMLHttpRequest',
       'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      student_id,
+      student_id: studentId,
       course_id: page.props.course.id,
-      date: date.toISOString().slice(0, 10)
-    })
+      date: date.toISOString().slice(0, 10),
+    }),
+  }).then(() => {
+    if (isNowChecked) {
+      props.attendances.push({
+        student_id: studentId,
+        course_id: page.props.course.id,
+        date: date.toISOString().slice(0, 10),
+      });
+    } else {
+      const index = props.attendances.findIndex(
+        (attendance) =>
+          attendance.student_id === studentId &&
+          attendance.date === date.toISOString().slice(0, 10)
+      );
+      if (index > -1) props.attendances.splice(index, 1);
+    }
   });
 };
 </script>
-
 
 <template>
   <h1 class="h2">Attendance</h1>
@@ -72,18 +85,20 @@ const updateAttendance = (student_id, date, isNowChecked) => {
       <tr>
         <th scope="col">Student</th>
         <th scope="col" class="hoverable text-center">Total</th>
-        <th scope="col" class="hoverable text-center" v-for="date in sortedDates">{{ formatDate(date) }}</th>
+        <th scope="col" class="hoverable text-center" v-for="date in sortedDates" :key="date">
+          {{ formatDate(date) }}
+        </th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="student in sortedStudents" :key="student.id">
-        <td>{{ student.last_name + ' ' + student.first_name }}</td>
-        <td class="text-center">0%</td>
-        <td class="text-center" v-for="date in sortedDates">
-          <input type="checkbox" class="form-check-input" :checked="isStudentPresent(student.id, date)"
-            :disabled="!isAdmin" @change="updateAttendance(student.id, date, $event.target.checked)">
-        </td>
-      </tr>
+      <AttendanceRow
+        v-for="student in sortedStudents"
+        :key="student.id"
+        :student="student"
+        :dates="sortedDates"
+        :attendances="props.attendances"
+        @update-attendance="updateAttendance"
+      />
     </tbody>
   </table>
 </template>
