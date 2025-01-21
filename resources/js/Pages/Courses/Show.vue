@@ -1,4 +1,6 @@
 <script setup>
+import StudentsList from '../Students/Index.vue';
+
 const props = defineProps({ course: Object })
 
 const sortedCourseExercises = props.course.exercises.sort((a, b) => a.title.localeCompare(b.title))
@@ -25,8 +27,7 @@ const sortedCourseExercises = props.course.exercises.sort((a, b) => a.title.loca
   <div class="tab-content p-3" id="courseTabsContent">
     <div class="tab-pane fade show active" id="students-tab-pane" role="tabpanel" aria-labelledby="students-tab"
       tabindex="0">
-      <h2 class="mb-3 ">Students</h2>
-      <!-- <StudentsList :course_id="course.id" /> --><!-- Course id is intended to be passed to the StudentsList component -->
+      <StudentsList :students="course.students" />
     </div>
     
     <div class="tab-pane fade" id="exercises-tab-pane" role="tabpanel" aria-labelledby="exercises-tab" tabindex="0">
