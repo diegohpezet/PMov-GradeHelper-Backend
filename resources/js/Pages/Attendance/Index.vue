@@ -13,10 +13,8 @@ const sortedStudents = props.students.sort((a, b) => a.last_name.localeCompare(b
 const sortedDates = ref(
   props.attendances
     .map(attendance => new Date(attendance.date))
-    .filter((date, index, self) =>
-      self.findIndex(d => d.getTime() === date.getTime()) === index // Filtrar duplicados por timestamp
-    )
-    .sort((a, b) => a.date.localeCompare(b.date))
+    .filter((date, index, self) => self.findIndex(d => d.getTime() === date.getTime()) === index)
+    .sort((a, b) => a.getTime() - b.getTime())
 );
 
 const formatDate = (date) => date.toISOString().slice(0, 10).split('-').slice(1).reverse().join('-');
