@@ -18,6 +18,7 @@ const props = defineProps({
       v-for="exercise in student.course.exercises" 
       :key="exercise.id"
       :exercise="exercise"
+      :studentId="student.id"
     />
   </main>
 </template>
