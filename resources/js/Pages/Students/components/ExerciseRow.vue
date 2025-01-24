@@ -14,7 +14,7 @@ const dateFormatter = new Intl.DateTimeFormat('es-AR', {
 </script>
 
 <template>
-  <div>
+  <div class="mb-3">
     <div class="d-flex mb-2">
       <h2 class="h3">{{ exercise.title }}</h2>
       <button class="btn btn-sm btn-outline-secondary" v-if="!showGradeForm" @click="showGradeForm = true">Add
@@ -54,7 +54,7 @@ const dateFormatter = new Intl.DateTimeFormat('es-AR', {
           }">
             {{ gr.result }}
           </div>
-          <div class="col">{{ gr.comment }}</div>
+          <div class="col text-truncate">{{ gr.comment }}</div>
           <div class="col-auto">{{ dateFormatter.format(new Date(gr.created_at)) }}</div>
         </div>
       </li>
