@@ -57,4 +57,11 @@ class Student extends Model
                 ->values(),
         ];
     }
+
+    public function resolveRouteBinding($value, $field = null)
+    {
+        return $this->where('name', $value)
+            ->orWhere('githubUsername', $value)
+            ->firstOrFail();
+    }
 }
