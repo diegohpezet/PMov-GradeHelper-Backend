@@ -11,9 +11,9 @@ const showGradeForm = ref(false);
 
 <template>
   <div class="mb-3">
-    <div class="d-flex mb-2">
+    <div class="d-flex align-items-center mb-2">
       <h2 class="h3">{{ exercise.title }}</h2>
-      <button class="btn btn-sm btn-outline-secondary" v-if="!showGradeForm" @click="showGradeForm = true">Add
+      <button class="btn btn-sm btn-outline-secondary ms-1" v-if="!showGradeForm" @click="showGradeForm = true">Add
         Grade</button>
     </div>
 
