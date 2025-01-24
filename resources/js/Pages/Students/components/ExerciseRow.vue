@@ -14,7 +14,7 @@ const gradeResultOptions = page.props.gradeResultOptions
 const form = useForm({
   student_id: props.studentId,
   exercise_id: props.exercise?.id,
-  result: false,
+  result: undefined,
   comment: ''
 });
 
