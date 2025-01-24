@@ -33,7 +33,7 @@ const showGradeForm = ref(false);
         </div>
       </div>
       <div class="col">
-          <textarea class="form-control" id="comment" rows="3"></textarea>
+        <textarea class="form-control" id="comment" rows="3"></textarea>
       </div>
       <div class="col-12">
         <button class="btn btn-primary me-3" type="submit">Add Grade</button>
