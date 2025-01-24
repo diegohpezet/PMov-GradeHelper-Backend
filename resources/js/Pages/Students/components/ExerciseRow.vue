@@ -6,6 +6,11 @@ const props = defineProps({
 });
 
 const showGradeForm = ref(false);
+
+const dateFormatter = new Intl.DateTimeFormat('es-AR', {
+    dateStyle: 'short',
+    timeStyle: 'short',
+  })
 </script>
 
 <template>
@@ -50,7 +55,7 @@ const showGradeForm = ref(false);
             {{ gr.result }}
           </div>
           <div class="col">{{ gr.comment }}</div>
-          <div class="col-2">{{ (new Date(gr.created_at)).toLocaleString() }}</div>
+          <div class="col-auto">{{ dateFormatter.format(new Date(gr.created_at)) }}</div>
         </div>
       </li>
     </ul>
