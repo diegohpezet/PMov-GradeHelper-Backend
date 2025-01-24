@@ -21,13 +21,13 @@ const showGradeForm = ref(false);
         <div class="form-check">
           <input class="form-check-input" type="radio" :name="`result-radio-${exercise.id}`" :id="`result-radio-passed-${exercise.id}`">
           <label class="form-check-label" :for="`result-radio-passed-${exercise.id}`">
-            Aprobado
+            Passed
           </label>
         </div>
         <div class="form-check">
           <input class="form-check-input" type="radio" :name="`result-radio-${exercise.id}`" :id="`result-radio-failed-${exercise.id}`">
           <label class="form-check-label" :for="`result-radio-failed-${exercise.id}`">
-            Desaprobado
+            Failed
           </label>
         </div>
       </div>
