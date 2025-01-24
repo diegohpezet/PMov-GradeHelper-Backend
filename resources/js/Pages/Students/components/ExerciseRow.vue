@@ -1,10 +1,14 @@
 <script setup>
 import { ref } from 'vue'
+import { usePage } from '@inertiajs/vue3';
 import GradeRow from './GradeRow.vue';
 
 const props = defineProps({
   exercise: Object,
 });
+
+const page = usePage()
+const gradeResultOptions = page.props.gradeResultOptions
 
 const showGradeForm = ref(false);
 </script>
@@ -19,16 +23,11 @@ const showGradeForm = ref(false);
 
     <form class="mb-3 row g-3 align-items-center" action="" v-if="showGradeForm">
       <div class="col-auto">
-        <div class="form-check">
-          <input class="form-check-input" type="radio" :name="`result-radio-${exercise.id}`" :id="`result-radio-passed-${exercise.id}`">
-          <label class="form-check-label" :for="`result-radio-passed-${exercise.id}`">
-            Passed
-          </label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" :name="`result-radio-${exercise.id}`" :id="`result-radio-failed-${exercise.id}`">
-          <label class="form-check-label" :for="`result-radio-failed-${exercise.id}`">
-            Failed
+        <div class="form-check" v-for="option in gradeResultOptions">
+          <input class="form-check-input" :value="option" type="radio" :name="`result-radio-${exercise.id}`"
+            :id="`result-radio-${option}-${exercise.id}`">
+          <label class="form-check-label" :for="`result-radio-${option}-${exercise.id}`">
+            {{ option }}
           </label>
         </div>
       </div>
