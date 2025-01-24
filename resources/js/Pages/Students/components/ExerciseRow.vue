@@ -7,11 +7,6 @@ const props = defineProps({
 });
 
 const showGradeForm = ref(false);
-
-const dateFormatter = new Intl.DateTimeFormat('es-AR', {
-    dateStyle: 'short',
-    timeStyle: 'short',
-  })
 </script>
 
 <template>
