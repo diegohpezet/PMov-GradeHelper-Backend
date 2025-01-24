@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import GradeRow from './GradeRow.vue';
 
 const props = defineProps({
   exercise: Object,
@@ -47,16 +48,7 @@ const dateFormatter = new Intl.DateTimeFormat('es-AR', {
 
     <ul class="list-group" v-if="exercise.grades.length">
       <li class="list-group-item" v-for="gr in exercise.grades">
-        <div class="row align-items-center">
-          <div class="col-1" :class="{
-            'text-danger': gr.result == 'failed',
-            'text-success': gr.result == 'passed',
-          }">
-            {{ gr.result }}
-          </div>
-          <div class="col text-truncate">{{ gr.comment }}</div>
-          <div class="col-auto">{{ dateFormatter.format(new Date(gr.created_at)) }}</div>
-        </div>
+        <GradeRow :grade="gr" />
       </li>
     </ul>
     <p v-else>No grades for this exercise.</p>
