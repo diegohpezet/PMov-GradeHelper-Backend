@@ -7,7 +7,7 @@ import { Link } from '@inertiajs/vue3';
     <Link 
       class="list-group-item list-group-item-action rounded border-0 mb-1" 
       href="/courses"
-      :class="{ 'active': $page.url === '/courses' }"
+      :class="{ 'active': $page.url.startsWith('/courses') }"
     >
       <i class="ri-file-list-3-line me-2"></i>
       Courses
@@ -16,7 +16,7 @@ import { Link } from '@inertiajs/vue3';
     <Link 
       class="list-group-item list-group-item-action rounded border-0 mb-1" 
       href="/exercises"
-      :class="{ 'active': $page.url === '/exercises' }"
+      :class="{ 'active': $page.url.startsWith('/exercises') }"
     >
       <i class="ri-question-answer-line me-2"></i>
       Exercises
@@ -25,7 +25,7 @@ import { Link } from '@inertiajs/vue3';
     <Link 
       class="list-group-item list-group-item-action rounded border-0 mb-1"
       href="/students"
-      :class="{ 'active': $page.url === '/students' }"
+      :class="{ 'active': $page.url.startsWith('/students') }"
     >
       <i class="ri-graduation-cap-line me-2"></i>
       Students
@@ -34,7 +34,7 @@ import { Link } from '@inertiajs/vue3';
     <Link 
       class="list-group-item list-group-item-action rounded border-0 mb-1" 
       href="/grades"
-      :class="{ 'active': $page.url === '/grades' }"
+      :class="{ 'active': $page.url.startsWith('/grades') }"
     >
       <i class="ri-numbers-line me-2"></i>
       Grades
