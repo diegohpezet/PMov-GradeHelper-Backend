@@ -38,13 +38,11 @@ const openLinkModal = (student) => {
   </details>
 
   <ul class="list-group">
-    <li v-for="student in sortedStudents" :key="student.id" class="list-group-item d-flex justify-content-between">
+    <li v-for="student in sortedStudents" :key="student.id" class="list-group-item list-group-item-action d-flex justify-content-between">
       <div>
-        <h2 class="card-title fs-4">
-          <Link :href="`/students/${student.githubUsername}`" class="text-decoration-none text-dark">
+          <Link :href="`/students/${student.githubUsername}`" class="card-title fs-4 stretched-link">
             {{ student.last_name + ' ' + student.first_name }}
           </Link>
-        </h2>
         <p class="card-text text-muted fst-italic">
           {{ student.course.name }} | <a :href="`https://github.com/${student.githubUsername}`">@{{
             student.githubUsername }}</a>
