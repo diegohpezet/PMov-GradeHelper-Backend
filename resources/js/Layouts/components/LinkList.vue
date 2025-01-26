@@ -1,5 +1,12 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
+
+const toggleTheme = () => {
+  const currentTheme = document.documentElement.dataset?.bsTheme || 'light';
+  const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+  document.documentElement.dataset.bsTheme = newTheme;
+};
+
 </script>
 
 <template>
@@ -21,7 +28,7 @@ import { Link } from '@inertiajs/vue3';
       Grades
     </Link>
     <hr/>
-    <button class="list-group-item text-start">
+    <button class="list-group-item text-start" @click="toggleTheme">
       <i class="ri-sun-line me-2"></i>Switch theme
     </button>
     <Link class="list-group-item text-start" href="/logout" method="post">
