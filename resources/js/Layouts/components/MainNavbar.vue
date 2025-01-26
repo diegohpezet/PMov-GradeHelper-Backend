@@ -9,7 +9,7 @@ const isAdmin = page.props.auth.isAdmin;
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-md bg-light rounded border">
+  <nav class="navbar navbar-expand-md card">
     <div class="d-flex w-100 flex-wrap justify-content-between text-align-middle">
       <!-- Header -->
       <div class="d-flex align-items-center">

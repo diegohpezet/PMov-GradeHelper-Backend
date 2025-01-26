@@ -20,7 +20,7 @@ const isAdmin = page.props.auth.isAdmin;
       <div :class="isAdmin ? 'col-12 col-md-8 col-lg-9 col-xxl-10' : 'col-12 col-md-10 col-lg-9 col-xxl-8 mx-auto'">
         <MainNavbar class="mb-3 p-3" />
 
-        <main class="bg-light border rounded p-3">
+        <main class="card p-3">
           <slot>
             <!-- Page content -->
           </slot>
