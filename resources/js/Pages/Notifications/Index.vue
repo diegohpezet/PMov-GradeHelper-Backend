@@ -1,7 +1,9 @@
 <script setup>
+import moment from 'moment';
+
 const props = defineProps({ notifications: [Object] })
 
-console.log(props.notifications)
+const calculateTimeAgo = (timestamp) => moment(timestamp).fromNow()
 </script>
 
 <template>
@@ -13,7 +15,7 @@ console.log(props.notifications)
     <li v-for="notification in notifications" class="list-group-item list-group-item-action">
       <div class="d-flex w-100 justify-content-between">
         <h5 class="mb-1">{{ notification.data.message }}</h5>
-        <small>{{ notification.data.timestamp }}</small>
+        <small>{{ calculateTimeAgo(notification.data.timestamp) }}</small>
       </div>
       <p class="text-muted">{{ notification.data.action_by }}</p>
     </li>
