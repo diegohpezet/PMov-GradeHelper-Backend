@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('students', StudentController::class)->only(['index', 'store', 'edit', 'update', 'destroy']);
         Route::resource('grades', GradeController::class)->only(['index', 'store', 'edit', 'update', 'destroy']);
         Route::get('/notifications', [NotificationController::class, 'index']);
+        Route::put('/notifications/markAsRead', [NotificationController::class, 'markAsRead']);
     });
 });
 

@@ -10,7 +10,7 @@ class NotificationService
 {
     public function notifyAdmins(array $actionDetails)
     {
-        $admins = User::role('admin')->where('id', '!=', Auth::user()->id)->get();
+        $admins = User::role('admin')->get();
 
         foreach ($admins as $admin) {
             $admin->notify(new AdminActionNotification($actionDetails));
