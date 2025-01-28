@@ -1,5 +1,9 @@
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import { ref, watch } from 'vue';
+import { Link, usePage } from '@inertiajs/vue3';
+
+const page = usePage();
+const unreadNotificationsCount = ref(page.props.unreadNotificationsCount);
 
 const toggleTheme = () => {
   const currentTheme = document.documentElement.dataset?.bsTheme || 'light';
@@ -7,6 +11,12 @@ const toggleTheme = () => {
   document.documentElement.dataset.bsTheme = newTheme;
 };
 
+watch(() => page.url, (newUrl) => {
+    if (newUrl.startsWith('/notifications')) {
+      unreadNotificationsCount.value = 0;
+    }
+  }
+);
 </script>
 
 <template>
@@ -47,7 +57,15 @@ const toggleTheme = () => {
       Grades
     </Link>
     <hr/>
-    <button class="list-group-item text-start" @click="toggleTheme">
+    <Link 
+      class="list-group-item list-group-item-action rounded border-0 mb-1"
+      href="/notifications"
+      :class="{ 'active': $page.url.startsWith('/notifications') }"
+    >
+      <i class="ri-news-line me-2"></i>Notifications 
+      <i v-if="unreadNotificationsCount > 0" class="ri-circle-fill text-primary"></i>
+    </Link>
+    <button class="list-group-item text-start border-0" @click="toggleTheme">
       <i class="ri-sun-line me-2"></i>Switch theme
     </button>
     <Link class="list-group-item list-group-item-action rounded border-0 mb-1" href="/logout" method="post">

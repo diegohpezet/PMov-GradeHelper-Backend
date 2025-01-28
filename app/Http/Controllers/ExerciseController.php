@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Exercise;
+use App\Services\NotificationService;
 use App\Http\Requests\StoreExerciseRequest;
 use App\Http\Requests\UpdateExerciseRequest;
+use App\Traits\Notify;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class ExerciseController extends Controller
 {
+    use Notify;
     /**
      * Display a listing of the resource.
      */
@@ -26,7 +30,12 @@ class ExerciseController extends Controller
      */
     public function store(StoreExerciseRequest $request)
     {
-        Exercise::create($request->validated());
+        $exercise = Exercise::create($request->validated());
+        
+        $this->sendAdminNotification([
+            'message' => 'A new exercise has been created: ' . $exercise->title,
+            'action_by' => $request->user()->name
+        ]);
 
         return redirect()->back()->with('success', 'Exercise created successfully');
     }
@@ -68,15 +77,25 @@ class ExerciseController extends Controller
 
         $exercise->courses()->sync($coursesData);
 
+        $this->sendAdminNotification([
+            'message' => 'An exercise has been updated: ' . $exercise->title,
+            'action_by' => $request->user()->name
+        ]);
+
         return redirect()->route('exercises.index')->with('success', 'Exercise updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Exercise $exercise)
+    public function destroy(Exercise $exercise, Request $request)
     {
         $exercise->delete();
+
+        $this->sendAdminNotification([
+            'message' => 'An exercise has been removed: ' . $exercise->title,
+            'action_by' => $request->user()->name
+        ]);
 
         return redirect()->back()->with('success', 'Exercise deleted successfully');
     }

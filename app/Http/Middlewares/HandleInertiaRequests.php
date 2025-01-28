@@ -39,6 +39,7 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
                 'isAdmin' => $request->user() && $request->user()->isAdmin()
             ],
+            'unreadNotificationsCount' => $request->user() ? $request->user()->unreadNotifications->count() : 0
         ];
     }
 }
