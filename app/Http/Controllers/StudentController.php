@@ -39,14 +39,18 @@ class StudentController extends Controller
     {
         $student = Student::where('id', $studentParam)
         ->orWhere('githubUsername', $studentParam)
+        ->with(['course.exercises', 'grades'])
         ->firstOrFail();
 
-        $studentCourse = $student->course;
-        $exercises = $studentCourse->exercises->sortBy('name');
+        // structure as student.course.exercises.grades
+        $gradesByExercise = $student->grades->groupBy('exercise_id');
+        $student->course->exercises->map(function ($exercise) use ($gradesByExercise) {
+            $exercise['grades'] = $gradesByExercise[$exercise->id] ?? collect();
+            return $exercise;
+        });
 
         return Inertia::render('Students/Show', [
-            'student' => $student->transformWithGrades($exercises),
-            'exercises' => $exercises
+            'student' => $student,
         ]);
     }
 
