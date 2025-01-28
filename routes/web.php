@@ -3,6 +3,7 @@
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\GradeController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('exercises', ExerciseController::class)->only(['index', 'store', 'edit', 'update', 'destroy']);
         Route::resource('students', StudentController::class)->only(['index', 'store', 'edit', 'update', 'destroy']);
         Route::resource('grades', GradeController::class)->only(['index', 'store', 'edit', 'update', 'destroy']);
+        Route::get('/notifications', [NotificationController::class, 'index']);
     });
 });
 

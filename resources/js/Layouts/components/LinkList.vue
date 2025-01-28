@@ -47,7 +47,14 @@ const toggleTheme = () => {
       Grades
     </Link>
     <hr/>
-    <button class="list-group-item text-start" @click="toggleTheme">
+    <Link 
+      class="list-group-item list-group-item-action rounded border-0 mb-1"
+      href="/notifications"
+      :class="{ 'active': $page.url.startsWith('/notifications') }"  
+    >
+      <i class="ri-news-line me-2"></i>Notifications
+    </Link>
+    <button class="list-group-item text-start border-0" @click="toggleTheme">
       <i class="ri-sun-line me-2"></i>Switch theme
     </button>
     <Link class="list-group-item list-group-item-action rounded border-0 mb-1" href="/logout" method="post">
