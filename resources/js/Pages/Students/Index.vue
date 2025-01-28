@@ -44,7 +44,7 @@ const openLinkModal = (student) => {
             {{ student.last_name + ' ' + student.first_name }}
           </Link>
         <p class="card-text text-muted fst-italic">
-          {{ student.course.name }} | <a :href="`https://github.com/${student.githubUsername}`">@{{
+          {{ student.course ? student.course.name : 'No course' }} | <a :href="`https://github.com/${student.githubUsername}`">@{{
             student.githubUsername }}</a>
 
           <button v-if="isAdmin" class="btn btn-sm btn-outline-primary ms-2 rounded-circle" @click="openLinkModal(student)">

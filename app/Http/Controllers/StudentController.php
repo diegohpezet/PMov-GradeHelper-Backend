@@ -35,14 +35,9 @@ class StudentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($studentParam)
+    public function show(Student $student)
     {
-        $student = Student::where('id', $studentParam)
-        ->orWhere('githubUsername', $studentParam)
-        ->firstOrFail();
-
-        $studentCourse = $student->course;
-        $exercises = $studentCourse->exercises->sortBy('name');
+        $exercises = $student->course->exercises->sortBy('name');
 
         return Inertia::render('Students/Show', [
             'student' => $student->transformWithGrades($exercises),

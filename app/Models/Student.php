@@ -33,7 +33,7 @@ class Student extends Model
 
     public function grades(): HasMany
     {
-        return $this->hasMany(Grade::class);
+        return $this->hasMany(Grade::class)->latest();
     }
 
     public function transformWithGrades($exercises)
@@ -56,5 +56,12 @@ class Student extends Model
                 ->map->toArray()
                 ->values(),
         ];
+    }
+
+    public function resolveRouteBinding($value, $field = null)
+    {
+        return $this->where('id', $value)
+            ->orWhere('githubUsername', $value)
+            ->firstOrFail();
     }
 }
