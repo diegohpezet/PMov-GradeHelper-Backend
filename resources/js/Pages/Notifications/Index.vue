@@ -7,7 +7,7 @@ const calculateTimeAgo = (timestamp) => moment(timestamp).fromNow()
 </script>
 
 <template>
-  <h1 class="h2 mb-3">News</h1>
+  <h1 class="h2 mb-3">Notifications</h1>
 
   <p v-if="notifications.length == 0">There aren't any notifications to show</p>
 
