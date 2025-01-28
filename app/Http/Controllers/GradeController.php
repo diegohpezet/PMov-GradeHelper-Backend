@@ -8,6 +8,8 @@ use App\Models\Grade;
 use App\Models\Student;
 use App\Http\Requests\StoreGradeRequest;
 use App\Http\Requests\UpdateGradeRequest;
+use App\Mail\ExerciseCorrection;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 
 class GradeController extends Controller
@@ -35,7 +37,11 @@ class GradeController extends Controller
      */
     public function store(StoreGradeRequest $request)
     {
-        Grade::create($request->validated());
+        $grade = Grade::create($request->validated());
+
+        // Send email after creating the grade
+        $userToMail = $grade->student->user;
+        Mail::to($userToMail->email)->send(new ExerciseCorrection($grade));
 
         return redirect()->back()->with('success', 'Grade created successfully');
     }
