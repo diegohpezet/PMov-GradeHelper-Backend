@@ -40,8 +40,10 @@ class GradeController extends Controller
         $grade = Grade::create($request->validated());
 
         // Send email after creating the grade
-        $userToMail = $grade->student->user;
-        Mail::to($userToMail->email)->send(new ExerciseCorrection($grade));
+        $studentEmail = $grade->student?->user?->email;
+        if ($studentEmail) {
+            Mail::to($studentEmail)->send(new ExerciseCorrection($grade));
+        }
 
         return redirect()->back()->with('success', 'Grade created successfully');
     }
