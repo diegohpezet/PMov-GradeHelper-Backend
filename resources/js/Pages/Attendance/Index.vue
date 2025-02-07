@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { usePage } from '@inertiajs/vue3';
+import { shortDateFormat } from '../../Utils/dates.js';
 import AttendanceRow from './components/AttendanceRow.vue';
 
 const props = defineProps({ students: [Object], attendances: [Object] });
@@ -19,9 +20,6 @@ const sortedDates = ref(
     )
     .sort((a, b) => a.getTime() - b.getTime())
 );
-
-const formatDate = (date) =>
-  date.toISOString().slice(0, 10).split('-').slice(1).reverse().join('-');
 
 const createAttendanceDate = () => {
   const today = new Date();
@@ -86,19 +84,13 @@ const updateAttendance = ({ studentId, date, isNowChecked }) => {
         <th scope="col">Student</th>
         <th scope="col" class="hoverable text-center">Total</th>
         <th scope="col" class="hoverable text-center" v-for="date in sortedDates" :key="date">
-          {{ formatDate(date) }}
+          {{ shortDateFormat(date) }}
         </th>
       </tr>
     </thead>
     <tbody>
-      <AttendanceRow
-        v-for="student in sortedStudents"
-        :key="student.id"
-        :student="student"
-        :dates="sortedDates"
-        :attendances="props.attendances"
-        @update-attendance="updateAttendance"
-      />
+      <AttendanceRow v-for="student in sortedStudents" :key="student.id" :student="student" :dates="sortedDates"
+        :attendances="props.attendances" @update-attendance="updateAttendance" />
     </tbody>
   </table>
 </template>
