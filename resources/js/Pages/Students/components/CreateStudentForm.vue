@@ -4,7 +4,7 @@ import { useForm, usePage } from '@inertiajs/vue3';
 const form = useForm({
   first_name: '',
   last_name: '',
-  githubUsername: '',
+  github_username: '',
   course_id: ''
 })
 
@@ -41,8 +41,8 @@ function submit() {
       </div>
 
       <div class="col-12 col-sm-6 col-xxl-3 my-3">
-        <label for="githubUsername" class="visually-hidden">Github</label>
-        <input type="text" id="githubUsername" class="form-control" v-model="form.githubUsername" placeholder="Github" />
+        <label for="github_username" class="visually-hidden">Github</label>
+        <input type="text" id="github_username" class="form-control" v-model="form.github_username" placeholder="Github" />
       </div>
 
       <div class="col-12 col-sm-6 col-xxl-2 my-3">

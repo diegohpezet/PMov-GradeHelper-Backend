@@ -16,7 +16,7 @@ class Student extends Model
     protected $fillable = [
         'first_name',
         'last_name',
-        'githubUsername',
+        'github_username',
         'course_id',
         'user_id',
     ];
@@ -42,7 +42,7 @@ class Student extends Model
             'id' => $this->id,
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
-            'githubUsername' => $this->githubUsername,
+            'github_username' => $this->github_username,
             'grades' => $exercises->map(fn($exercise) => $this->transformExerciseGrades($exercise))
         ];
     }
@@ -61,7 +61,7 @@ class Student extends Model
     public function resolveRouteBinding($value, $field = null)
     {
         return $this->where('id', $value)
-            ->orWhere('githubUsername', $value)
+            ->orWhere('github_username', $value)
             ->firstOrFail();
     }
 }

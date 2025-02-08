@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('githubUsername')->nullable()->unique();
+            $table->string('github_username')->nullable()->unique();
             
             $table->foreignUuid('user_id')->nullable()->unique()->constrained();
             $table->foreignUuid('course_id')->nullable()->constrained()->onDelete('set null');

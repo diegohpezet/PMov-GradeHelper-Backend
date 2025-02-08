@@ -24,7 +24,7 @@ class StoreStudentRequest extends FormRequest
         return [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'githubUsername' => 'nullable|unique:students',
+            'github_username' => 'nullable|unique:students',
             'course_id' => 'required|exists:courses,id',
         ];
     }
