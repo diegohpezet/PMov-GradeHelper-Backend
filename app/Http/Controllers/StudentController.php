@@ -37,11 +37,13 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
-        $exercises = $student->course->exercises->sortBy('name');
+        // get only grades related to current student
+        $student->load(['course.exercises.grades' => function ($query) use ($student) {
+            $query->where('student_id', $student->id);
+        }]);
 
         return Inertia::render('Students/Show', [
-            'student' => $student->transformWithGrades($exercises),
-            'exercises' => $exercises
+            'student' => $student,
         ]);
     }
 
