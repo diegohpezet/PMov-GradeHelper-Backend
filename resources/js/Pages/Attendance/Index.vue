@@ -12,13 +12,12 @@ const isAdmin = page.props.auth.isAdmin;
 const error = ref('');
 
 const sortedStudents = props.students.sort((a, b) => a.last_name.localeCompare(b.last_name));
+
+// Get unique attendance dates and sort them
 const sortedDates = ref(
-  props.attendances
-    .map((attendance) => new Date(attendance.date))
-    .filter(
-      (date, index, self) => self.findIndex((d) => d.getTime() === date.getTime()) === index
-    )
-    .sort((a, b) => a.getTime() - b.getTime())
+  Array.from(new Set(props.attendances.map((attendance) => new Date(attendance.date).getTime())))
+    .sort((a, b) => a - b)
+    .map((timestamp) => new Date(timestamp))
 );
 
 const createAttendanceDate = () => {
