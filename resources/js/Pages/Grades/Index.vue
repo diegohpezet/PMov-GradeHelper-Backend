@@ -73,9 +73,9 @@ const setGradeFormValues = (student, exercise) => {
 
         <td class="hoverable" v-for="exercise in filteredExercises" :key="exercise.id" @click="setGradeFormValues(student, exercise)">
           <div class="d-flex">
-            <CheckOnlineStatus :studentUsername="student.githubUsername" :exercisePath="exercise?.path"/>
+            <CheckOnlineStatus :studentUsername="student.github_username" :exercisePath="exercise?.path"/>
             <span>
-              <a v-if="exercise" :href="`https://${student.githubUsername}.github.io/plataformas-moviles-entregas/${exercise.path}`" class="mx-1">
+              <a v-if="exercise" :href="`https://${student.github_username}.github.io/plataformas-moviles-entregas/${exercise.path}`" class="mx-1">
                 Link
               </a> | {{ getLastGrade(student, exercise)?.result ?? '-' }}
             </span>

@@ -40,12 +40,12 @@ const openLinkModal = (student) => {
   <ul class="list-group">
     <li v-for="student in sortedStudents" :key="student.id" class="list-group-item list-group-item-action d-flex justify-content-between">
       <div>
-          <Link :href="`/students/${student.githubUsername}`" class="card-title fs-4">
+          <Link :href="`/students/${student.github_username}`" class="card-title fs-4">
             {{ student.last_name + ' ' + student.first_name }}
           </Link>
         <p class="card-text text-muted fst-italic">
-          {{ student.course ? student.course.name : 'No course' }} | <a :href="`https://github.com/${student.githubUsername}`">@{{
-            student.githubUsername }}</a>
+          {{ student.course ? student.course.name : 'No course' }} | <a :href="`https://github.com/${student.github_username}`">@{{
+            student.github_username }}</a>
 
           <button v-if="isAdmin" class="btn btn-sm btn-outline-primary ms-2 rounded-circle" @click="openLinkModal(student)">
             <i v-if="!student.user_id" class="ri ri-link"></i>

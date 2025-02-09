@@ -28,9 +28,9 @@ const editStudent = (id) => {
     </div>
 
     <div class="mb-3">
-      <label for="githubUsername" class="form-label">Github</label>
-      <input type="text" class="form-control" id="githubUsername" v-model="form.githubUsername">
-      <span v-if="form.errors.githubUsername" class="text-danger">{{ form.errors.githubUsername }}</span>
+      <label for="github_username" class="form-label">Github</label>
+      <input type="text" class="form-control" id="github_username" v-model="form.github_username">
+      <span v-if="form.errors.github_username" class="text-danger">{{ form.errors.github_username }}</span>
     </div>
 
     <div class="mb-3">
