@@ -29,4 +29,9 @@ class Course extends Model
             ->withTimestamps()
             ->using(CourseExercise::class);
     }
+
+    public function attendances(): HasMany
+    {
+        return $this->hasMany(Attendance::class);
+    }
 }
