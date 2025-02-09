@@ -19,10 +19,10 @@ class Exercise extends Model
 
     public function courses(): BelongsToMany
     {
-        return $this->belongsToMany(Course::class)
-            ->withPivot('due_at')
+        return $this->belongsToMany(Course::class, 'assessments')
+            ->withPivot('due_date')
             ->withTimestamps()
-            ->using(CourseExercise::class);
+            ->using(Assessment::class);
     }
 
     public function grades(): HasMany
