@@ -7,6 +7,7 @@ use App\Models\Course;
 use App\Models\Exercise;
 use App\Models\Grade;
 use App\Models\Student;
+use App\Models\Attendance;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Database\Seeder;
 
@@ -43,6 +44,12 @@ class DatabaseSeeder extends Seeder
             Grade::factory(3)
                 ->for($student)
                 ->recycle($student->course->exercises)
+                ->create();
+
+            // random attendances
+            $attendances = Attendance::factory(3)
+                ->for($student)
+                ->for($student->course)
                 ->create();
         });
 
