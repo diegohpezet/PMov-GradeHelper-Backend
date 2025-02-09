@@ -26,7 +26,7 @@ class UpdateExerciseRequest extends FormRequest
             'path' => 'required|string|max:255',
             'courses' => 'array',
             'courses.*.course_id' => 'required|exists:courses,id',
-            'courses.*.due_at' => 'required|date|after:today',
+            'courses.*.due_date' => 'required|date|after:today',
         ];
     }
 }

@@ -13,12 +13,12 @@ export const getDefaultDueDate = () => {
 
 export const getDueDate = (courses, courseId) => {
   const course = courses.find(c => c.course_id === courseId);
-  return course ? course.due_at : getDefaultDueDate();
+  return course ? course.due_date : getDefaultDueDate();
 };
 
 export const setDueDate = (courses, courseId, newDate) => {
   const course = courses.find(c => c.course_id === courseId);
   if (course) {
-    course.due_at = newDate;
+    course.due_date = newDate;
   }
 };

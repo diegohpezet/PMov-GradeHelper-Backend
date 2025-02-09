@@ -10,7 +10,7 @@ const form = useForm({
   ...props.exercise,
   courses: props.exercise.courses.map(course => ({
     course_id: course.id,
-    due_at: formatDate(course.pivot?.due_at) || getDefaultDueDate(),
+    due_date: formatDate(course.pivot?.due_date) || getDefaultDueDate(),
   })),
   selectedCourses: props.exercise.courses.map(course => course.id),
 })
@@ -24,7 +24,7 @@ watch(() => form.selectedCourses, (newSelectedCourses) => {
     if (!form.courses.some(course => course.course_id === courseId)) {
       form.courses.push({
         course_id: courseId,
-        due_at: getDefaultDueDate(),
+        due_date: getDefaultDueDate(),
       })
     }
   })
