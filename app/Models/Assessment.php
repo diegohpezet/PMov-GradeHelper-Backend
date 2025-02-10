@@ -9,6 +9,8 @@ class Assessment extends Pivot
 {
     use HasUuids;
 
+    protected $table = 'assessments';
+
     public $timestamps = true;
 
     protected function casts(): array
