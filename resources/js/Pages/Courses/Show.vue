@@ -1,10 +1,13 @@
 <script setup>
 import StudentsList from '../Students/Index.vue';
 import AttendanceIndex from '../Attendance/Index.vue';
+import GradesTable from '../Grades/Index.vue';
 
 const props = defineProps({ course: Object })
 
-const sortedCourseExercises = props.course.exercises.sort((a, b) => a.title.localeCompare(b.title))
+const sortedAssessments = props.course.assessments.sort((a, b) => 
+  a.exercise.title.localeCompare(b.exercise.title)
+);
 </script>
 
 <template>
@@ -13,19 +16,27 @@ const sortedCourseExercises = props.course.exercises.sort((a, b) => a.title.loca
   <ul class="nav nav-tabs" id="courseTabs" role="tablist">
     <li class="nav-item" role="presentation">
       <button class="nav-link active" id="students-tab" data-bs-toggle="tab" data-bs-target="#students-tab-pane"
-        type="button" role="tab" aria-controls="students-tab-pane" aria-selected="true">Students</button>
+        type="button" role="tab" aria-controls="students-tab-pane" aria-selected="true">
+        Students
+      </button>
     </li>
     <li class="nav-item" role="presentation">
       <button class="nav-link" id="exercises-tab" data-bs-toggle="tab" data-bs-target="#exercises-tab-pane" type="button"
-        role="tab" aria-controls="exercises-tab-pane" aria-selected="false">Exercises</button>
+        role="tab" aria-controls="exercises-tab-pane" aria-selected="false">
+        Exercises
+      </button>
     </li>
     <li class="nav-item" role="presentation">
       <button class="nav-link" id="grades-tab" data-bs-toggle="tab" data-bs-target="#grades-tab-pane" type="button"
-        role="tab" aria-controls="grades-tab-pane" aria-selected="false">Grades</button>
+        role="tab" aria-controls="grades-tab-pane" aria-selected="false">
+        Grades
+      </button>
     </li>
     <li class="nav-item" role="presentation">
       <button class="nav-link" id="attendance-tab" data-bs-toggle="tab" data-bs-target="#attendance-tab-pane" type="button"
-        role="tab" aria-controls="attendance-tab-pane" aria-selected="false">Attendance</button>
+        role="tab" aria-controls="attendance-tab-pane" aria-selected="false">
+        Attendance
+      </button>
     </li>
   </ul>
 
@@ -38,17 +49,15 @@ const sortedCourseExercises = props.course.exercises.sort((a, b) => a.title.loca
     <div class="tab-pane fade" id="exercises-tab-pane" role="tabpanel" aria-labelledby="exercises-tab" tabindex="0">
       <h2 class="mb-3">Exercises</h2>
       <ul class="list-group">
-        <li v-for="exercise in sortedCourseExercises" :key="exercise.id" class="list-group-item">
-          <span class="lead me-3">{{  exercise.title }}</span>
-          <span class="text-muted">Due Date {{ (new Date(exercise.pivot.due_date)).toLocaleString() }}</span>
+        <li v-for="assessment in sortedAssessments" :key="assessment.id" class="list-group-item">
+          <span class="lead me-3">{{ assessment.exercise.title }}</span>
+          <span class="text-muted">Due Date: {{ (new Date(assessment.due_date)).toLocaleString() }}</span>
         </li>
       </ul>
     </div>
     
     <div class="tab-pane fade" id="grades-tab-pane" role="tabpanel" aria-labelledby="grades-tab" tabindex="0">
-      <h2>Grades</h2>
-      <!-- <GradesStudentsMatrix :course_id="course.id" /> -->
-      <!-- Course id is intended to be passed to the GradesStudentsMatrix component -->
+      <GradesTable :students="course.students" :assessments="course.assessments" />
     </div>
 
     <div class="tab-pane fade" id="attendance-tab-pane" role="tabpanel" aria-labelledby="attendance-tab" tabindex="0">
