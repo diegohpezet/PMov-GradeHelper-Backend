@@ -23,15 +23,28 @@ class StoreGradeRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'student_id' => 'required|exists:students,id',
-            'exercise_id' => 'required|exists:exercises,id',
-            'comment' => 'nullable|required_without:result|string|max:255',
-            'result' => [
-                'nullable',
-                'required_without:comment',
-                Rule::enum(GradeResult::class)
-            ],
+            'assessment_id' => 'required|exists:assessments,id',
+            'gradeable_type' => 'required|in:PassFailGrade,TEGrade,NumericGrade',
+            'value' => 'required',
+            'comment' => 'nullable|string|max:255',
         ];
+
+        switch ($this->input('gradeable_type')) {
+            case 'PassFailGrade':
+                $rules['value'] = 'required|boolean';
+                break;
+
+            case 'TEGrade':
+                $rules['value'] = 'required|in:TEA,TEP,TED';
+                break;
+
+            case 'NumericGrade':
+                $rules['value'] = 'required|numeric|min:0|max:10';
+                break;
+        }
+
+        return $rules;
     }
 }

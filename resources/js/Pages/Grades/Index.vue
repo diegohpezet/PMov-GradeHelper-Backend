@@ -44,17 +44,18 @@ const getLastGrade = (student, assessment) => {
 
 // Form functionality
 const studentToGrade = ref(null);
-const exerciseToGrade = ref(null);
-const setGradeFormValues = (student, exercise) => {
+const assessmentToGrade = ref(null);
+
+const setGradeFormValues = (student, assessment) => {
   studentToGrade.value = student;
-  exerciseToGrade.value = exercise;
+  assessmentToGrade.value = assessment;
 };
 </script>
 
 <template>
   <h1 class="h2">Grades</h1>
-  <CreateGradeForm v-if="isAdmin" :student="studentToGrade" :exercise="exerciseToGrade" />
-  <GradesHistory :student="studentToGrade" :exercise="exerciseToGrade" />
+  <CreateGradeForm v-if="isAdmin" :student="studentToGrade" :assessment="assessmentToGrade" />
+  <!-- <GradesHistory :student="studentToGrade" :assessment="assessment" /> -->
 
   <table class="table table-striped border">
     <thead class="table-primary">
