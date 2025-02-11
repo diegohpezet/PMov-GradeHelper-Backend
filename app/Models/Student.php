@@ -30,36 +30,14 @@ class Student extends Model
         return $this->belongsTo(Course::class);
     }
 
-    public function grades(): HasMany
+    public function gradeables(): HasMany
     {
-        return $this->hasMany(Grade::class)->latest();
+        return $this->hasMany(Gradeable::class);
     }
 
     public function attendances(): HasMany
     {
         return $this->hasMany(Attendance::class);
-    }
-
-    public function transformWithGrades($exercises)
-    {
-        return [
-            'id' => $this->id,
-            'first_name' => $this->first_name,
-            'last_name' => $this->last_name,
-            'github_username' => $this->github_username,
-            'grades' => $exercises->map(fn($exercise) => $this->transformExerciseGrades($exercise))
-        ];
-    }
-
-    private function transformExerciseGrades($exercise)
-    {
-        return [
-            'exercise_id' => $exercise->id,
-            'grades' => $this->grades
-                ->where('exercise_id', $exercise->id)
-                ->map->toArray()
-                ->values(),
-        ];
     }
 
     public function resolveRouteBinding($value, $field = null)
