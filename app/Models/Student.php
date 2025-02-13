@@ -32,7 +32,7 @@ class Student extends Model
 
     public function gradeables(): HasMany
     {
-        return $this->hasMany(Gradeable::class);
+        return $this->hasMany(Gradeable::class)->orderBy('created_at', 'desc');
     }
 
     public function attendances(): HasMany
