@@ -8,6 +8,14 @@ const emit = defineEmits(['delete-grade']);
 const page = usePage();
 const isAdmin = page.props.auth.isAdmin;
 
+const handleGradeValue = (grade) => {
+  if (grade.gradable_type === 'App\\Models\\PassFailGrade') {
+    return grade.gradable.value ? 'Passed' : 'Failed';
+  }
+
+  return grade.gradable.value;
+}
+
 function deleteGrade(gradeId) {
   if (confirm('Are you sure you want to delete this grade?')) {
     router.delete(`/grades/${gradeId}`, {
@@ -27,7 +35,7 @@ function deleteGrade(gradeId) {
     </div>
     <div class="d-flex w-100 justify-content-between">
       <p class="mb-1">
-        Grade: {{ grade.gradable.value }}
+        Grade: {{ handleGradeValue(grade) }}
       </p>
       <div v-if="isAdmin">
         <button class="btn btn-sm btn-outline-danger" @click="deleteGrade(grade.id)">
