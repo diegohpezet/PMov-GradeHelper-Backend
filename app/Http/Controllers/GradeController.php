@@ -102,10 +102,10 @@ class GradeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Grade $grade)
+    public function destroy(Gradeable $grade)
     {
         $grade->delete();
 
-        return redirect()->back()->with('success', 'Grade deleted successfully');
+        return redirect()->back()->with('success', 'Gradeable deleted successfully');
     }
 }

@@ -55,7 +55,7 @@ const setGradeFormValues = (student, assessment) => {
 <template>
   <h1 class="h2">Grades</h1>
   <CreateGradeForm v-if="isAdmin" :student="studentToGrade" :assessment="assessmentToGrade" />
-  <!-- <GradesHistory :student="studentToGrade" :assessment="assessment" /> -->
+  <GradesHistory :student="studentToGrade" :assessment="assessmentToGrade" />
 
   <table class="table table-striped border">
     <thead class="table-primary">
