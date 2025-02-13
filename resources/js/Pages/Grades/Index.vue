@@ -40,7 +40,7 @@ const applyStudentListFilter = (student) => {
 const getLastGrade = (student, assessment) => {
   const grade = student.gradeables.find((grade) => grade.assessment_id === assessment.id);
 
-  if (grade.gradable_type === 'App\\Models\\PassFailGrade') {
+  if (grade && grade.gradable_type === 'App\\Models\\PassFailGrade') {
     return grade.gradable.value ? 'Passed' : 'Failed';
   }
   
