@@ -11,7 +11,8 @@ export function filterStudents(students, selectedStudent, selectedAssessment) {
       gradeables: selectedAssessment
         ? student.gradeables.filter((gradeable) => gradeable.assessment_id === selectedAssessment.id)
         : student.gradeables,
-    }));
+    }))
+    .sort((a, b) => a.last_name.localeCompare(b.last_name));
 }
 
 export function filterAssessments(assessments, selectedAssessment) {
