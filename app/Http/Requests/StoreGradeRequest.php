@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Enums\Enums\GradeResult;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class StoreGradeRequest extends FormRequest
 {

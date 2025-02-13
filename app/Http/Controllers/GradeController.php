@@ -12,6 +12,7 @@ use App\Models\Gradeable;
 use App\Models\NumericGrade;
 use App\Models\PassFailGrade;
 use App\Models\TEGrade;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 
@@ -82,21 +83,21 @@ class GradeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Grade $grade)
+    public function edit(Gradeable $grade)
     {
         return Inertia::render('Grades/Edit', [
-            'grade' => $grade
+            'grade' => $grade->load('gradable'),
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateGradeRequest $request, Grade $grade)
+    public function update(UpdateGradeRequest $request, Gradeable $grade)
     {
-        $grade->update($request->validated());
+        $grade->gradable->update($request->validated());
 
-        return redirect()->route('grades.index')->with('success', 'Grade updated successfully');
+        return redirect()->back()->with('success', 'Grade updated successfully');
     }
 
     /**
