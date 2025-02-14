@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\GradeableType;
 use App\Http\Requests\StoreGradeRequest;
 use App\Http\Requests\UpdateGradeRequest;
 use App\Mail\ExerciseCorrection;
@@ -20,15 +21,16 @@ class GradeController extends Controller
     public function store(StoreGradeRequest $request)
     {
         $validated = $request->validated();
+        
+        // Check if gradeable type is valid
+        $gradeableType = GradeableType::tryFrom($validated['gradeable_type']);
+        
+        if (!$gradeableType) {
+            return redirect()->back()->withErrors(['gradeable_type' => 'Invalid grade type']);
+        }
     
         // Create grade model instance
-        $models = [
-            'PassFailGrade' => PassFailGrade::class,
-            'NumericGrade' => NumericGrade::class,
-            'TEGrade' => TEGrade::class,
-        ];
-
-        $gradeModel = new $models[$validated['gradeable_type']]([
+        $gradeModel = new ($gradeableType->model())([
             'value' => $validated['value'],
             'comment' => $validated['comment'],
         ]);
@@ -38,7 +40,7 @@ class GradeController extends Controller
         $gradeable = Gradeable::create([
             'assessment_id' => $validated['assessment_id'],
             'student_id' => $validated['student_id'],
-            'gradable_type' => $models[$validated['gradeable_type']],
+            'gradable_type' => $gradeableType->model(),
             'gradable_id' => $gradeModel->id,
         ]);
     

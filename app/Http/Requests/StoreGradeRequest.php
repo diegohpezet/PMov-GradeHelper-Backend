@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\GradeableType;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Enum;
 
 class StoreGradeRequest extends FormRequest
 {
@@ -21,28 +23,12 @@ class StoreGradeRequest extends FormRequest
      */
     public function rules(): array
     {
-        $rules = [
+        return [
             'student_id' => 'required|exists:students,id',
             'assessment_id' => 'required|exists:assessments,id',
-            'gradeable_type' => 'required|in:PassFailGrade,TEGrade,NumericGrade',
+            'gradeable_type' => ['required', new Enum(GradeableType::class)],
             'value' => 'required',
             'comment' => 'nullable|string|max:255',
         ];
-
-        switch ($this->input('gradeable_type')) {
-            case 'PassFailGrade':
-                $rules['value'] = 'required|boolean';
-                break;
-
-            case 'TEGrade':
-                $rules['value'] = 'required|in:TEA,TEP,TED';
-                break;
-
-            case 'NumericGrade':
-                $rules['value'] = 'required|numeric|min:0|max:10';
-                break;
-        }
-
-        return $rules;
     }
 }
