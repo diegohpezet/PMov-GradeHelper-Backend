@@ -4,7 +4,7 @@ namespace App\Traits;
 
 use App\Services\NotificationService;
 
-trait Notify
+trait CanNotifyAdmins
 {
     public function sendAdminNotification(array $details)
     {

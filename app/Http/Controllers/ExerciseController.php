@@ -3,16 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Exercise;
-use App\Services\NotificationService;
 use App\Http\Requests\StoreExerciseRequest;
 use App\Http\Requests\UpdateExerciseRequest;
-use App\Traits\Notify;
+use App\Traits\CanNotifyAdmins;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class ExerciseController extends Controller
 {
-    use Notify;
+    use CanNotifyAdmins;
     /**
      * Display a listing of the resource.
      */
