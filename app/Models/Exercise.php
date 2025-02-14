@@ -25,8 +25,8 @@ class Exercise extends Model
             ->using(Assessment::class);
     }
 
-    public function grades(): HasMany
+    public function assessments(): HasMany
     {
-        return $this->hasMany(Grade::class);
+        return $this->hasMany(Assessment::class);
     }
 }
