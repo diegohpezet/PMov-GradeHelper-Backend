@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateGradeRequest extends FormRequest
+class UpdateGradeableRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -18,7 +18,7 @@ class UpdateGradeRequest extends FormRequest
             'comment' => 'nullable|string|max:255'
         ];
 
-        switch ($this->route('grade')->gradable_type) {
+        switch ($this->route('gradeable')->gradable_type) {
             case 'PassFailGrade':
                 $rules['value'] = 'required|boolean';
                 break;
