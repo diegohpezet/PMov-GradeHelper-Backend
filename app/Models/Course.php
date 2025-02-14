@@ -29,7 +29,7 @@ class Course extends Model
 
     public function exercises(): HasManyThrough
     {
-        return $this->hasManyThrough(Exercise::class, Assessment::class, 'course_id', 'id', 'id', 'exercise_id');
+        return $this->hasManyThrough(Exercise::class, Assessment::class);
     }
 
     public function attendances(): HasMany
