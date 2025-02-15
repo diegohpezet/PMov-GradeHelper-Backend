@@ -36,15 +36,15 @@ const applyStudentListFilter = (student) => {
     selectedStudent.value && selectedStudent.value.id === student.id ? null : student;
 };
 
-// Get grade value for assessment
-const getLastGrade = (student, assessment) => {
-  const grade = student.gradeables.find((grade) => grade.assessment_id === assessment.id);
+// Get gradeable value for assessment
+const getLastGradeable = (student, assessment) => {
+  const gradeable = student.gradeables.find((gradeable) => gradeable.assessment_id === assessment.id);
 
-  if (grade && grade.gradable_type === 'App\\Models\\PassFailGrade') {
-    return grade.gradable.value ? 'Passed' : 'Failed';
+  if (gradeable && gradeable.gradable_type === 'App\\Models\\PassFailGrade') {
+    return gradeable.gradable.value ? 'Passed' : 'Failed';
   }
   
-  return grade ? grade.gradable.value : '-';
+  return gradeable ? gradeable.gradable.value : '-';
 };
 
 // Form functionality
@@ -87,7 +87,7 @@ const setGradeFormValues = (student, assessment) => {
                 :href="`https://${student.github_username}.github.io/plataformas-moviles-entregas/${assessment.exercise.path}`"
                 class="mx-1">
                 Link
-              </a> | {{ getLastGrade(student, assessment) }}
+              </a> | {{ getLastGradeable(student, assessment) }}
             </span>
           </div>
         </td>
