@@ -26,7 +26,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('courses', CourseController::class)->only(['store', 'edit', 'update', 'destroy']);
         Route::resource('exercises', ExerciseController::class)->only(['index','store', 'edit', 'update', 'destroy']);
         Route::resource('students', StudentController::class)->only(['index','store', 'edit', 'update', 'destroy']);
-        Route::resource('grades', GradeableController::class)->only(['index','store', 'edit', 'update', 'destroy']);
+        Route::resource('gradeables', GradeableController::class)->only(['index','store', 'edit', 'update', 'destroy']);
 
         Route::post('attendances', [AttendanceController::class, 'store'])->name('attendances.store');
         Route::delete('attendances', [AttendanceController::class, 'destroy'])->name('attendances.destroy');
