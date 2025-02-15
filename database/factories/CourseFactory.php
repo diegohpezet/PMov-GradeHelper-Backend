@@ -9,17 +9,24 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class CourseFactory extends Factory
 {
-    private static int $division = 2;
-    private static array $suffixes = ['d', 'r', 't'];
+    private static array $divisions = ['1ro', '2do', '3ro', '4to', '5to', '6to', '7mo'];
+    private static array $sections = ['1ra', '2da', '3ra', '4ta'];
+    private static array $orientations = ['Programación', 'Informática'];
 
     public function definition(): array
     {
-        $suffix = self::$suffixes[self::$division - 2];
-        $name = '7mo' . self::$division++ . $suffix . 'a';
-
         return [
-            'name' => $name,
-            'school_year' => "2024"
+            'name' => self::generateCourseName(),
+            'school_year' => now()->year,
         ];
+    }
+
+    private static function generateCourseName ()
+    {
+        $division = fake()->randomElement(self::$divisions);
+        $section = fake()->randomElement(self::$sections);
+        $orientation = fake()->randomElement(self::$orientations);
+
+        return "$division $section ($orientation)";
     }
 }
