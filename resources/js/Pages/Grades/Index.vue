@@ -2,8 +2,8 @@
 import { computed, ref } from 'vue';
 import { filterStudents, filterAssessments } from './utils/filters';
 import CheckOnlineStatus from './components/CheckOnlineStatus.vue';
-import CreateGradeForm from './components/CreateGradeForm.vue';
-import GradesHistory from './components/GradesHistory.vue';
+import CreateGradeableForm from './components/CreateGradeableForm.vue';
+import GradeablesHistory from './components/GradeablesHistory.vue';
 import { usePage } from '@inertiajs/vue3';
 
 const props = defineProps({
@@ -59,8 +59,8 @@ const setGradeFormValues = (student, assessment) => {
 
 <template>
   <h1 class="h2">Grades</h1>
-  <CreateGradeForm v-if="isAdmin" :student="studentToGrade" :assessment="assessmentToGrade" />
-  <GradesHistory :student="studentToGrade" :assessment="assessmentToGrade" />
+  <CreateGradeableForm v-if="isAdmin" :student="studentToGrade" :assessment="assessmentToGrade" />
+  <GradeablesHistory :student="studentToGrade" :assessment="assessmentToGrade" />
 
   <table class="table table-striped border">
     <thead class="table-primary">

@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watchEffect } from 'vue';
-import GradesHistoryItem from './GradesHistoryItem.vue';
+import GradeablesHistoryItem from './GradeablesHistoryItem.vue';
 
 const props = defineProps({ student: Object, assessment: Object });
 
@@ -23,7 +23,7 @@ watchEffect(() => {
       <span>History</span>
     </summary>
     <ul class="list-group list-group-flush">
-      <GradesHistoryItem 
+      <GradeablesHistoryItem 
         v-for="gradeable in gradeables" 
         :key="gradeable.created_at"
         :gradeable="gradeable"
