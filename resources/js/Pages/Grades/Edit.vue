@@ -1,24 +1,24 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3';
 
-const props = defineProps({ grade: Object });
+const props = defineProps({ gradeable: Object });
 const form = useForm({
-  value: props.grade.gradable.value,
-  comment: props.grade.gradable.comment,
+  value: props.gradeable.gradable.value,
+  comment: props.gradeable.gradable.comment,
 });
-const gradableType = props.grade.gradable_type.split('\\').pop();
+const gradableType = props.gradeable.gradable_type.split('\\').pop();
 
 const options = {
   TEGrade: ["TEA", "TEP", "TED"],
   PassFailGrade: [true, false]
 };
 
-const editGrade = () => form.put(`/grades/${props.grade.id}`);
+const editGradeable = () => form.put(`/gradeables/${props.gradeable.id}`);
 </script>
 
 <template>
   <h1>Edit grade</h1>
-  <form @submit.prevent="editGrade">
+  <form @submit.prevent="editGradeable">
     <div v-if="gradableType in options" class="mb-3">
       <label class="form-label">Value</label>
       <div v-for="option in options[gradableType]" :key="option" class="form-check">

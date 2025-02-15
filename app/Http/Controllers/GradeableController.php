@@ -55,7 +55,7 @@ class GradeableController extends Controller
     public function edit(Gradeable $gradeable)
     {
         return Inertia::render('Grades/Edit', [
-            'grade' => $gradeable->load('gradable'),
+            'gradeable' => $gradeable->load('gradable'),
         ]);
     }
 
