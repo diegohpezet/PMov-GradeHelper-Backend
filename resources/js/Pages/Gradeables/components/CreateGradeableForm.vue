@@ -28,7 +28,7 @@ watchEffect(() => {
 });
 
 const saveGrade = () => {
-  form.post('/grades', {
+  form.post('/gradeables', {
     onSuccess: () => {
       form.reset();
     }
