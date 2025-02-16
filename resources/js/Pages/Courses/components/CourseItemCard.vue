@@ -1,7 +1,9 @@
 <script setup>
 import { Link, router, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n() ;
 const page = usePage();
 const isAdmin = computed(() => page.props.auth.isAdmin);
 
@@ -10,7 +12,7 @@ const props = defineProps({
 });
 
 const deleteCourse = (id) => {
-  if (confirm('Are you sure you want to delete this course?')) {
+  if (confirm(t('courses.delete_confirm'))) {
     router.delete(`/courses/${id}`);
   }
 };
@@ -28,14 +30,14 @@ const deleteCourse = (id) => {
           <div class="btn-group">
             <Link
               class="btn btn-outline-secondary" 
-              title="Edit Course"
+              :title="$t('courses.edit')"
               :href="`/courses/${course.id}/edit`"
             >
               <i class="ri ri-pencil-line"></i>
             </Link>
             <button
               class="btn btn-outline-danger" 
-              title="Delete Course"
+              :title="$t('courses.delete')"
               @click="deleteCourse(course.id)"
             >
               <i class="ri ri-delete-bin-line"></i>
