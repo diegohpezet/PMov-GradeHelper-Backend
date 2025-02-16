@@ -3,10 +3,15 @@
 
     "courses": "Cursos",
     "courses.add": "Agregar nuevo curso",
+    "courses.submit": "Crear Curso",
     "courses.delete": "Eliminar curso",
     "courses.delete_confirm": "Está seguro que quiere eliminar este curso?",
     "courses.edit": "Editar curso",
     "courses.empty": "No hay ningún curso",
+    "courses.field.name": "Nombre",
+    "courses.field.name_placeholder": "Nombre del curso",
+    "courses.field.school_year": "Ciclo Lectivo",
+    "courses.field.school_year_placeholder": "Ciclo Lectivo",
 
     "exercises": "Ejercicios",
     "grades": "Calificaciones",

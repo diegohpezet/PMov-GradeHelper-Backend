@@ -14,22 +14,25 @@ function submit() {
 </script>
 
 <template>
-  <form @submit.prevent="submit">
-    <div class="row g-2">
-      <div class="col-12 col-sm-6 col-lg-4 col-xxl-3 my-3">
-        <label for="name" class="visually-hidden">Name</label>
-        <input type="text" id="name" class="form-control" v-model="form.name" placeholder="Name"/>
+  <form @submit.prevent="submit" class="my-3">
+    <div class="row g-1">
+      <div class="col-12 col-md-6">
+        <label for="name" class="visually-hidden">
+          {{ $t('courses.field.name') }}
+        </label>
+        <input type="text" id="name" class="form-control" v-model="form.name" :placeholder="$t('courses.field.name_placeholder')"/>
       </div>
 
-      <div class="col-12 col-sm-6 col-lg-4 col-xxl-3 my-3">
-        <label for="school_year" class="visually-hidden">School year</label>
-        <input type="text" id="school_year" class="form-control" v-model="form.school_year" placeholder="School Year" />
+      <div class="col-12 col-md-6">
+        <label for="school_year" class="visually-hidden">
+          {{ $t('courses.field.school_year') }}
+        </label>
+        <input type="text" id="school_year" class="form-control" v-model="form.school_year" :placeholder="$t('courses.field.school_year_placeholder')" />
       </div>
 
-      <div class="col-12 col-lg-1 my-lg-3 d-flex">
-        <button type="submit" class="btn btn-primary text-white w-variant">
-          <i class="ri-add-line"></i>
-          <span class="d-inline d-lg-none">Submit</span>
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary">
+          {{ $t('courses.submit') }}
         </button>
       </div>
     </div>
