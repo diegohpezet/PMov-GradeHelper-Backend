@@ -45,7 +45,9 @@ class GradeController extends Controller
             Mail::to($studentEmail)->send(new ExerciseCorrection($grade));
         }
 
-        return redirect()->back()->with('success', 'Grade created successfully');
+        return redirect()
+            ->back()
+            ->with('success', __('grades.created'));
     }
 
     /**
@@ -73,7 +75,9 @@ class GradeController extends Controller
     {
         $grade->update($request->validated());
 
-        return redirect()->route('grades.index')->with('success', 'Grade updated successfully');
+        return redirect()
+            ->route('grades.index')
+            ->with('success', __('grades.updated'));
     }
 
     /**
@@ -83,6 +87,8 @@ class GradeController extends Controller
     {
         $grade->delete();
 
-        return redirect()->back()->with('success', 'Grade deleted successfully');
+        return redirect()
+            ->back()
+            ->with('success', __('grades.deleted'));
     }
 }
