@@ -63,7 +63,7 @@ class ExerciseController extends Controller
 
         $coursesData = [];
         foreach ($request->input('courses', []) as $course) {
-            $coursesData[$course['course_id']] = ['due_date' => $course['due_date']];
+            $coursesData[$course['course_id']] = ['due_at' => $course['due_at']];
         }
 
         $exercise->courses()->sync($coursesData);
