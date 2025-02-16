@@ -24,10 +24,10 @@ class Course extends Model
 
     public function exercises(): BelongsToMany
     {
-        return $this->belongsToMany(Exercise::class)
+        return $this->belongsToMany(Exercise::class, 'assessments')
             ->withPivot('due_at')
             ->withTimestamps()
-            ->using(CourseExercise::class);
+            ->using(Assessment::class);
     }
 
     public function attendances(): HasMany
