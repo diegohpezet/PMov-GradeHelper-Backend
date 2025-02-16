@@ -1,4 +1,6 @@
 {
+    "attendances": "Asistencias",
+
     "courses": "Cursos",
     "courses.add": "Agregar nuevo curso",
     "courses.empty": "No hay ningún curso",
