@@ -4,7 +4,9 @@ import { Link, router, usePage } from '@inertiajs/vue3';
 import CreateStudentForm from './components/CreateStudentForm.vue';
 import LinkStudentList from './components/LinkStudentList.vue';
 import BaseModal from '../../Layouts/components/BaseModal.vue';
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n() ;
 const props = defineProps({ students: [Object] });
 
 const sortedStudents = props.students.sort((a, b) => a.last_name.localeCompare(b.last_name));
@@ -13,7 +15,7 @@ const page = usePage();
 const isAdmin = page.props.auth.isAdmin;
 
 const deleteStudent = (id) => {
-  if (confirm('Are you sure you want to delete this student?')) {
+  if (confirm(t('students.delete_confirm'))) {
     router.delete(`/students/${id}`);
   }
 }
@@ -28,20 +30,22 @@ const openLinkModal = (student) => {
 </script>
 
 <template>
-  <h1 class="fs-2">Students</h1>
+  <h1 class="h2">{{ $t('students') }}</h1>
 
   <details v-if="isAdmin" class="my-3">
     <summary role="button" class="btn btn-primary text-white">
-      <span><i class="ri-add-line"></i>Add new Student</span>
+      <span><i class="ri-add-line"></i>{{ $t('students.add') }}</span>
     </summary>
     <CreateStudentForm />
   </details>
 
-  <ul class="list-group">
+  <p v-if="!sortedStudents.length" class="text-muted">{{ $t('students.empty') }}</p>
+
+  <ul v-else class="list-group">
     <li v-for="student in sortedStudents" :key="student.id" class="list-group-item list-group-item-action d-flex justify-content-between">
       <div>
           <Link :href="`/students/${student.github_username}`" class="card-title fs-4">
-            {{ student.last_name + ' ' + student.first_name }}
+            {{ student.last_name + ', ' + student.first_name }}
           </Link>
         <p class="card-text text-muted fst-italic">
           {{ student.course ? student.course.name : 'No course' }} | <a :href="`https://github.com/${student.github_username}`">@{{
@@ -55,11 +59,19 @@ const openLinkModal = (student) => {
       </div>
 
       <div v-if="isAdmin" class="btn-group text-end my-auto">
-        <Link :href="`/students/${student.id}/edit`" class="btn btn-outline-warning">
+        <Link
+          class="btn btn-outline-secondary"
+          :href="`/students/${student.id}/edit`"
+          :title="$t('students.edit')"
+        >
           <i class="ri ri-pencil-line"></i>
         </Link>
 
-        <button class="btn btn-outline-danger" @click="deleteStudent(student.id)">
+        <button
+          class="btn btn-outline-danger"
+          :title="$t('students.delete')"
+          @click="deleteStudent(student.id)"
+        >
           <i class="ri ri-delete-bin-line"></i>
         </button>
       </div>
@@ -68,14 +80,16 @@ const openLinkModal = (student) => {
 
   <BaseModal v-if="isModalOpen" @close="isModalOpen = false">
     <template #header>
-      <h3 class="fs-4">Link student to user</h3>
+      <h3 class="fs-4">{{ $t('students.link_to_user') }}</h3>
     </template>
     
     <LinkStudentList :student="currentStudent" />
 
     <template #footer>
       <div class="d-flex justify-content-end">
-        <button class="btn btn-secondary" @click="isModalOpen = false">Close</button>
+        <button class="btn btn-secondary" @click="isModalOpen = false">
+          {{ $t('close') }}
+        </button>
       </div>
     </template>
   </BaseModal>

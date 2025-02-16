@@ -1,6 +1,8 @@
 {
     "attendances": "Asistencias",
 
+    "close": "Cerrar",
+
     "courses": "Cursos",
     "courses.add": "Agregar nuevo curso",
     "courses.submit": "Crear curso",
@@ -35,6 +37,14 @@
     "logout": "Cerrar Sesión",
 
     "students": "Estudiantes",
+    "students.add": "Agregar nuevo estudiante",
+    "students.submit": "Crear estudiante",
+    "students.delete": "Eliminar estudiante",
+    "students.delete_confirm": "Está seguro que quiere eliminar este estudiante?",
+    "students.edit": "Editar estudiante",
+    "students.empty": "No hay ningún estudiante para mostrar",
+    "students.link_to_user": "Asociar estudiante con usuario",
+
     "switch_theme": "Cambiar Modo",
     " ": " "
 }
