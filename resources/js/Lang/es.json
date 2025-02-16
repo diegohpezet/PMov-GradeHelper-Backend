@@ -2,5 +2,11 @@
     "courses": "Cursos",
     "courses.add": "Agregar nuevo curso",
     "courses.empty": "No hay ningún curso",
+    "exercises": "Ejercicios",
+    "grades": "Calificaciones",
+    "login": "Iniciar Sesión",
+    "logout": "Cerrar Sesión",
+    "students": "Estudiantes",
+    "switch_theme": "Cambiar Modo",
     " ": " "
 }
