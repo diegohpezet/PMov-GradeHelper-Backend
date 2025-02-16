@@ -38,19 +38,36 @@ const editExercise = (id) => {
 <template>
   <form @submit.prevent="editExercise(exercise.id)">
     <div class="mb-3">
-      <label for="title" class="form-label">Title</label>
-      <input type="text" class="form-control" id="title" v-model="form.title">
+      <label for="title" class="form-label">
+        {{ $t('exercises.field.title') }}
+      </label>
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        :placeholder="$t('exercises.field.title_placeholder')"
+        v-model="form.title"
+      >
       <span v-if="form.errors.title" class="text-danger">{{ form.errors.title }}</span>
     </div>
 
     <div class="mb-3">
-      <label for="path" class="form-label">Path</label>
-      <input type="text" class="form-control" id="path" v-model="form.path">
+      <label for="path" class="form-label">
+        {{ $t('exercises.field.path') }}
+      </label>
+      <input
+        type="text"
+        class="form-control"
+        id="path"
+        :placeholder="$t('exercises.field.path_placeholder')"
+        v-model="form.path"
+      >
       <span v-if="form.errors.path" class="text-danger">{{ form.errors.path }}</span>
     </div>
 
     <div class="mb-3">
-      <label for="courses" class="form-label">Courses:</label>
+      <label for="courses" class="form-label">{{ $t('courses') }}</label>
+      <p class="text-muted">{{ $t('exercises.field.courses_description') }}</p>
       <ul class="list-group">
         <li v-for="(course, index) in courses" :key="course.id" class="list-group-item">
           <input 
@@ -63,7 +80,7 @@ const editExercise = (id) => {
           <label class="form-check-label ms-2" :for="`checkbox-${course.id}`">{{ course.name }}</label>
 
           <div v-if="form.selectedCourses.includes(course.id)">
-            <label :for="`due-at-${course.id}`">Due at</label>
+            <label :for="`due-at-${course.id}`">{{ $t('exercises.field.due_at') }}</label>
             <input 
               type="datetime-local"
               :id="`due-at-${course.id}`"
@@ -77,6 +94,8 @@ const editExercise = (id) => {
       <span v-if="form.errors.courses" class="text-danger">{{ form.errors.courses }}</span>
     </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">
+      {{ $t('exercises.submit_edit') }}
+    </button>
   </form>
 </template>
