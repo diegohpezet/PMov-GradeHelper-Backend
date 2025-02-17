@@ -38,14 +38,6 @@ const toggleTheme = () => {
       Students
     </Link>
 
-    <Link 
-      class="list-group-item list-group-item-action rounded border-0 mb-1" 
-      href="/grades"
-      :class="{ 'active': $page.url.startsWith('/grades') }"
-    >
-      <i class="ri-numbers-line me-2"></i>
-      Grades
-    </Link>
     <hr/>
     <button class="list-group-item text-start" @click="toggleTheme">
       <i class="ri-sun-line me-2"></i>Switch theme

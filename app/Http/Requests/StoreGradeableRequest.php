@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests;
 
-use App\Enums\Enums\GradeResult;
+use App\Enums\GradeableType;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Enum;
 
-class StoreGradeRequest extends FormRequest
+class StoreGradeableRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,13 +25,10 @@ class StoreGradeRequest extends FormRequest
     {
         return [
             'student_id' => 'required|exists:students,id',
-            'exercise_id' => 'required|exists:exercises,id',
-            'comment' => 'nullable|required_without:result|string|max:255',
-            'result' => [
-                'nullable',
-                'required_without:comment',
-                Rule::enum(GradeResult::class)
-            ],
+            'assessment_id' => 'required|exists:assessments,id',
+            'gradeable_type' => ['required', new Enum(GradeableType::class)],
+            'value' => 'required',
+            'comment' => 'nullable|string|max:255',
         ];
     }
 }

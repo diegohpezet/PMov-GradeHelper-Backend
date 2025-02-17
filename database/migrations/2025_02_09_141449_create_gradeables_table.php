@@ -1,6 +1,5 @@
 <?php
 
-use App\Enums\Enums\GradeResult;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -10,14 +9,13 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('grades', function (Blueprint $table) {
+        Schema::create('gradeables', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->foreignUuid('assessment_id')->constrained()->onDelete('cascade');
             $table->foreignUuid('student_id')->constrained()->onDelete('cascade');
-            $table->foreignUuid('exercise_id')->constrained()->onDelete('cascade');
-            $table->enum('result', GradeResult::values())->nullable();
-            $table->string('comment')->nullable();
+            $table->morphs('gradable');
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('grades');
+        Schema::dropIfExists('gradeables');
     }
 };

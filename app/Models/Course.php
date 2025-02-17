@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Course extends Model
 {
@@ -22,12 +22,14 @@ class Course extends Model
         return $this->hasMany(Student::class);
     }
 
-    public function exercises(): BelongsToMany
+    public function assessments(): HasMany
     {
-        return $this->belongsToMany(Exercise::class)
-            ->withPivot('due_at')
-            ->withTimestamps()
-            ->using(CourseExercise::class);
+        return $this->hasMany(Assessment::class);
+    }
+
+    public function exercises(): HasManyThrough
+    {
+        return $this->hasManyThrough(Exercise::class, Assessment::class);
     }
 
     public function attendances(): HasMany

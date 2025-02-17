@@ -33,7 +33,8 @@ class CourseController extends Controller
     /**
      * Display a listing of students for a specific course.
      */
-    public function courseStudents(Course $course) {
+    public function courseStudents(Course $course)
+    {
         return response()->json($course->students);
     }
 
@@ -54,15 +55,23 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-        return Inertia::render('Courses/Show', [
-            'course' => $course->load(['students.course', 'exercises', 'attendances'])
+        $course->load([
+            'students.course',
+            'assessments.exercise',
+            'students.gradeables.gradable',
+            'attendances'
+        ]);
+
+        return inertia('Courses/Show', [
+            'course' => $course
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Course $course) {
+    public function edit(Course $course)
+    {
         return Inertia::render('Courses/Edit', [
             'course' => $course
         ]);
