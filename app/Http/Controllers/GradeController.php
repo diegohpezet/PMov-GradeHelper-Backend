@@ -2,87 +2,83 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\Enums\GradeResult;
-use App\Models\Exercise;
-use App\Models\Grade;
-use App\Models\Student;
+use App\Enums\GradeableType;
 use App\Http\Requests\StoreGradeRequest;
 use App\Http\Requests\UpdateGradeRequest;
 use App\Mail\ExerciseCorrection;
+use App\Models\Gradeable;
+use App\Models\NumericGrade;
+use App\Models\PassFailGrade;
+use App\Models\TEGrade;
 use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 
 class GradeController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $students = Student::with('grades')->get();
-        $exercises = Exercise::all();
-
-        $tableData = $students->map(function ($student) use ($exercises) {
-            return $student->transformWithGrades($exercises);
-        });
-
-        return Inertia::render('Grades/Index', [
-            'exercises' => $exercises,
-            'students' => $tableData,
-        ]);
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreGradeRequest $request)
     {
-        $grade = Grade::create($request->validated());
-
-        // Send email after creating the grade
-        $studentEmail = $grade->student?->user?->email;
-        if ($studentEmail) {
-            Mail::to($studentEmail)->send(new ExerciseCorrection($grade));
+        $validated = $request->validated();
+        
+        // Check if gradeable type is valid
+        $gradeableType = GradeableType::tryFrom($validated['gradeable_type']);
+        
+        if (!$gradeableType) {
+            return redirect()->back()->withErrors(['gradeable_type' => 'Invalid grade type']);
         }
+    
+        // Create grade model instance
+        $gradeModel = new ($gradeableType->model())([
+            'value' => $validated['value'],
+            'comment' => $validated['comment'],
+        ]);
+        $gradeModel->save();
 
+        // Create gradeable
+        $gradeable = Gradeable::create([
+            'assessment_id' => $validated['assessment_id'],
+            'student_id' => $validated['student_id'],
+            'gradable_type' => $gradeableType->model(),
+            'gradable_id' => $gradeModel->id,
+        ]);
+    
+        // Send email to student
+        if ($studentEmail = $gradeable->student?->user?->email) {
+            Mail::to($studentEmail)->send(new ExerciseCorrection($gradeable));
+        }
+    
         return redirect()->back()->with('success', 'Grade created successfully');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Grade $grade)
-    {
-        return response()->json($grade);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Grade $grade)
+    public function edit(Gradeable $grade)
     {
         return Inertia::render('Grades/Edit', [
-            'grade' => $grade
+            'grade' => $grade->load('gradable'),
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateGradeRequest $request, Grade $grade)
+    public function update(UpdateGradeRequest $request, Gradeable $grade)
     {
-        $grade->update($request->validated());
+        $grade->gradable->update($request->validated());
 
-        return redirect()->route('grades.index')->with('success', 'Grade updated successfully');
+        return redirect()->back()->with('success', 'Grade updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Grade $grade)
+    public function destroy(Gradeable $grade)
     {
         $grade->delete();
 
-        return redirect()->back()->with('success', 'Grade deleted successfully');
+        return redirect()->back()->with('success', 'Gradeable deleted successfully');
     }
 }

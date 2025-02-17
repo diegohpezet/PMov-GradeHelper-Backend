@@ -1,4 +1,4 @@
-export function filterStudents(students, selectedStudent, selectedExercise) {
+export function filterStudents(students, selectedStudent, selectedAssessment) {
   return students
     .filter((student) => {
       if (selectedStudent && student.id !== selectedStudent.id) {
@@ -8,16 +8,16 @@ export function filterStudents(students, selectedStudent, selectedExercise) {
     })
     .map((student) => ({
       ...student,
-      grades: selectedExercise
-        ? student.grades.filter((grade) => grade.exercise_id === selectedExercise.id)
-        : student.grades,
-    }));
+      gradeables: selectedAssessment
+        ? student.gradeables.filter((gradeable) => gradeable.assessment_id === selectedAssessment.id)
+        : student.gradeables,
+    }))
+    .sort((a, b) => a.last_name.localeCompare(b.last_name));
 }
 
-
-export function filterExercises(exercises, selectedExercise) {
-  if (!selectedExercise) {
-    return exercises;
+export function filterAssessments(assessments, selectedAssessment) {
+  if (!selectedAssessment) {
+    return assessments;
   }
-  return exercises.filter((exercise) => exercise.id === selectedExercise.id);
+  return assessments.filter((assessment) => assessment.id === selectedAssessment.id);
 }
