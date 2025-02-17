@@ -28,7 +28,9 @@ class ExerciseController extends Controller
     {
         Exercise::create($request->validated());
 
-        return redirect()->back()->with('success', 'Exercise created successfully');
+        return redirect()
+            ->back()
+            ->with('success', __('exercises.created'));
     }
 
     /**
@@ -68,7 +70,9 @@ class ExerciseController extends Controller
 
         $exercise->courses()->sync($coursesData);
 
-        return redirect()->route('exercises.index')->with('success', 'Exercise updated successfully');
+        return redirect()
+            ->route('exercises.index')
+            ->with('success', __('exercises.updated'));
     }
 
     /**
@@ -78,6 +82,8 @@ class ExerciseController extends Controller
     {
         $exercise->delete();
 
-        return redirect()->back()->with('success', 'Exercise deleted successfully');
+        return redirect()
+            ->back()
+            ->with('success', __('exercises.deleted'));
     }
 }
