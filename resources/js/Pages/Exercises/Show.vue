@@ -1,5 +1,5 @@
 <script setup>
-defineProps({ exercise: Object })
+defineProps({ exercise: Object });
 </script>
 
 <template>

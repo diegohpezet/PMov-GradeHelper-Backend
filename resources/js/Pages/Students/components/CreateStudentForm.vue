@@ -5,24 +5,24 @@ const form = useForm({
   first_name: '',
   last_name: '',
   github_username: '',
-  course_id: ''
-})
+  course_id: '',
+});
 
 // Get courses information
-const page = usePage()
-const courses = page.props.courses
+const page = usePage();
+const courses = page.props.courses;
 
 // Get current course if on the course page
-const courseUrlParam = page.url.split('/')[2]
-const currentCourse = courses.find(course => course.id === courseUrlParam)
+const courseUrlParam = page.url.split('/')[2];
+const currentCourse = courses.find((course) => course.id === courseUrlParam);
 
 if (currentCourse) {
-  form.course_id = currentCourse.id
+  form.course_id = currentCourse.id;
 }
 
 function submit() {
   form.post('/students', {
-    onSuccess: () => form.reset()
+    onSuccess: () => form.reset(),
   });
 }
 </script>
@@ -32,24 +32,44 @@ function submit() {
     <div class="row g-2">
       <div class="col-12 col-sm-6 col-xxl-3 my-3">
         <label for="last_name" class="visually-hidden">Last Name</label>
-        <input type="text" id="last_name" class="form-control" v-model="form.last_name" placeholder="Last Name"/>
+        <input
+          id="last_name"
+          v-model="form.last_name"
+          type="text"
+          class="form-control"
+          placeholder="Last Name"
+        />
       </div>
 
       <div class="col-12 col-sm-6 col-xxl-3 my-3">
         <label for="first_name" class="visually-hidden">First Name</label>
-        <input type="text" id="first_name" class="form-control" v-model="form.first_name" placeholder="First Name" />
+        <input
+          id="first_name"
+          v-model="form.first_name"
+          type="text"
+          class="form-control"
+          placeholder="First Name"
+        />
       </div>
 
       <div class="col-12 col-sm-6 col-xxl-3 my-3">
         <label for="github_username" class="visually-hidden">Github</label>
-        <input type="text" id="github_username" class="form-control" v-model="form.github_username" placeholder="Github" />
+        <input
+          id="github_username"
+          v-model="form.github_username"
+          type="text"
+          class="form-control"
+          placeholder="Github"
+        />
       </div>
 
       <div class="col-12 col-sm-6 col-xxl-2 my-3">
         <label for="course_id" class="visually-hidden">Course</label>
-        <select id="course_id" class="form-select" v-model="form.course_id">
+        <select id="course_id" v-model="form.course_id" class="form-select">
           <option value="" disabled>Select a course</option>
-          <option v-for="course in courses" :key="course.id" :value="course.id">{{ course.name }}</option>
+          <option v-for="course in courses" :key="course.id" :value="course.id">
+            {{ course.name }}
+          </option>
         </select>
       </div>
 
@@ -62,7 +82,9 @@ function submit() {
     </div>
 
     <ul v-if="form.errors">
-      <li v-for="error in form.errors" :key="error" class="text-danger">{{ error }}</li>
+      <li v-for="error in form.errors" :key="error" class="text-danger">
+        {{ error }}
+      </li>
     </ul>
   </form>
 </template>

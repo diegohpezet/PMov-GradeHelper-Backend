@@ -11,20 +11,32 @@ const isAdmin = page.props.auth.isAdmin;
 
 const error = ref('');
 
-const sortedStudents = props.students.sort((a, b) => a.last_name.localeCompare(b.last_name));
+const sortedStudents = props.students.sort((a, b) =>
+  a.last_name.localeCompare(b.last_name),
+);
 
 // Get unique attendance dates and sort them
 const sortedDates = ref(
-  Array.from(new Set(props.attendances.map((attendance) => new Date(attendance.date).getTime())))
+  Array.from(
+    new Set(
+      props.attendances.map((attendance) =>
+        new Date(attendance.date).getTime(),
+      ),
+    ),
+  )
     .sort((a, b) => a - b)
-    .map((timestamp) => new Date(timestamp))
+    .map((timestamp) => new Date(timestamp)),
 );
 
 const createAttendanceDate = () => {
   const today = new Date();
   const todayString = today.toISOString().slice(0, 10);
 
-  if (sortedDates.value.find((date) => date.toISOString().slice(0, 10) === todayString)) {
+  if (
+    sortedDates.value.find(
+      (date) => date.toISOString().slice(0, 10) === todayString,
+    )
+  ) {
     return (error.value = 'You already took attendance today');
   }
 
@@ -39,7 +51,8 @@ const updateAttendance = ({ studentId, date, isNowChecked }) => {
     credentials: 'include',
     headers: {
       'X-Requested-With': 'XMLHttpRequest',
-      'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content,
+      'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]')
+        .content,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
@@ -58,7 +71,7 @@ const updateAttendance = ({ studentId, date, isNowChecked }) => {
       const index = props.attendances.findIndex(
         (attendance) =>
           attendance.student_id === studentId &&
-          attendance.date === date.toISOString().slice(0, 10)
+          attendance.date === date.toISOString().slice(0, 10),
       );
       if (index > -1) props.attendances.splice(index, 1);
     }
@@ -69,7 +82,11 @@ const updateAttendance = ({ studentId, date, isNowChecked }) => {
 <template>
   <h1 class="h2">Attendance</h1>
 
-  <button v-if="isAdmin" class="btn btn-primary text-white" @click="createAttendanceDate">
+  <button
+    v-if="isAdmin"
+    class="btn btn-primary text-white"
+    @click="createAttendanceDate"
+  >
     Take attendance
   </button>
 
@@ -82,14 +99,25 @@ const updateAttendance = ({ studentId, date, isNowChecked }) => {
       <tr>
         <th scope="col">Student</th>
         <th scope="col" class="hoverable text-center">Total</th>
-        <th scope="col" class="hoverable text-center" v-for="date in sortedDates" :key="date">
+        <th
+          v-for="date in sortedDates"
+          :key="date"
+          scope="col"
+          class="hoverable text-center"
+        >
           {{ shortDateFormat(date) }}
         </th>
       </tr>
     </thead>
     <tbody>
-      <AttendanceRow v-for="student in sortedStudents" :key="student.id" :student="student" :dates="sortedDates"
-        :attendances="props.attendances" @update-attendance="updateAttendance" />
+      <AttendanceRow
+        v-for="student in sortedStudents"
+        :key="student.id"
+        :student="student"
+        :dates="sortedDates"
+        :attendances="props.attendances"
+        @update-attendance="updateAttendance"
+      />
     </tbody>
   </table>
 </template>

@@ -9,8 +9,8 @@ const form = useForm({
 const gradableType = props.gradeable.gradable_type.split('\\').pop();
 
 const options = {
-  TEGrade: ["TEA", "TEP", "TED"],
-  PassFailGrade: [true, false]
+  TEGrade: ['TEA', 'TEP', 'TED'],
+  PassFailGrade: [true, false],
 };
 
 const editGradeable = () => form.put(`/gradeables/${props.gradeable.id}`);
@@ -21,20 +21,41 @@ const editGradeable = () => form.put(`/gradeables/${props.gradeable.id}`);
   <form @submit.prevent="editGradeable">
     <div v-if="gradableType in options" class="mb-3">
       <label class="form-label">Value</label>
-      <div v-for="option in options[gradableType]" :key="option" class="form-check">
-        <input class="form-check-input" type="radio" v-model="form.value" :value="option">
-        <label class="form-check-label">{{ option === true ? "Passed" : option === false ? "Failed" : option }}</label>
+      <div
+        v-for="option in options[gradableType]"
+        :key="option"
+        class="form-check"
+      >
+        <input
+          v-model="form.value"
+          class="form-check-input"
+          type="radio"
+          :value="option"
+        />
+        <label class="form-check-label">{{
+          option === true ? 'Passed' : option === false ? 'Failed' : option
+        }}</label>
       </div>
     </div>
 
     <div v-else-if="gradableType === 'NumericGrade'" class="mb-3">
       <label class="form-label" for="value">Value</label>
-      <input type="number" class="form-control" id="value" v-model="form.value">
+      <input
+        id="value"
+        v-model="form.value"
+        type="number"
+        class="form-control"
+      />
     </div>
 
     <div class="mb-3">
       <label class="form-label" for="comment">Comment</label>
-      <input type="text" class="form-control" id="comment" v-model="form.comment">
+      <input
+        id="comment"
+        v-model="form.comment"
+        type="text"
+        class="form-control"
+      />
     </div>
 
     <button type="submit" class="btn btn-primary text-white">Submit</button>

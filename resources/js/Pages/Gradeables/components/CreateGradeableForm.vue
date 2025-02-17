@@ -9,7 +9,7 @@ const props = defineProps({
 
 const gradeableTypes = ['PassFailGrade', 'NumericGrade', 'TEGrade'];
 
-const teGradeResultOptions = ["TEA", "TEP", "TED"];
+const teGradeResultOptions = ['TEA', 'TEP', 'TED'];
 const passFailGradeResultOptions = [true, false];
 
 const form = useForm({
@@ -31,7 +31,7 @@ const saveGrade = () => {
   form.post('/gradeables', {
     onSuccess: () => {
       form.reset();
-    }
+    },
   });
 };
 </script>
@@ -41,17 +41,37 @@ const saveGrade = () => {
     <div class="row g-3 mb-3">
       <div class="col-6">
         <label for="student_id" class="visually-hidden">Student</label>
-        <input type="text" id="student_id" :value="props.student?.last_name || ''" disabled class="form-control">
+        <input
+          id="student_id"
+          type="text"
+          :value="props.student?.last_name || ''"
+          disabled
+          class="form-control"
+        />
       </div>
       <div class="col-6">
-        <label for="assessment_id" class="visually-hidden">Assessment exercise</label>
-        <input type="text" id="assessment_id" :value="props.assessment?.exercise.title || ''" disabled class="form-control">
+        <label for="assessment_id" class="visually-hidden"
+          >Assessment exercise</label
+        >
+        <input
+          id="assessment_id"
+          type="text"
+          :value="props.assessment?.exercise.title || ''"
+          disabled
+          class="form-control"
+        />
       </div>
 
       <!-- Dropdown for selecting gradeable type -->
       <div class="col-6">
-        <label for="gradeable_type" class="visually-hidden">Gradeable Type</label>
-        <select id="gradeable_type" class="form-control" v-model="form.gradeable_type">
+        <label for="gradeable_type" class="visually-hidden"
+          >Gradeable Type</label
+        >
+        <select
+          id="gradeable_type"
+          v-model="form.gradeable_type"
+          class="form-control"
+        >
           <option v-for="type in gradeableTypes" :key="type" :value="type">
             {{ type }}
           </option>
@@ -59,17 +79,21 @@ const saveGrade = () => {
       </div>
 
       <!-- TE Grade -->
-      <div class="col-6" v-if="form.gradeable_type === 'TEGrade'">
+      <div v-if="form.gradeable_type === 'TEGrade'" class="col-6">
         <label for="score" class="visually-hidden">Result</label>
-        <div class="form-check" v-for="option in teGradeResultOptions" :key="option">
+        <div
+          v-for="option in teGradeResultOptions"
+          :key="option"
+          class="form-check"
+        >
           <input
+            :id="`value-${option}`"
+            v-model="form.value"
             class="form-check-input"
             type="radio"
             name="value"
-            :id="`value-${option}`"
-            v-model="form.value"
             :value="option"
-          >
+          />
           <label class="form-check-label" :for="`value-${option}`">
             {{ option }}
           </label>
@@ -77,32 +101,50 @@ const saveGrade = () => {
       </div>
 
       <!-- Pass/Fail -->
-      <div class="col-6" v-if="form.gradeable_type === 'PassFailGrade'">
+      <div v-if="form.gradeable_type === 'PassFailGrade'" class="col-6">
         <label for="score" class="visually-hidden">Result</label>
-        <div class="form-check" v-for="option in passFailGradeResultOptions" :key="option">
+        <div
+          v-for="option in passFailGradeResultOptions"
+          :key="option"
+          class="form-check"
+        >
           <input
+            :id="`value-${option}`"
+            v-model="form.value"
             class="form-check-input"
             type="radio"
             name="value"
-            :id="`value-${option}`"
-            v-model="form.value"
             :value="option"
-          >
+          />
           <label class="form-check-label" :for="`value-${option}`">
-            {{ option ? "Passed" : "Failed" }}
+            {{ option ? 'Passed' : 'Failed' }}
           </label>
         </div>
       </div>
 
       <!-- Numeric Grade -->
-      <div class="col-6" v-if="form.gradeable_type === 'NumericGrade'">
+      <div v-if="form.gradeable_type === 'NumericGrade'" class="col-6">
         <label for="score" class="visually-hidden">Result</label>
-        <input type="number" id="score" class="form-control" v-model="form.value" placeholder="Grade" min="0" max="10">
+        <input
+          id="score"
+          v-model="form.value"
+          type="number"
+          class="form-control"
+          placeholder="Grade"
+          min="0"
+          max="10"
+        />
       </div>
 
       <div class="col-12">
         <label for="comment" class="visually-hidden">Comment</label>
-        <input type="text" id="comment" class="form-control" placeholder="Comment" v-model="form.comment">
+        <input
+          id="comment"
+          v-model="form.comment"
+          type="text"
+          class="form-control"
+          placeholder="Comment"
+        />
       </div>
 
       <div class="col-12">
@@ -114,7 +156,9 @@ const saveGrade = () => {
     </div>
 
     <ul v-if="form.errors">
-      <li v-for="error in form.errors" :key="error" class="text-danger">{{ error }}</li>
+      <li v-for="error in form.errors" :key="error" class="text-danger">
+        {{ error }}
+      </li>
     </ul>
   </form>
 </template>
