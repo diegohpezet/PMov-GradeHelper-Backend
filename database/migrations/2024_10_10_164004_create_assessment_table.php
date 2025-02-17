@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('course_exercise', function (Blueprint $table) {
-            $table->uuid('id');
-            $table->foreignUuid('course_id')->onDelete('cascade');
-            $table->foreignUuid('exercise_id')->onDelete('cascade');
+        Schema::create('assessments', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->foreignUuid('course_id')->constrained('courses')->onDelete('cascade');
+            $table->foreignUuid('exercise_id')->constrained('exercises')->onDelete('cascade');
 
             $table->timestamp('due_at')->nullable();
 
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('course_exercise');
+        Schema::dropIfExists('assessments');
     }
 };
