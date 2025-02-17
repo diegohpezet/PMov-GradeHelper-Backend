@@ -11,7 +11,6 @@ const closeModal = () => {
 <template>
   <div class="modal-backdrop mb-3" @click.self="closeModal">
     <div class="modal-content">
-
       <header>
         <slot name="header"></slot>
       </header>
@@ -25,7 +24,6 @@ const closeModal = () => {
       <footer>
         <slot name="footer"></slot>
       </footer>
-
     </div>
   </div>
 </template>

@@ -4,12 +4,14 @@ import { Link, router, usePage } from '@inertiajs/vue3';
 import CreateStudentForm from './components/CreateStudentForm.vue';
 import LinkStudentList from './components/LinkStudentList.vue';
 import BaseModal from '../../Layouts/components/BaseModal.vue';
-import { useI18n } from 'vue-i18n'
+import { useI18n } from 'vue-i18n';
 
-const { t } = useI18n() ;
+const { t } = useI18n();
 const props = defineProps({ students: [Object] });
 
-const sortedStudents = props.students.sort((a, b) => a.last_name.localeCompare(b.last_name));
+const sortedStudents = props.students.sort((a, b) =>
+  a.last_name.localeCompare(b.last_name),
+);
 
 const page = usePage();
 const isAdmin = page.props.auth.isAdmin;
@@ -18,7 +20,7 @@ const deleteStudent = (id) => {
   if (confirm(t('students.delete_confirm'))) {
     router.delete(`/students/${id}`);
   }
-}
+};
 
 const isModalOpen = ref(false);
 const currentStudent = ref(null);
@@ -39,19 +41,34 @@ const openLinkModal = (student) => {
     <CreateStudentForm />
   </details>
 
-  <p v-if="!sortedStudents.length" class="text-muted">{{ $t('students.empty') }}</p>
+  <p v-if="!sortedStudents.length" class="text-muted">
+    {{ $t('students.empty') }}
+  </p>
 
   <ul v-else class="list-group">
-    <li v-for="student in sortedStudents" :key="student.id" class="list-group-item list-group-item-action d-flex justify-content-between">
+    <li
+      v-for="student in sortedStudents"
+      :key="student.id"
+      class="list-group-item list-group-item-action d-flex justify-content-between"
+    >
       <div>
-          <Link :href="`/students/${student.github_username}`" class="card-title fs-4">
-            {{ student.last_name + ', ' + student.first_name }}
-          </Link>
+        <Link
+          :href="`/students/${student.github_username}`"
+          class="card-title fs-4"
+        >
+          {{ student.last_name + ', ' + student.first_name }}
+        </Link>
         <p class="card-text text-muted fst-italic">
-          {{ student.course ? student.course.name : 'No course' }} | <a :href="`https://github.com/${student.github_username}`">@{{
-            student.github_username }}</a>
+          {{ student.course ? student.course.name : 'No course' }} |
+          <a :href="`https://github.com/${student.github_username}`"
+            >@{{ student.github_username }}</a
+          >
 
-          <button v-if="isAdmin" class="btn btn-sm btn-outline-primary ms-2 rounded-circle" @click="openLinkModal(student)">
+          <button
+            v-if="isAdmin"
+            class="btn btn-sm btn-outline-primary ms-2 rounded-circle"
+            @click="openLinkModal(student)"
+          >
             <i v-if="!student.user_id" class="ri ri-link"></i>
             <i v-else class="ri-arrow-left-right-line"></i>
           </button>
@@ -82,7 +99,7 @@ const openLinkModal = (student) => {
     <template #header>
       <h3 class="fs-4">{{ $t('students.link_to_user') }}</h3>
     </template>
-    
+
     <LinkStudentList :student="currentStudent" />
 
     <template #footer>

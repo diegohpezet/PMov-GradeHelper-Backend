@@ -8,7 +8,6 @@ const props = defineProps({ courses: [Object] });
 
 const page = usePage();
 const isAdmin = computed(() => page.props.auth.isAdmin);
-
 </script>
 
 <template>
@@ -22,16 +21,10 @@ const isAdmin = computed(() => page.props.auth.isAdmin);
   </details>
 
   <p v-if="!courses.length" class="text-muted">{{ $t('courses.empty') }}</p>
-  
+
   <div v-else class="row g-2 mt-2">
-    <div
-      class="col-12 col-lg-6"
-      v-for="course in courses" 
-      :key="course.id"
-    >
-      <CourseItemCard 
-        :course="course"
-      />
+    <div v-for="course in courses" :key="course.id" class="col-12 col-lg-6">
+      <CourseItemCard :course="course" />
     </div>
   </div>
 </template>

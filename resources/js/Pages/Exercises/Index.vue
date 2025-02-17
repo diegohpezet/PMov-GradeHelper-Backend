@@ -1,9 +1,9 @@
 <script setup>
 import { Link, router, usePage } from '@inertiajs/vue3';
 import CreateExerciseForm from './components/CreateExerciseForm.vue';
-import { useI18n } from 'vue-i18n'
+import { useI18n } from 'vue-i18n';
 
-const { t } = useI18n() ;
+const { t } = useI18n();
 defineProps({ exercises: [Object] });
 
 const page = usePage();
@@ -13,7 +13,7 @@ const deleteExercise = (id) => {
   if (confirm(t('exercises.delete_confirm'))) {
     router.delete(`/exercises/${id}`);
   }
-}
+};
 </script>
 
 <template>
@@ -29,12 +29,17 @@ const deleteExercise = (id) => {
   <p v-if="!exercises.length" class="text-muted">{{ $t('exercises.empty') }}</p>
 
   <ul v-else class="list-group">
-    <li v-for="exercise in exercises" :key="exercise.id" class="list-group-item d-flex justify-content-between">
+    <li
+      v-for="exercise in exercises"
+      :key="exercise.id"
+      class="list-group-item d-flex justify-content-between"
+    >
       <div>
         <h2 class="card-title fs-4">{{ exercise.title }}</h2>
         <p class="card-text text-muted fst-italic">/{{ exercise.path }}</p>
         <p v-if="exercise.courses.length > 0" class="card-text text-muted">
-          {{ $t('exercises.assigned') }} {{ exercise.courses.map(c => c.name).join(', ') }}
+          {{ $t('exercises.assigned') }}
+          {{ exercise.courses.map((c) => c.name).join(', ') }}
         </p>
       </div>
 

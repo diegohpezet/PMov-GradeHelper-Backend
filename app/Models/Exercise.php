@@ -17,16 +17,16 @@ class Exercise extends Model
         'path',
     ];
 
-    public function courses(): BelongsToMany
+    public function assessments(): HasMany
     {
-        return $this->belongsToMany(Course::class)
-            ->withPivot('due_at')
-            ->withTimestamps()
-            ->using(CourseExercise::class);
+        return $this->hasMany(Assessment::class);
     }
 
-    public function grades(): HasMany
+    public function courses(): BelongsToMany
     {
-        return $this->hasMany(Grade::class);
+        return $this->belongsToMany(Course::class, 'assessments')
+            ->withPivot('due_at')
+            ->withTimestamps()
+            ->using(Assessment::class);
     }
 }

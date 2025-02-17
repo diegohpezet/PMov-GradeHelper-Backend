@@ -33,7 +33,8 @@ class CourseController extends Controller
     /**
      * Display a listing of students for a specific course.
      */
-    public function courseStudents(Course $course) {
+    public function courseStudents(Course $course)
+    {
         return response()->json($course->students);
     }
 
@@ -44,7 +45,9 @@ class CourseController extends Controller
     {
         Course::create($request->validated());
 
-        return redirect()->back()->with('success', 'Course created successfully');
+        return redirect()
+            ->back()
+            ->with('success', __('courses.created'));
     }
 
     /**
@@ -52,15 +55,23 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-        return Inertia::render('Courses/Show', [
-            'course' => $course->load(['students.course', 'exercises', 'attendances'])
+        $course->load([
+            'students.course',
+            'assessments.exercise',
+            'students.gradeables.gradable',
+            'attendances'
+        ]);
+
+        return inertia('Courses/Show', [
+            'course' => $course
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Course $course) {
+    public function edit(Course $course)
+    {
         return Inertia::render('Courses/Edit', [
             'course' => $course
         ]);
@@ -73,7 +84,9 @@ class CourseController extends Controller
     {
         $course->update($request->validated());
 
-        return redirect()->route('courses.index')->with('success', 'Course updated successfully');
+        return redirect()
+            ->route('courses.index')
+            ->with('success', __('courses.updated'));
     }
 
     /**
@@ -83,6 +96,8 @@ class CourseController extends Controller
     {
         $course->delete();
 
-        return redirect()->back()->with('success', 'Course deleted successfully');
+        return redirect()
+            ->back()
+            ->with('success', __('courses.deleted'));
     }
 }

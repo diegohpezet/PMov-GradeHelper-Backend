@@ -1,6 +1,6 @@
 <template>
   <footer class="container">
-    <hr>
+    <hr />
     <small>Grade Helper</small>
   </footer>
 </template>

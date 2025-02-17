@@ -5,24 +5,24 @@ const form = useForm({
   first_name: '',
   last_name: '',
   github_username: '',
-  course_id: ''
-})
+  course_id: '',
+});
 
 // Get courses information
-const page = usePage()
-const courses = page.props.courses
+const page = usePage();
+const courses = page.props.courses;
 
 // Get current course if on the course page
-const courseUrlParam = page.url.split('/')[2]
-const currentCourse = courses.find(course => course.id === courseUrlParam)
+const courseUrlParam = page.url.split('/')[2];
+const currentCourse = courses.find((course) => course.id === courseUrlParam);
 
 if (currentCourse) {
-  form.course_id = currentCourse.id
+  form.course_id = currentCourse.id;
 }
 
 function submit() {
   form.post('/students', {
-    onSuccess: () => form.reset()
+    onSuccess: () => form.reset(),
   });
 }
 </script>
@@ -35,10 +35,10 @@ function submit() {
           {{ $t('students.field.last_name') }}
         </label>
         <input
-          type="text"
           id="last_name"
-          class="form-control"
           v-model="form.last_name"
+          type="text"
+          class="form-control"
           :placeholder="$t('students.field.last_name')"
         />
       </div>
@@ -48,10 +48,10 @@ function submit() {
           {{ $t('students.field.first_name') }}
         </label>
         <input
-          type="text"
           id="first_name"
-          class="form-control"
           v-model="form.first_name"
+          type="text"
+          class="form-control"
           :placeholder="$t('students.field.first_name')"
         />
       </div>
@@ -61,10 +61,10 @@ function submit() {
           {{ $t('students.field.github_username') }}
         </label>
         <input
-          type="text"
           id="github_username"
-          class="form-control"
           v-model="form.github_username"
+          type="text"
+          class="form-control"
           :placeholder="$t('students.field.github_username')"
         />
       </div>
@@ -73,11 +73,13 @@ function submit() {
         <label for="course_id" class="visually-hidden">
           {{ $t('students.field.course') }}
         </label>
-        <select id="course_id" class="form-select" v-model="form.course_id">
+        <select id="course_id" v-model="form.course_id" class="form-select">
           <option value="" disabled>
             {{ $t('students.field.course_select') }}
           </option>
-          <option v-for="course in courses" :key="course.id" :value="course.id">{{ course.name }}</option>
+          <option v-for="course in courses" :key="course.id" :value="course.id">
+            {{ course.name }}
+          </option>
         </select>
       </div>
 
@@ -89,7 +91,9 @@ function submit() {
     </div>
 
     <ul v-if="form.errors">
-      <li v-for="error in form.errors" :key="error" class="text-danger">{{ error }}</li>
+      <li v-for="error in form.errors" :key="error" class="text-danger">
+        {{ error }}
+      </li>
     </ul>
   </form>
 </template>

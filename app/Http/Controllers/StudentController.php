@@ -29,7 +29,9 @@ class StudentController extends Controller
     {
         Student::create($request->validated());
 
-        return redirect()->back()->with('success', 'Student created successfully');
+        return redirect()
+            ->back()
+            ->with('success', __('students.created'));
     }
 
     /**
@@ -63,7 +65,9 @@ class StudentController extends Controller
     {
         $student->update($request->validated());
 
-        return redirect()->route('students.index')->with('success', 'Student updated successfully');
+        return redirect()
+            ->route('students.index')
+            ->with('success', __('students.updated'));
     }
 
     /**
@@ -73,6 +77,8 @@ class StudentController extends Controller
     {
         $student->delete();
 
-        return redirect()->back()->with('success', 'Student deleted successfully');
+        return redirect()
+            ->back()
+            ->with('success', __('students.deleted'));
     }
 }

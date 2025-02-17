@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('course_exercise', function (Blueprint $table) {
-            $table->uuid('id');
-            $table->foreignUuid('course_id')->onDelete('cascade');
-            $table->foreignUuid('exercise_id')->onDelete('cascade');
-
-            $table->timestamp('due_at')->nullable();
-
+        Schema::create('pass_fail_grades', function (Blueprint $table) {
+            $table->id();
+            $table->boolean('value');
+            $table->text('comment')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('course_exercise');
+        Schema::dropIfExists('passfail_grades');
     }
 };

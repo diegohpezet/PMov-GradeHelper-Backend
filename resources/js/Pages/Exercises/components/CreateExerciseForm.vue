@@ -3,12 +3,12 @@ import { useForm } from '@inertiajs/vue3';
 
 const form = useForm({
   title: '',
-  path: ''
-})
+  path: '',
+});
 
 function submit() {
   form.post('/exercises', {
-    onSuccess: () => form.reset()
+    onSuccess: () => form.reset(),
   });
 }
 </script>
@@ -21,10 +21,10 @@ function submit() {
           {{ $t('exercises.field.title') }}
         </label>
         <input
-          type="text"
           id="title"
-          class="form-control"
           v-model="form.title"
+          type="text"
+          class="form-control"
           :placeholder="$t('exercises.field.title_placeholder')"
         />
       </div>
@@ -34,10 +34,10 @@ function submit() {
           {{ $t('exercises.field.path') }}
         </label>
         <input
-          type="text"
           id="path"
-          class="form-control"
           v-model="form.path"
+          type="text"
+          class="form-control"
           :placeholder="$t('exercises.field.path_placeholder')"
         />
       </div>
@@ -50,7 +50,9 @@ function submit() {
     </div>
 
     <ul v-if="form.errors">
-      <li v-for="error in form.errors" :key="error" class="text-danger">{{ error }}</li>
+      <li v-for="error in form.errors" :key="error" class="text-danger">
+        {{ error }}
+      </li>
     </ul>
   </form>
 </template>
