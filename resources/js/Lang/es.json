@@ -40,6 +40,9 @@
     "grades.results.passed": "aprobado",
 
     "login": "Iniciar Sesión",
+    "login.fields.email": "Email",
+    "login.fields.password": "Contraseña",
+    "login.fields.remember": "Recordarme",
     "logout": "Cerrar Sesión",
 
     "students": "Estudiantes",

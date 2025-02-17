@@ -32,12 +32,15 @@ function handleSubmit() {
 
     <form @submit.prevent="handleSubmit">
       <div class="mb-3">
-        <label for="email" value="Email" class="form-label">Email</label>
+        <label for="email" value="Email" class="form-label">
+          {{ $t('login.fields.email') }}
+        </label>
         <input
           id="email"
           v-model="form.email"
           type="email"
           class="form-control"
+          :disabled="form.processing"
           autofocus
         />
         <span v-if="form.errors.email" class="text-danger">{{
@@ -46,12 +49,15 @@ function handleSubmit() {
       </div>
 
       <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
+        <label for="password" class="form-label">
+          {{ $t('login.fields.password') }}
+        </label>
         <input
           id="password"
           v-model="form.password"
           type="password"
           class="form-control"
+          :disabled="form.processing"
         />
         <span v-if="form.errors.password" class="text-danger">{{
           form.errors.password
@@ -65,18 +71,19 @@ function handleSubmit() {
           v-model:="form.remember"
           class="form-check-input"
         />
-        <label class="form-check-label ms-2" :for="`checkbox-remember`"
-          >Remember me</label
-        >
+        <label class="form-check-label ms-2" for="checkbox-remember">
+          {{ $t('login.fields.remember') }}
+        </label>
       </div>
 
       <div class="mb-3 d-flex align-items-center justify-content-end">
-        <input
+        <button
           type="submit"
           class="btn btn-primary ms-4"
           :disabled="form.processing"
-          value="Log in"
-        />
+        >
+          {{ $t('login') }}
+        </button>
       </div>
     </form>
   </div>
