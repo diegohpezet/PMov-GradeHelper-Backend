@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from 'vue';
 
-const props = defineProps({
-  grade: Object,
+defineProps({
+  grade: { type: Object, required: true, default: () => ({}) },
 });
 
 const showTruncated = ref(true);
@@ -11,6 +11,10 @@ const dateFormatter = new Intl.DateTimeFormat('es-AR', {
   dateStyle: 'short',
   timeStyle: 'short',
 });
+
+const isPassFailGrade = (gradeable) => {
+  return gradeable.gradable_type === 'App\\Models\\PassFailGrade';
+};
 </script>
 
 <template>
@@ -18,11 +22,15 @@ const dateFormatter = new Intl.DateTimeFormat('es-AR', {
     <div
       class="col-1"
       :class="{
-        'text-danger': grade.result == 'failed',
-        'text-success': grade.result == 'passed',
+        'text-danger': isPassFailGrade(grade) && !grade.gradable.value,
+        'text-success': isPassFailGrade(grade) && grade.gradable.value,
       }"
     >
-      {{ grade.result }}
+      {{
+        isPassFailGrade(grade)
+          ? (grade.gradable.value && 'Passed') || 'Failed'
+          : grade.gradable.value
+      }}
     </div>
     <div
       class="col"
@@ -30,7 +38,7 @@ const dateFormatter = new Intl.DateTimeFormat('es-AR', {
         'text-truncate': showTruncated,
       }"
     >
-      {{ grade.comment }}
+      {{ grade.gradable.comment }}
     </div>
     <div class="col-auto">
       {{ dateFormatter.format(new Date(grade.created_at)) }}
