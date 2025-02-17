@@ -28,9 +28,9 @@ function submit() {
 </script>
 
 <template>
-  <form @submit.prevent="submit">
+  <form class="my-3" @submit.prevent="submit">
     <div class="row g-2">
-      <div class="col-12 col-sm-6 col-xxl-3 my-3">
+      <div class="col-12 col-md-6">
         <label for="last_name" class="visually-hidden">
           {{ $t('students.field.last_name') }}
         </label>
@@ -43,7 +43,7 @@ function submit() {
         />
       </div>
 
-      <div class="col-12 col-sm-6 col-xxl-3 my-3">
+      <div class="col-12 col-md-6">
         <label for="first_name" class="visually-hidden">
           {{ $t('students.field.first_name') }}
         </label>
@@ -56,7 +56,7 @@ function submit() {
         />
       </div>
 
-      <div class="col-12 col-sm-6 col-xxl-3 my-3">
+      <div class="col-12 col-md-6">
         <label for="github_username" class="visually-hidden">
           {{ $t('students.field.github_username') }}
         </label>
@@ -69,7 +69,7 @@ function submit() {
         />
       </div>
 
-      <div class="col-12 col-sm-6 col-xxl-2 my-3">
+      <div class="col-12 col-md-6">
         <label for="course_id" class="visually-hidden">
           {{ $t('students.field.course') }}
         </label>

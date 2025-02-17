@@ -14,9 +14,9 @@ function submit() {
 </script>
 
 <template>
-  <form @submit.prevent="submit">
+  <form class="my-3" @submit.prevent="submit">
     <div class="row g-2">
-      <div class="col-12 col-sm-6 col-lg-4 col-xxl-3 my-3">
+      <div class="col-12 col-md-6">
         <label for="title" class="visually-hidden">
           {{ $t('exercises.field.title') }}
         </label>
@@ -29,7 +29,7 @@ function submit() {
         />
       </div>
 
-      <div class="col-12 col-sm-6 col-lg-4 col-xxl-3 my-3">
+      <div class="col-12 col-md-6">
         <label for="path" class="visually-hidden">
           {{ $t('exercises.field.path') }}
         </label>
@@ -56,11 +56,3 @@ function submit() {
     </ul>
   </form>
 </template>
-
-<style scoped>
-@media (max-width: 992px) {
-  .w-variant {
-    width: 100%;
-  }
-}
-</style>

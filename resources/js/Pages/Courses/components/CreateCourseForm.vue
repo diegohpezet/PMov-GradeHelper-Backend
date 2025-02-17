@@ -15,7 +15,7 @@ function submit() {
 
 <template>
   <form class="my-3" @submit.prevent="submit">
-    <div class="row g-1">
+    <div class="row g-2">
       <div class="col-12 col-md-6">
         <label for="name" class="visually-hidden">
           {{ $t('courses.field.name') }}
@@ -56,11 +56,3 @@ function submit() {
     </ul>
   </form>
 </template>
-
-<style scoped>
-@media (max-width: 992px) {
-  .w-variant {
-    width: 100%;
-  }
-}
-</style>
