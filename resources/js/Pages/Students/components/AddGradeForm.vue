@@ -8,14 +8,14 @@ const props = defineProps({
   exerciseId: String,
 });
 
-const page = usePage()
-const gradeResultOptions = page.props.gradeResultOptions
+const page = usePage();
+const gradeResultOptions = page.props.gradeResultOptions;
 
 const form = useForm({
   student_id: props.studentId,
   exercise_id: props.exerciseId,
   result: undefined,
-  comment: ''
+  comment: '',
 });
 
 const saveGrade = () => {
@@ -23,7 +23,7 @@ const saveGrade = () => {
     onSuccess: () => {
       form.reset();
       emit('close');
-    }
+    },
   });
 };
 </script>
@@ -31,25 +31,51 @@ const saveGrade = () => {
 <template>
   <form class="row g-3 align-items-center" @submit.prevent="saveGrade">
     <div class="col-auto">
-      <div class="form-check" v-for="option in gradeResultOptions">
-        <input class="form-check-input" v-model="form.result" :value="option" type="radio"
-          :name="`result-radio-${exerciseId}`" :id="`result-radio-${option}-${exerciseId}`" :disabled="form.processing">
-        <label class="form-check-label" :for="`result-radio-${option}-${exerciseId}`">
+      <div v-for="option in gradeResultOptions" class="form-check">
+        <input
+          :id="`result-radio-${option}-${exerciseId}`"
+          v-model="form.result"
+          class="form-check-input"
+          :value="option"
+          type="radio"
+          :name="`result-radio-${exerciseId}`"
+          :disabled="form.processing"
+        />
+        <label
+          class="form-check-label"
+          :for="`result-radio-${option}-${exerciseId}`"
+        >
           {{ option }}
         </label>
       </div>
     </div>
     <div class="col">
-      <textarea class="form-control" :name="`comment-${exerciseId}`" :id="`comment-${exerciseId}`" rows="3"
-        v-model="form.comment" :disabled="form.processing"></textarea>
+      <textarea
+        :id="`comment-${exerciseId}`"
+        v-model="form.comment"
+        class="form-control"
+        :name="`comment-${exerciseId}`"
+        rows="3"
+        :disabled="form.processing"
+      ></textarea>
     </div>
     <div class="col-12">
-      <button class="btn btn-primary me-3" type="submit" :disabled="form.processing">
+      <button
+        class="btn btn-primary me-3"
+        type="submit"
+        :disabled="form.processing"
+      >
         <i class="ri-add-line"></i>
         Add Grade
       </button>
-      <button class="btn btn-secondary" type="button" @click="$emit('close')"
-        :disabled="form.processing">Cancel</button>
+      <button
+        class="btn btn-secondary"
+        type="button"
+        :disabled="form.processing"
+        @click="$emit('close')"
+      >
+        Cancel
+      </button>
     </div>
   </form>
 </template>

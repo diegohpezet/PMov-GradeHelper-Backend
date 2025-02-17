@@ -4,7 +4,7 @@ import { useForm, usePage } from '@inertiajs/vue3';
 const props = defineProps({ grade: Object });
 
 const page = usePage();
-const gradeResultOptions = page.props.gradeResultOptions
+const gradeResultOptions = page.props.gradeResultOptions;
 
 const form = useForm(props.grade);
 
@@ -19,9 +19,15 @@ const editGrade = (gradeId) => {
   <form @submit.prevent="editGrade(grade.id)">
     <div class="mb-3">
       <label for="score" class="visually-hidden">Result</label>
-      <div class="form-check" v-for="option in gradeResultOptions">
-        <input class="form-check-input" type="radio" name="result" :id="`result-${option}`" v-model="form.result"
-          :value="option">
+      <div v-for="option in gradeResultOptions" class="form-check">
+        <input
+          :id="`result-${option}`"
+          v-model="form.result"
+          class="form-check-input"
+          type="radio"
+          name="result"
+          :value="option"
+        />
         <label class="form-check-label" :for="`result-${option}`">
           {{ option }}
         </label>
@@ -30,8 +36,15 @@ const editGrade = (gradeId) => {
 
     <div class="mb-3">
       <label for="comment" class="form-label">Comment</label>
-      <input type="text" class="form-control" id="comment" v-model="form.comment">
-      <span v-if="form.errors.comment" class="text-danger">{{ form.errors.comment }}</span>
+      <input
+        id="comment"
+        v-model="form.comment"
+        type="text"
+        class="form-control"
+      />
+      <span v-if="form.errors.comment" class="text-danger">{{
+        form.errors.comment
+      }}</span>
     </div>
 
     <button type="submit" class="btn btn-primary">Submit</button>

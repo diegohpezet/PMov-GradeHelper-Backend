@@ -18,7 +18,9 @@ const attendancePercentage = computed(() => {
   const attendedDates = props.attendances.filter(
     (attendance) =>
       attendance.student_id === props.student.id &&
-      props.dates.some((date) => date.toISOString().slice(0, 10) === attendance.date)
+      props.dates.some(
+        (date) => date.toISOString().slice(0, 10) === attendance.date,
+      ),
   ).length;
 
   return totalDates > 0 ? Math.round((attendedDates / totalDates) * 100) : 0;
@@ -29,8 +31,8 @@ const isStudentPresent = (date) => {
     props.attendances.find(
       (attendance) =>
         attendance.date === date.toISOString().slice(0, 10) &&
-        attendance.student_id === props.student.id
-    )
+        attendance.student_id === props.student.id,
+    ),
   );
 };
 
@@ -47,7 +49,7 @@ const handleAttendanceChange = (date, isNowChecked) => {
   <tr>
     <td>{{ student.last_name + ' ' + student.first_name }}</td>
     <td class="text-center">{{ attendancePercentage }}%</td>
-    <td class="text-center" v-for="date in dates" :key="date">
+    <td v-for="date in dates" :key="date" class="text-center">
       <input
         type="checkbox"
         class="form-check-input"

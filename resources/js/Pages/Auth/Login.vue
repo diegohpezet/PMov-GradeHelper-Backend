@@ -40,23 +40,50 @@ export default {
     <form @submit.prevent="submit">
       <div class="mb-3">
         <label for="email" value="Email" class="form-label">Email</label>
-        <input id="email" type="email" class="form-control" v-model="form.email" autofocus />
-        <span v-if="form.errors.email" class="text-danger">{{ form.errors.email }}</span>
+        <input
+          id="email"
+          v-model="form.email"
+          type="email"
+          class="form-control"
+          autofocus
+        />
+        <span v-if="form.errors.email" class="text-danger">{{
+          form.errors.email
+        }}</span>
       </div>
 
       <div class="mb-3">
         <label for="password" class="form-label">Password</label>
-        <input id="password" type="password" class="form-control" v-model="form.password">
-        <span v-if="form.errors.password" class="text-danger">{{ form.errors.password }}</span>
+        <input
+          id="password"
+          v-model="form.password"
+          type="password"
+          class="form-control"
+        />
+        <span v-if="form.errors.password" class="text-danger">{{
+          form.errors.password
+        }}</span>
       </div>
 
       <div class="mb-3">
-        <input type="checkbox" v-model:="form.remember" class="form-check-input" :id="`checkbox-remember`">
-        <label class="form-check-label ms-2" :for="`checkbox-remember`">Remember me</label>
+        <input
+          :id="`checkbox-remember`"
+          type="checkbox"
+          v-model:="form.remember"
+          class="form-check-input"
+        />
+        <label class="form-check-label ms-2" :for="`checkbox-remember`"
+          >Remember me</label
+        >
       </div>
 
       <div class="mb-3 d-flex align-items-center justify-content-end">
-        <input type="submit" class="btn btn-primary ms-4" :disabled="form.processing" value="Log in" />
+        <input
+          type="submit"
+          class="btn btn-primary ms-4"
+          :disabled="form.processing"
+          value="Log in"
+        />
       </div>
     </form>
   </div>

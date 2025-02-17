@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref } from 'vue';
 import GradeRow from './GradeRow.vue';
 import AddGradeForm from './AddGradeForm.vue';
 
@@ -15,15 +15,25 @@ const showGradeForm = ref(false);
   <div class="mb-3">
     <div class="d-flex align-items-center mb-2">
       <h2 class="h3">{{ exercise.title }}</h2>
-      <button class="btn btn-sm btn-outline-secondary ms-1" v-if="!showGradeForm" @click="showGradeForm = true">
+      <button
+        v-if="!showGradeForm"
+        class="btn btn-sm btn-outline-secondary ms-1"
+        @click="showGradeForm = true"
+      >
         Add Grade
       </button>
     </div>
 
-    <AddGradeForm class="mb-3" v-if="showGradeForm" :studentId="studentId" :exerciseId="exercise.id" @close="showGradeForm = false" />
+    <AddGradeForm
+      v-if="showGradeForm"
+      class="mb-3"
+      :student-id="studentId"
+      :exercise-id="exercise.id"
+      @close="showGradeForm = false"
+    />
 
-    <ul class="list-group" v-if="exercise.grades.length">
-      <li class="list-group-item" v-for="gr in exercise.grades">
+    <ul v-if="exercise.grades.length" class="list-group">
+      <li v-for="gr in exercise.grades" class="list-group-item">
         <GradeRow :grade="gr" />
       </li>
     </ul>

@@ -7,14 +7,14 @@ const props = defineProps({
   exercise: Object,
 });
 
-const page = usePage()
-const gradeResultOptions = page.props.gradeResultOptions
+const page = usePage();
+const gradeResultOptions = page.props.gradeResultOptions;
 
 const form = useForm({
   student_id: props.student?.id || '',
   exercise_id: props.exercise?.id || '',
   result: '',
-  comment: ''
+  comment: '',
 });
 
 watchEffect(() => {
@@ -28,7 +28,7 @@ const saveGrade = () => {
   form.post('/grades', {
     onSuccess: () => {
       form.reset();
-    }
+    },
   });
 };
 </script>
@@ -38,23 +38,35 @@ const saveGrade = () => {
     <div class="row g-3 mb-3">
       <div class="col-6">
         <label for="student_id" class="visually-hidden">Student</label>
-        <input type="text" id="student_id" :value="props.student?.last_name || ''" disabled class="form-control">
+        <input
+          id="student_id"
+          type="text"
+          :value="props.student?.last_name || ''"
+          disabled
+          class="form-control"
+        />
       </div>
       <div class="col-6">
         <label for="exercise_id" class="visually-hidden">Exercise</label>
-        <input type="text" id="exercise_id" :value="props.exercise?.title || ''" disabled class="form-control">
+        <input
+          id="exercise_id"
+          type="text"
+          :value="props.exercise?.title || ''"
+          disabled
+          class="form-control"
+        />
       </div>
       <div class="col-6">
         <label for="score" class="visually-hidden">Result</label>
-        <div class="form-check" v-for="option in gradeResultOptions">
+        <div v-for="option in gradeResultOptions" class="form-check">
           <input
+            :id="`result-${option}`"
+            v-model="form.result"
             class="form-check-input"
             type="radio"
             name="result"
-            :id="`result-${option}`"
-            v-model="form.result"
             :value="option"
-          >
+          />
           <label class="form-check-label" :for="`result-${option}`">
             {{ option }}
           </label>
@@ -62,7 +74,13 @@ const saveGrade = () => {
       </div>
       <div class="col-6">
         <label for="comment" class="visually-hidden">Comment</label>
-        <input type="text" id="comment" class="form-control" placeholder="Comment" v-model="form.comment">
+        <input
+          id="comment"
+          v-model="form.comment"
+          type="text"
+          class="form-control"
+          placeholder="Comment"
+        />
       </div>
       <div class="col-12">
         <button type="submit" class="btn btn-primary text-white w-variant">
@@ -73,7 +91,9 @@ const saveGrade = () => {
     </div>
 
     <ul v-if="form.errors">
-      <li v-for="error in form.errors" :key="error" class="text-danger">{{ error }}</li>
+      <li v-for="error in form.errors" :key="error" class="text-danger">
+        {{ error }}
+      </li>
     </ul>
   </form>
 </template>

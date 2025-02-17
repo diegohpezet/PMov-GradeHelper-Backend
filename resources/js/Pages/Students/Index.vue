@@ -7,7 +7,9 @@ import BaseModal from '../../Layouts/components/BaseModal.vue';
 
 const props = defineProps({ students: [Object] });
 
-const sortedStudents = props.students.sort((a, b) => a.last_name.localeCompare(b.last_name));
+const sortedStudents = props.students.sort((a, b) =>
+  a.last_name.localeCompare(b.last_name),
+);
 
 const page = usePage();
 const isAdmin = page.props.auth.isAdmin;
@@ -16,7 +18,7 @@ const deleteStudent = (id) => {
   if (confirm('Are you sure you want to delete this student?')) {
     router.delete(`/students/${id}`);
   }
-}
+};
 
 const isModalOpen = ref(false);
 const currentStudent = ref(null);
@@ -38,16 +40,29 @@ const openLinkModal = (student) => {
   </details>
 
   <ul class="list-group">
-    <li v-for="student in sortedStudents" :key="student.id" class="list-group-item list-group-item-action d-flex justify-content-between">
+    <li
+      v-for="student in sortedStudents"
+      :key="student.id"
+      class="list-group-item list-group-item-action d-flex justify-content-between"
+    >
       <div>
-          <Link :href="`/students/${student.github_username}`" class="card-title fs-4">
-            {{ student.last_name + ' ' + student.first_name }}
-          </Link>
+        <Link
+          :href="`/students/${student.github_username}`"
+          class="card-title fs-4"
+        >
+          {{ student.last_name + ' ' + student.first_name }}
+        </Link>
         <p class="card-text text-muted fst-italic">
-          {{ student.course ? student.course.name : 'No course' }} | <a :href="`https://github.com/${student.github_username}`">@{{
-            student.github_username }}</a>
+          {{ student.course ? student.course.name : 'No course' }} |
+          <a :href="`https://github.com/${student.github_username}`"
+            >@{{ student.github_username }}</a
+          >
 
-          <button v-if="isAdmin" class="btn btn-sm btn-outline-primary ms-2 rounded-circle" @click="openLinkModal(student)">
+          <button
+            v-if="isAdmin"
+            class="btn btn-sm btn-outline-primary ms-2 rounded-circle"
+            @click="openLinkModal(student)"
+          >
             <i v-if="!student.user_id" class="ri ri-link"></i>
             <i v-else class="ri-arrow-left-right-line"></i>
           </button>
@@ -55,11 +70,17 @@ const openLinkModal = (student) => {
       </div>
 
       <div v-if="isAdmin" class="btn-group text-end my-auto">
-        <Link :href="`/students/${student.id}/edit`" class="btn btn-outline-warning">
+        <Link
+          :href="`/students/${student.id}/edit`"
+          class="btn btn-outline-warning"
+        >
           <i class="ri ri-pencil-line"></i>
         </Link>
 
-        <button class="btn btn-outline-danger" @click="deleteStudent(student.id)">
+        <button
+          class="btn btn-outline-danger"
+          @click="deleteStudent(student.id)"
+        >
           <i class="ri ri-delete-bin-line"></i>
         </button>
       </div>
@@ -70,12 +91,14 @@ const openLinkModal = (student) => {
     <template #header>
       <h3 class="fs-4">Link student to user</h3>
     </template>
-    
+
     <LinkStudentList :student="currentStudent" />
 
     <template #footer>
       <div class="d-flex justify-content-end">
-        <button class="btn btn-secondary" @click="isModalOpen = false">Close</button>
+        <button class="btn btn-secondary" @click="isModalOpen = false">
+          Close
+        </button>
       </div>
     </template>
   </BaseModal>
