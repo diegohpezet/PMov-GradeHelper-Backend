@@ -1,13 +1,13 @@
 <script setup>
 import { ref, watchEffect } from 'vue';
-import GradesHistoryItem from './GradesHistoryItem.vue';
+import GradeablesHistoryItem from './GradeablesHistoryItem.vue';
 
 const props = defineProps({ student: Object, assessment: Object });
 
 const gradeables = ref([]);
 
-function removeGrade(gradeId) {
-  gradeables.value = gradeables.value.filter(grade => grade.id !== gradeId);
+function removeGradeable(gradeableId) {
+  gradeables.value = gradeables.value.filter(gradeable => gradeable.id !== gradeableId);
 }
 
 watchEffect(() => {
@@ -23,11 +23,11 @@ watchEffect(() => {
       <span>History</span>
     </summary>
     <ul class="list-group list-group-flush">
-      <GradesHistoryItem 
-        v-for="grade in gradeables" 
-        :key="grade.created_at"
-        :grade="grade"
-        @delete-grade="removeGrade"
+      <GradeablesHistoryItem 
+        v-for="gradeable in gradeables" 
+        :key="gradeable.created_at"
+        :gradeable="gradeable"
+        @delete-gradeable="removeGradeable"
       />
     </ul>
   </details>

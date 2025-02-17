@@ -2,8 +2,8 @@
 import { computed, ref } from 'vue';
 import { filterStudents, filterAssessments } from './utils/filters';
 import CheckOnlineStatus from './components/CheckOnlineStatus.vue';
-import CreateGradeForm from './components/CreateGradeForm.vue';
-import GradesHistory from './components/GradesHistory.vue';
+import CreateGradeableForm from './components/CreateGradeableForm.vue';
+import GradeablesHistory from './components/GradeablesHistory.vue';
 import { usePage } from '@inertiajs/vue3';
 
 const props = defineProps({
@@ -36,15 +36,15 @@ const applyStudentListFilter = (student) => {
     selectedStudent.value && selectedStudent.value.id === student.id ? null : student;
 };
 
-// Get grade value for assessment
-const getLastGrade = (student, assessment) => {
-  const grade = student.gradeables.find((grade) => grade.assessment_id === assessment.id);
+// Get gradeable value for assessment
+const getLastGradeable = (student, assessment) => {
+  const gradeable = student.gradeables.find((gradeable) => gradeable.assessment_id === assessment.id);
 
-  if (grade && grade.gradable_type === 'App\\Models\\PassFailGrade') {
-    return grade.gradable.value ? 'Passed' : 'Failed';
+  if (gradeable && gradeable.gradable_type === 'App\\Models\\PassFailGrade') {
+    return gradeable.gradable.value ? 'Passed' : 'Failed';
   }
   
-  return grade ? grade.gradable.value : '-';
+  return gradeable ? gradeable.gradable.value : '-';
 };
 
 // Form functionality
@@ -59,8 +59,8 @@ const setGradeFormValues = (student, assessment) => {
 
 <template>
   <h1 class="h2">Grades</h1>
-  <CreateGradeForm v-if="isAdmin" :student="studentToGrade" :assessment="assessmentToGrade" />
-  <GradesHistory :student="studentToGrade" :assessment="assessmentToGrade" />
+  <CreateGradeableForm v-if="isAdmin" :student="studentToGrade" :assessment="assessmentToGrade" />
+  <GradeablesHistory :student="studentToGrade" :assessment="assessmentToGrade" />
 
   <table class="table table-striped border">
     <thead class="table-primary">
@@ -87,7 +87,7 @@ const setGradeFormValues = (student, assessment) => {
                 :href="`https://${student.github_username}.github.io/plataformas-moviles-entregas/${assessment.exercise.path}`"
                 class="mx-1">
                 Link
-              </a> | {{ getLastGrade(student, assessment) }}
+              </a> | {{ getLastGradeable(student, assessment) }}
             </span>
           </div>
         </td>

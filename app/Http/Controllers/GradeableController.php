@@ -3,22 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Enums\GradeableType;
-use App\Http\Requests\StoreGradeRequest;
-use App\Http\Requests\UpdateGradeRequest;
+use App\Http\Requests\StoreGradeableRequest;
+use App\Http\Requests\UpdateGradeableRequest;
 use App\Mail\ExerciseCorrection;
 use App\Models\Gradeable;
-use App\Models\NumericGrade;
-use App\Models\PassFailGrade;
-use App\Models\TEGrade;
 use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 
-class GradeController extends Controller
+class GradeableController extends Controller
 {
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreGradeRequest $request)
+    public function store(StoreGradeableRequest $request)
     {
         $validated = $request->validated();
         
@@ -49,35 +46,35 @@ class GradeController extends Controller
             Mail::to($studentEmail)->send(new ExerciseCorrection($gradeable));
         }
     
-        return redirect()->back()->with('success', 'Grade created successfully');
+        return redirect()->back()->with('success', 'Gradeable created successfully');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Gradeable $grade)
+    public function edit(Gradeable $gradeable)
     {
-        return Inertia::render('Grades/Edit', [
-            'grade' => $grade->load('gradable'),
+        return Inertia::render('Gradeables/Edit', [
+            'gradeable' => $gradeable->load('gradable'),
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateGradeRequest $request, Gradeable $grade)
+    public function update(UpdateGradeableRequest $request, Gradeable $gradeable)
     {
-        $grade->gradable->update($request->validated());
+        $gradeable->gradable->update($request->validated());
 
-        return redirect()->back()->with('success', 'Grade updated successfully');
+        return redirect()->back()->with('success', 'Gradeable updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Gradeable $grade)
+    public function destroy(Gradeable $gradeable)
     {
-        $grade->delete();
+        $gradeable->delete();
 
         return redirect()->back()->with('success', 'Gradeable deleted successfully');
     }

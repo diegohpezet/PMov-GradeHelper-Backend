@@ -3,7 +3,7 @@
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ExerciseController;
-use App\Http\Controllers\GradeController;
+use App\Http\Controllers\GradeableController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,13 +20,13 @@ Route::middleware('auth')->group(function () {
     Route::resource('courses', CourseController::class)->except(['store', 'edit', 'update', 'destroy']);
     Route::resource('exercises', ExerciseController::class)->except(['index','store', 'edit', 'update', 'destroy']);
     Route::resource('students', StudentController::class)->except(['index', 'store', 'edit', 'update', 'destroy']);
-    Route::resource('grades', GradeController::class)->except(['index', 'store', 'edit', 'update', 'destroy']);
+    Route::resource('gradeables', GradeableController::class)->except(['index', 'store', 'edit', 'update', 'destroy']);
 
     Route::middleware('admin')->group(function () {
         Route::resource('courses', CourseController::class)->only(['store', 'edit', 'update', 'destroy']);
         Route::resource('exercises', ExerciseController::class)->only(['index','store', 'edit', 'update', 'destroy']);
         Route::resource('students', StudentController::class)->only(['index','store', 'edit', 'update', 'destroy']);
-        Route::resource('grades', GradeController::class)->only(['index','store', 'edit', 'update', 'destroy']);
+        Route::resource('gradeables', GradeableController::class)->only(['index','store', 'edit', 'update', 'destroy']);
 
         Route::post('attendances', [AttendanceController::class, 'store'])->name('attendances.store');
         Route::delete('attendances', [AttendanceController::class, 'destroy'])->name('attendances.destroy');

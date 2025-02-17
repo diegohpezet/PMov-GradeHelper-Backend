@@ -1,7 +1,7 @@
 <script setup>
 import StudentsList from '../Students/Index.vue';
 import AttendanceIndex from '../Attendance/Index.vue';
-import GradesTable from '../Grades/Index.vue';
+import GradesTable from '../Gradeables/Index.vue';
 
 const props = defineProps({ course: Object })
 
