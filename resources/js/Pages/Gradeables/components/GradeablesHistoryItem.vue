@@ -1,7 +1,9 @@
 <script setup>
 import { Link, router, usePage } from '@inertiajs/vue3';
 import { shortDateFormat } from '../../../Utils/dates';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const props = defineProps({ gradeable: Object });
 const emit = defineEmits(['delete-gradeable']);
 
@@ -17,7 +19,7 @@ const handleGradeableValue = (gradeable) => {
 };
 
 function deleteGradeable(gradeableId) {
-  if (confirm('Are you sure you want to delete this grade?')) {
+  if (confirm(t('grades.delete_confirm'))) {
     router.delete(`/gradeables/${gradeableId}`, {
       onSuccess: () => emit('delete-gradeable', gradeableId),
     });
@@ -29,7 +31,7 @@ function deleteGradeable(gradeableId) {
   <li class="list-group-item list-group-item-action">
     <div class="d-flex w-100 justify-content-between">
       <p class="mb-1">
-        {{ gradeable.gradable.comment || 'No comment' }}
+        {{ gradeable.gradable.comment || $t('grades.no_comment') }}
       </p>
       <small>{{ shortDateFormat(new Date(gradeable.created_at)) }}</small>
     </div>
