@@ -5,11 +5,34 @@ import CreateStudentForm from './components/CreateStudentForm.vue';
 import LinkStudentList from './components/LinkStudentList.vue';
 import BaseModal from '../../Layouts/components/BaseModal.vue';
 
-const props = defineProps({ students: [Object] });
+const { students } = defineProps({
+  students: {
+    type: Array,
+    default: () => [],
+  },
+});
 
-const sortedStudents = props.students.sort((a, b) =>
-  a.last_name.localeCompare(b.last_name),
-);
+const SORT_FIELDS = ['first_name', 'last_name'];
+const sortField = ref(SORT_FIELDS[0]);
+const sortInvert = ref(false);
+
+const sortedList = (list) => {
+  return [...list].sort((a, b) => {
+    const aValue = a[sortField.value];
+    const bValue = b[sortField.value];
+    const result = `${aValue}`.localeCompare(`${bValue}`);
+    return sortInvert.value ? -result : result;
+  });
+};
+
+const handleSelectSort = (selected) => {
+  if (sortField.value === selected) {
+    sortInvert.value = !sortInvert.value;
+  } else {
+    sortField.value = selected;
+    sortInvert.value = false;
+  }
+};
 
 const page = usePage();
 const isAdmin = page.props.auth.isAdmin;
@@ -30,7 +53,23 @@ const openLinkModal = (student) => {
 </script>
 
 <template>
-  <h1 class="fs-2">Students</h1>
+  <div class="d-flex align-items-center justify-content-between">
+    <h1 class="fs-2">Students</h1>
+    <aside>
+      <button
+        v-for="field in SORT_FIELDS"
+        :key="field"
+        class="btn btn-sm btn-outline-primary"
+        :class="{ active: sortField === field }"
+        @click="handleSelectSort(field)"
+      >
+        {{ field }}
+        <span v-if="sortField === field">
+          {{ sortInvert ? '↑' : '↓' }}
+        </span>
+      </button>
+    </aside>
+  </div>
 
   <details v-if="isAdmin" class="my-3">
     <summary role="button" class="btn btn-primary text-white">
@@ -41,7 +80,7 @@ const openLinkModal = (student) => {
 
   <ul class="list-group">
     <li
-      v-for="student in sortedStudents"
+      v-for="student in sortedList(students)"
       :key="student.id"
       class="list-group-item list-group-item-action d-flex justify-content-between"
     >
