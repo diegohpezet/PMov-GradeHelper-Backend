@@ -46,7 +46,9 @@ class GradeableController extends Controller
             Mail::to($studentEmail)->send(new ExerciseCorrection($gradeable));
         }
     
-        return redirect()->back()->with('success', 'Gradeable created successfully');
+        return redirect()
+            ->back()
+            ->with('success', __('grades.created'));
     }
 
     /**
@@ -66,7 +68,9 @@ class GradeableController extends Controller
     {
         $gradeable->gradable->update($request->validated());
 
-        return redirect()->back()->with('success', 'Gradeable updated successfully');
+        return redirect()
+            ->route('grades.index')
+            ->with('success', __('grades.updated'));
     }
 
     /**
@@ -76,6 +80,8 @@ class GradeableController extends Controller
     {
         $gradeable->delete();
 
-        return redirect()->back()->with('success', 'Gradeable deleted successfully');
+        return redirect()
+            ->back()
+            ->with('success', __('grades.deleted'));
     }
 }
