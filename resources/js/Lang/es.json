@@ -5,7 +5,6 @@
 
     "courses": "Cursos",
     "courses.add": "Agregar nuevo curso",
-    "courses.submit": "Crear curso",
     "courses.delete": "Eliminar curso",
     "courses.delete_confirm": "Está seguro que quiere eliminar este curso?",
     "courses.edit": "Editar curso",
@@ -14,6 +13,7 @@
     "courses.field.name_placeholder": "Nombre del curso",
     "courses.field.school_year": "Ciclo lectivo",
     "courses.field.school_year_placeholder": "Ciclo lectivo",
+    "courses.submit": "Crear curso",
 
     "exercises": "Ejercicios",
     "exercises.add": "Agregar nuevo ejercicio",
@@ -38,12 +38,18 @@
 
     "students": "Estudiantes",
     "students.add": "Agregar nuevo estudiante",
-    "students.submit": "Crear estudiante",
     "students.delete": "Eliminar estudiante",
     "students.delete_confirm": "Está seguro que quiere eliminar este estudiante?",
     "students.edit": "Editar estudiante",
     "students.empty": "No hay ningún estudiante para mostrar",
+    "students.field.first_name": "Nombre",
+    "students.field.last_name": "Apellido",
+    "students.field.github_username": "Nombre de usuario de GitHub",
+    "students.field.course": "Curso",
+    "students.field.course_select": "Selecciona un curso",
     "students.link_to_user": "Asociar estudiante con usuario",
+    "students.submit": "Crear estudiante",
+    "students.submit_edit": "Editar estudiante",
 
     "switch_theme": "Cambiar Modo",
     " ": " "
