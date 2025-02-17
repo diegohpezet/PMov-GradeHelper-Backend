@@ -68,12 +68,14 @@ const setGradeFormValues = (student, assessment) => {
 </script>
 
 <template>
-  <h1 class="h2">Grades</h1>
+  <h1 class="h2">{{ $t('grades') }}</h1>
+
   <CreateGradeableForm
     v-if="isAdmin"
     :student="studentToGrade"
     :assessment="assessmentToGrade"
   />
+
   <GradeablesHistory
     :student="studentToGrade"
     :assessment="assessmentToGrade"
@@ -82,7 +84,7 @@ const setGradeFormValues = (student, assessment) => {
   <table class="table table-striped border">
     <thead class="table-primary">
       <tr>
-        <th scope="col">Student</th>
+        <th scope="col">{{ $t('grades.student') }}</th>
         <th
           v-for="assessment in filteredAssessments"
           :key="assessment.id"

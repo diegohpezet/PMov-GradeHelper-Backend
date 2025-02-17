@@ -38,10 +38,16 @@
 
     "grades": "Calificaciones",
     "grades.add": "Agregar calificación",
+    "grades.assessment": "Ejercicio",
+    "grades.edit": "Editar calificación",
     "grades.empty": "No hay ninguna calificación para este ejercicio",
-    "grades.submit": "Calificar",
+    "grades.field.comment": "Comentario",
+    "grades.field.gradeable_type": "Tipo de calificación",
     "grades.results.failed": "desaprobado",
     "grades.results.passed": "aprobado",
+    "grades.student": "Estudiante",
+    "grades.submit": "Calificar",
+    "grades.submit_edit": "Editar calificación",
 
     "login": "Iniciar Sesión",
     "login.fields.email": "Email",

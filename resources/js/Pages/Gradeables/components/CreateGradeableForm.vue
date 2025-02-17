@@ -40,7 +40,9 @@ const saveGrade = () => {
   <form @submit.prevent="saveGrade">
     <div class="row g-3 mb-3">
       <div class="col-6">
-        <label for="student_id" class="visually-hidden">Student</label>
+        <label for="student_id" class="visually-hidden">
+          {{ $t('grades.student') }}
+        </label>
         <input
           id="student_id"
           type="text"
@@ -50,9 +52,9 @@ const saveGrade = () => {
         />
       </div>
       <div class="col-6">
-        <label for="assessment_id" class="visually-hidden"
-          >Assessment exercise</label
-        >
+        <label for="assessment_id" class="visually-hidden">
+          {{ $t('grades.assessment') }}
+        </label>
         <input
           id="assessment_id"
           type="text"
@@ -64,9 +66,9 @@ const saveGrade = () => {
 
       <!-- Dropdown for selecting gradeable type -->
       <div class="col-6">
-        <label for="gradeable_type" class="visually-hidden"
-          >Gradeable Type</label
-        >
+        <label for="gradeable_type" class="visually-hidden">
+          {{ $t('grades.fields.gradeable_type') }}
+        </label>
         <select
           id="gradeable_type"
           v-model="form.gradeable_type"
@@ -137,7 +139,9 @@ const saveGrade = () => {
       </div>
 
       <div class="col-12">
-        <label for="comment" class="visually-hidden">Comment</label>
+        <label for="comment" class="visually-hidden">
+          {{ $t('grades.fields.comment') }}
+        </label>
         <input
           id="comment"
           v-model="form.comment"
@@ -150,7 +154,9 @@ const saveGrade = () => {
       <div class="col-12">
         <button type="submit" class="btn btn-primary text-white w-variant">
           <i class="ri-add-line"></i>
-          <span class="d-inline d-lg-none">Submit</span>
+          <span class="d-inline d-lg-none">
+            {{ $t('grades.submit') }}
+          </span>
         </button>
       </div>
     </div>
