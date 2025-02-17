@@ -7,12 +7,16 @@ const props = defineProps({ student: Object, assessment: Object });
 const gradeables = ref([]);
 
 function removeGradeable(gradeableId) {
-  gradeables.value = gradeables.value.filter(gradeable => gradeable.id !== gradeableId);
+  gradeables.value = gradeables.value.filter(
+    (gradeable) => gradeable.id !== gradeableId,
+  );
 }
 
 watchEffect(() => {
   if (props.student && props.assessment) {
-    gradeables.value = props.student.gradeables.filter(grade => grade.assessment_id === props.assessment.id);
+    gradeables.value = props.student.gradeables.filter(
+      (grade) => grade.assessment_id === props.assessment.id,
+    );
   }
 });
 </script>
@@ -23,8 +27,8 @@ watchEffect(() => {
       <span>History</span>
     </summary>
     <ul class="list-group list-group-flush">
-      <GradeablesHistoryItem 
-        v-for="gradeable in gradeables" 
+      <GradeablesHistoryItem
+        v-for="gradeable in gradeables"
         :key="gradeable.created_at"
         :gradeable="gradeable"
         @delete-gradeable="removeGradeable"

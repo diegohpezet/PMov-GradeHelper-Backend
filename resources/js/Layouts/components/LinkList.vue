@@ -37,7 +37,7 @@ const toggleTheme = () => {
       Students
     </Link>
 
-    <hr/>
+    <hr />
     <button class="list-group-item text-start" @click="toggleTheme">
       <i class="ri-sun-line me-2"></i>Switch theme
     </button>
