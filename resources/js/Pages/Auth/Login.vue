@@ -1,34 +1,27 @@
-<script>
-import { Link, useForm } from '@inertiajs/vue3';
+<script setup>
+import { useForm } from '@inertiajs/vue3';
 import GuestLayout from '../../Layouts/GuestLayout.vue';
 
-export default {
-  layout: GuestLayout,
-  props: {
-    canResetPassword: {
-      type: Boolean,
-      required: true,
-    },
-    status: {
-      type: String,
-      default: null,
-    },
+defineOptions({ layout: GuestLayout });
+
+const { status } = defineProps({
+  status: {
+    type: String,
+    default: null,
   },
-  data() {
-    return {
-      form: useForm({
-        email: '',
-        password: '',
-        remember: false,
-      }),
-    };
-  },
-  methods: {
-    submit() {
-      this.form.post('/login');
-    },
-  },
-};
+});
+
+const form = useForm({
+  email: '',
+  password: '',
+  remember: false,
+});
+
+function handleSubmit() {
+  form.post('/login', {
+    onSuccess: () => form.reset(),
+  });
+}
 </script>
 
 <template>
@@ -37,7 +30,7 @@ export default {
       {{ status }}
     </div>
 
-    <form @submit.prevent="submit">
+    <form @submit.prevent="handleSubmit">
       <div class="mb-3">
         <label for="email" value="Email" class="form-label">Email</label>
         <input
