@@ -80,14 +80,14 @@ const updateAttendance = ({ studentId, date, isNowChecked }) => {
 </script>
 
 <template>
-  <h1 class="h2">Attendance</h1>
+  <h1 class="h2">{{ $t('attendances') }}</h1>
 
   <button
     v-if="isAdmin"
     class="btn btn-primary text-white"
     @click="createAttendanceDate"
   >
-    Take attendance
+    {{ $t('attendances.take') }}
   </button>
 
   <br />
@@ -97,8 +97,12 @@ const updateAttendance = ({ studentId, date, isNowChecked }) => {
   <table class="table table-striped border mt-3">
     <thead class="table-primary">
       <tr>
-        <th scope="col">Student</th>
-        <th scope="col" class="hoverable text-center">Total</th>
+        <th scope="col">
+          {{ $t('attendances.student') }}
+        </th>
+        <th scope="col" class="hoverable text-center">
+          {{ $t('attendances.total') }}
+        </th>
         <th
           v-for="date in sortedDates"
           :key="date"

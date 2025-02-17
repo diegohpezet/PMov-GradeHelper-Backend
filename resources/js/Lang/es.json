@@ -1,5 +1,8 @@
 {
     "attendances": "Asistencias",
+    "attendances.take": "Tomar asistencia",
+    "attendances.student": "Estudiante",
+    "attendances.total": "Total",
 
     "close": "Cerrar",
     "cancel": "Cancelar",
