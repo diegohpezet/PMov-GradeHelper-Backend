@@ -49,9 +49,10 @@ const sortedAssessments = props.course.assessments.sort((a, b) =>
     <div class="tab-pane fade" id="exercises-tab-pane" role="tabpanel" aria-labelledby="exercises-tab" tabindex="0">
       <h2 class="mb-3">Exercises</h2>
       <ul class="list-group">
+
         <li v-for="assessment in sortedAssessments" :key="assessment.id" class="list-group-item">
           <span class="lead me-3">{{ assessment.exercise.title }}</span>
-          <span class="text-muted">Due Date: {{ (new Date(assessment.due_date)).toLocaleString() }}</span>
+          <span class="text-muted">Due Date: {{ (new Date(assessment.due_at)).toLocaleString() }}</span>
         </li>
       </ul>
     </div>

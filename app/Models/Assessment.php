@@ -18,7 +18,7 @@ class Assessment extends Pivot
     protected function casts(): array
     {
         return [
-            'due_date' => 'datetime',
+            'due_at' => 'datetime',
         ];
     }
 

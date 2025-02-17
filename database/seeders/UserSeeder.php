@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
     $studentUser = User::factory()->create([
       'email' => 'student@example.com',
     ]);
-    $studentUser->student()->save(Student::all()->random());
+    Student::inRandomOrder()->first()->user()->associate($studentUser);
 
     // Creates a new admin user and assign role
     $adminUser = User::factory()->create([

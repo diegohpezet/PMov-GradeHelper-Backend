@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignUuid('course_id')->constrained('courses')->onDelete('cascade');
             $table->foreignUuid('exercise_id')->constrained('exercises')->onDelete('cascade');
 
-            $table->timestamp('due_date')->nullable();
+            $table->timestamp('due_at')->nullable();
 
             $table->timestamps();
         });
