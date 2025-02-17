@@ -16,19 +16,19 @@ const editStudent = (id) => {
 <template>
   <form @submit.prevent="editStudent(student.id)">
     <div class="mb-3">
-      <label for="first_name" class="form-label">
-        {{ $t('students.field.first_name') }}
-      </label>
-      <input type="text" class="form-control" id="first_name" v-model="form.first_name">
-      <span v-if="form.errors.first_name" class="text-danger">{{ form.errors.first_name }}</span>
-    </div>
-
-    <div class="mb-3">
       <label for="last_name" class="form-label">
         {{ $t('students.field.last_name') }}
       </label>
       <input type="text" class="form-control" id="last_name" v-model="form.last_name">
       <span v-if="form.errors.last_name" class="text-danger">{{ form.errors.last_name }}</span>
+    </div>
+
+    <div class="mb-3">
+      <label for="first_name" class="form-label">
+        {{ $t('students.field.first_name') }}
+      </label>
+      <input type="text" class="form-control" id="first_name" v-model="form.first_name">
+      <span v-if="form.errors.first_name" class="text-danger">{{ form.errors.first_name }}</span>
     </div>
 
     <div class="mb-3">
