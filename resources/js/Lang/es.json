@@ -18,6 +18,7 @@
     "courses.field.school_year": "Ciclo lectivo",
     "courses.field.school_year_placeholder": "Ciclo lectivo",
     "courses.submit": "Crear curso",
+    "courses.submit_edit": "Editar curso",
 
     "exercises": "Ejercicios",
     "exercises.add": "Agregar nuevo ejercicio",
