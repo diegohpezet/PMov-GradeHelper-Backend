@@ -45,11 +45,12 @@ const saveGrade = () => {
     </div>
     <div class="col-12">
       <button class="btn btn-primary me-3" type="submit" :disabled="form.processing">
-        <i class="ri-add-line"></i>
-        Add Grade
+        {{ $t('grades.submit')}}
       </button>
       <button class="btn btn-secondary" type="button" @click="$emit('close')"
-        :disabled="form.processing">Cancel</button>
+        :disabled="form.processing">
+          {{ $t('cancel') }}
+        </button>
     </div>
   </form>
 </template>

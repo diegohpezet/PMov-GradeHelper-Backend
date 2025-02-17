@@ -2,6 +2,7 @@
     "attendances": "Asistencias",
 
     "close": "Cerrar",
+    "cancel": "Cancelar",
 
     "courses": "Cursos",
     "courses.add": "Agregar nuevo curso",
@@ -34,6 +35,7 @@
     "grades": "Calificaciones",
     "grades.add": "Agregar calificación",
     "grades.empty": "No hay ninguna calificación para este ejercicio",
+    "grades.submit": "Calificar",
     "grades.results.failed": "desaprobado",
     "grades.results.passed": "aprobado",
 
