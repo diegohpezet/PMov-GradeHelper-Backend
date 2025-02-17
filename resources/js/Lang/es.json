@@ -32,6 +32,8 @@
     "exercises.submit_edit": "Editar ejercicio",
 
     "grades": "Calificaciones",
+    "grades.results.failed": "desaprobado",
+    "grades.results.passed": "aprobado",
 
     "login": "Iniciar Sesión",
     "logout": "Cerrar Sesión",
