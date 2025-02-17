@@ -18,7 +18,7 @@ class ExerciseSeeder extends Seeder
       $courses->random(2)->each(function (Course $course) use ($exercise) {
         $exercise->courses()
           ->attach($course, [
-            'due_date' => $this::getRandomFutureDate(),
+            'due_at' => $this::getRandomFutureDate(),
           ]);
       });
     });
