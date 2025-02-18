@@ -2,6 +2,8 @@
 import { usePage } from '@inertiajs/vue3';
 import { useI18n } from 'vue-i18n';
 import StudentAssessmentList from './components/StudentAssessmentList.vue';
+import AttendanceIndex from '@/Pages/Attendance/Index.vue';
+import StudentAttendanceTable from './components/StudentAttendanceTable.vue';
 
 const { t } = useI18n();
 
@@ -28,7 +30,10 @@ const user = page.props.auth.user;
     </section>
 
     <section class="mt-3">
-      
+      <StudentAttendanceTable
+        :student="student"
+        :attendances="student.course.attendances"
+      />
     </section>
   </div>
 

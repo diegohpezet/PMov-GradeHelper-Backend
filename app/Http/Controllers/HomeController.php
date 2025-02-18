@@ -17,7 +17,8 @@ class HomeController extends Controller
       'course.assessments.gradeables' => function ($query) use ($student) {
         $query->where('student_id', $student->id);
       },
-      'course.assessments.gradeables.gradable'
+      'course.assessments.gradeables.gradable',
+      'course.attendances'
     ]);
 
     return Inertia::render('Home/HomeView', [

@@ -1,5 +1,6 @@
 {
     "attendances": "Asistencias",
+    "attendances.empty": "No hay ninguna asistencia para mostrar",
     "attendances.take": "Tomar asistencia",
     "attendances.student": "Estudiante",
     "attendances.total": "Total",
