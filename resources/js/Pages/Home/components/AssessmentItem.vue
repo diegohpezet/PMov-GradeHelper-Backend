@@ -15,8 +15,8 @@ defineProps({
 <template>
   <div class="accordion-item">
     <h2 class="accordion-header">
-      <button
-        class="accordion-button"
+      <button 
+        class="accordion-button collapsed"
         type="button"
         data-bs-toggle="collapse"
         :data-bs-target="`#collapse-${assessment.id}`"
@@ -31,11 +31,7 @@ defineProps({
         {{ assessment.exercise.title }}
       </button>
     </h2>
-    <div
-      :id="`collapse-${assessment.id}`"
-      class="accordion-collapse collapse show"
-      data-bs-parent="#assessmentsAccordion"
-    >
+    <div :id="`collapse-${assessment.id}`" class="accordion-collapse collapse" data-bs-parent="#assessmentsAccordion">
       <div class="accordion-body">
         <span class="fs-italic">
           {{ t('exercises.field.due_at') }}:
