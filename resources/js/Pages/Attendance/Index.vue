@@ -3,7 +3,12 @@ import { ref } from 'vue';
 import { usePage } from '@inertiajs/vue3';
 import AttendanceTable from './components/AttendanceTable.vue';
 
-const props = defineProps({ students: [Object], attendances: [Object] });
+const props = defineProps({
+  students: { type: Array, required: true },
+  attendances: { type: Array, required: true },
+});
+
+const attendanceList = ref(props.attendances);
 
 const page = usePage();
 const isAdmin = page.props.auth.isAdmin;
@@ -15,12 +20,12 @@ const createAttendanceDate = () => {
   const todayString = today.toISOString().slice(0, 10);
 
   if (
-    props.attendances.find((attendance) => attendance.date === todayString)
+    attendanceList.value.find((attendance) => attendance.date === todayString)
   ) {
     return (error.value = 'You already took attendance today');
   }
 
-  props.attendances.push({ date: todayString });
+  attendanceList.value.push({ date: todayString });
 };
 
 const updateAttendance = ({ studentId, date, isNowChecked }) => {
@@ -42,18 +47,18 @@ const updateAttendance = ({ studentId, date, isNowChecked }) => {
     }),
   }).then(() => {
     if (isNowChecked) {
-      props.attendances.push({
+      attendanceList.value.push({
         student_id: studentId,
         course_id: page.props.course.id,
         date: date.toISOString().slice(0, 10),
       });
     } else {
-      const index = props.attendances.findIndex(
+      const index = attendanceList.value.findIndex(
         (attendance) =>
           attendance.student_id === studentId &&
           attendance.date === date.toISOString().slice(0, 10),
       );
-      if (index > -1) props.attendances.splice(index, 1);
+      if (index > -1) attendanceList.value.splice(index, 1);
     }
   });
 };
@@ -76,6 +81,7 @@ const updateAttendance = ({ studentId, date, isNowChecked }) => {
 
   <AttendanceTable
     :students="students"
-    :attendances="attendances"
+    :attendances="attendanceList"
+    @update-attendance="updateAttendance"
   />
 </template>

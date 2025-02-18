@@ -3,9 +3,9 @@ import { usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
 const props = defineProps({
-  student: Object,
-  dates: Array,
-  attendances: Array,
+  student: { type: Object, required: true },
+  dates: { type: Array, required: true },
+  attendances: { type: Array, required: true },
   showNames: { type: Boolean, default: true },
 });
 

@@ -5,8 +5,8 @@ import { shortDateFormat } from '@/Utils/dates.js';
 import AttendanceRow from './AttendanceRow.vue';
 
 const props = defineProps({
-  students: [Object],
-  attendances: [Object],
+  students: { type: Array, required: true },
+  attendances: { type: Array, required: true },
   showNames: { type: Boolean, default: true },
 });
 
@@ -16,7 +16,7 @@ const isAdmin = page.props.auth.isAdmin;
 const emit = defineEmits(['update-attendance']);
 
 const sortedStudents = computed(() =>
-  props.students.sort((a, b) => a.last_name.localeCompare(b.last_name)),
+  [...props.students].sort((a, b) => a.last_name.localeCompare(b.last_name)),
 );
 
 const sortedDates = computed(() => {
@@ -60,7 +60,7 @@ const sortedDates = computed(() => {
         :dates="sortedDates"
         :attendances="attendances"
         :is-admin="isAdmin"
-        :showNames="showNames"
+        :show-names="showNames"
         @update-attendance="emit('update-attendance', $event)"
       />
     </tbody>

@@ -14,9 +14,9 @@ defineProps({
     <h4>{{ t('grades.history') }}</h4>
     <ul class="list-group">
       <li
-        class="list-group-item list-group-item-action"
         v-for="gradeable in gradeables"
         :key="gradeable.id"
+        class="list-group-item list-group-item-action"
       >
         <div class="d-flex w-100 justify-content-between">
           <h5 class="mb-1">{{ t('grade') }}: {{ gradeable.gradable.value }}</h5>

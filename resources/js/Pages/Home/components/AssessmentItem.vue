@@ -15,7 +15,7 @@ defineProps({
 <template>
   <div class="accordion-item">
     <h2 class="accordion-header">
-      <button 
+      <button
         class="accordion-button collapsed"
         type="button"
         data-bs-toggle="collapse"
@@ -24,14 +24,18 @@ defineProps({
         :aria-controls="`collapse-${assessment.id}`"
       >
         <CheckOnlineStatus
-          :studentUsername="student.github_username"
-          :exercisePath="assessment.exercise.path"
+          :student-username="student.github_username"
+          :exercise-path="assessment.exercise.path"
           class="me-2"
         />
         {{ assessment.exercise.title }}
       </button>
     </h2>
-    <div :id="`collapse-${assessment.id}`" class="accordion-collapse collapse" data-bs-parent="#assessmentsAccordion">
+    <div
+      :id="`collapse-${assessment.id}`"
+      class="accordion-collapse collapse"
+      data-bs-parent="#assessmentsAccordion"
+    >
       <div class="accordion-body">
         <span class="fs-italic">
           {{ t('exercises.field.due_at') }}:
