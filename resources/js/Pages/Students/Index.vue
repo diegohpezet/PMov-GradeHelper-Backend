@@ -69,7 +69,7 @@ const openLinkModal = (student) => {
         <span v-if="sortField === field">
           {{ sortInvert ? '↑' : '↓' }}
         </span>
-        {{ field }}
+        {{ $t(`students.field.${field}`) }}
       </button>
     </div>
   </div>
