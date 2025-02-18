@@ -23,3 +23,9 @@ createInertiaApp({
             .mount(el);
     },
 });
+
+// IIFE to get previously stored userTheme
+(() => {
+    const userTheme = localStorage.getItem('userTheme') || 'light';
+    document.documentElement.dataset.bsTheme = userTheme;
+})();
