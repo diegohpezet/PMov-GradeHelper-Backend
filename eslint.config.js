@@ -13,5 +13,10 @@ export default [
     },
     pluginJs.configs.recommended,
     ...pluginVue.configs['flat/recommended'],
+    {
+        rules: {
+            'vue/multi-word-component-names': 'warn',
+        },
+    },
     configPrettier,
 ];
