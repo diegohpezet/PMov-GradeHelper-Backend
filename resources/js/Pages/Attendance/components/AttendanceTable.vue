@@ -1,12 +1,13 @@
 <script setup>
 import { computed } from 'vue';
-import AttendanceRow from './AttendanceRow.vue';
-import { shortDateFormat } from '@/Utils/dates.js';
 import { usePage } from '@inertiajs/vue3';
+import { shortDateFormat } from '@/Utils/dates.js';
+import AttendanceRow from './AttendanceRow.vue';
 
 const props = defineProps({
   students: [Object],
   attendances: [Object],
+  showNames: { type: Boolean, default: true },
 });
 
 const page = usePage();
@@ -35,7 +36,7 @@ const sortedDates = computed(() => {
   <table class="table table-striped border mt-3">
     <thead class="table-primary">
       <tr>
-        <th scope="col">
+        <th v-if="showNames" scope="col">
           {{ $t('attendances.student') }}
         </th>
         <th scope="col" class="hoverable text-center">
@@ -59,6 +60,7 @@ const sortedDates = computed(() => {
         :dates="sortedDates"
         :attendances="attendances"
         :is-admin="isAdmin"
+        :showNames="showNames"
         @update-attendance="emit('update-attendance', $event)"
       />
     </tbody>
