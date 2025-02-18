@@ -1,7 +1,7 @@
 <script setup>
 import ExerciseRow from './components/ExerciseRow.vue';
 
-const props = defineProps({
+const { student } = defineProps({
   student: Object,
 });
 </script>

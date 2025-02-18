@@ -1,17 +1,19 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import { usePage } from '@inertiajs/vue3';
 import { shortDateFormat } from '../../Utils/dates.js';
 import AttendanceRow from './components/AttendanceRow.vue';
 
-const props = defineProps({ students: [Object], attendances: [Object] });
+const { students, attendances } = defineProps({
+  students: [Object],
+  attendances: [Object],
+});
 
 const page = usePage();
 const isAdmin = page.props.auth.isAdmin;
-
 const error = ref('');
 
-const sortedStudents = props.students.sort((a, b) =>
+const sortedStudents = [...students].sort((a, b) =>
   a.last_name.localeCompare(b.last_name),
 );
 
@@ -19,9 +21,7 @@ const sortedStudents = props.students.sort((a, b) =>
 const sortedDates = ref(
   Array.from(
     new Set(
-      props.attendances.map((attendance) =>
-        new Date(attendance.date).getTime(),
-      ),
+      attendances.map((attendance) => new Date(attendance.date).getTime()),
     ),
   )
     .sort((a, b) => a - b)
@@ -43,6 +43,7 @@ const createAttendanceDate = () => {
   sortedDates.value.push(today);
 };
 
+// TODO: refactor this to avoid mutating prop
 const updateAttendance = ({ studentId, date, isNowChecked }) => {
   const method = isNowChecked ? 'POST' : 'DELETE';
 
@@ -62,18 +63,18 @@ const updateAttendance = ({ studentId, date, isNowChecked }) => {
     }),
   }).then(() => {
     if (isNowChecked) {
-      props.attendances.push({
+      attendances.push({
         student_id: studentId,
         course_id: page.props.course.id,
         date: date.toISOString().slice(0, 10),
       });
     } else {
-      const index = props.attendances.findIndex(
+      const index = attendances.findIndex(
         (attendance) =>
           attendance.student_id === studentId &&
           attendance.date === date.toISOString().slice(0, 10),
       );
-      if (index > -1) props.attendances.splice(index, 1);
+      if (index > -1) attendances.splice(index, 1);
     }
   });
 };
@@ -119,7 +120,7 @@ const updateAttendance = ({ studentId, date, isNowChecked }) => {
         :key="student.id"
         :student="student"
         :dates="sortedDates"
-        :attendances="props.attendances"
+        :attendances="attendances"
         @update-attendance="updateAttendance"
       />
     </tbody>
