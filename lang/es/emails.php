@@ -8,7 +8,7 @@ return [
       'message' => 'Tienes una nueva corrección para el ejercicio :title',
       'value' => 'Tu nota es: :value',
       'passed' => 'Aprobado',
-      'failed' => 'Reprobado',
+      'failed' => 'Desaprobado',
       'comment' => 'Comentario: :comment',
       'link' => 'Revísalo en la web',
     ]
