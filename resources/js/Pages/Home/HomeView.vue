@@ -8,7 +8,7 @@ import StudentAttendanceTable from './components/StudentAttendanceTable.vue';
 const { t } = useI18n();
 
 defineProps({
-  student: {type: Object, required: false},
+  student: { type: Object, required: false },
 });
 
 const page = usePage();
@@ -21,19 +21,21 @@ const user = page.props.auth.user;
   </h1>
 
   <div v-if="student">
-    <a :href="'https://github.com/' + student.github_username + '/plataformas-moviles-entregas'">
-      {{ t('home.github_link') }}
-    </a>
+    <nav class="nav">
+      <a class="nav-link ps-0" :href="'https://github.com/' + student.github_username + '/plataformas-moviles-entregas'">
+        {{ t('home.github_link') }}
+      </a>
+      <a class="nav-link" href="#">
+        {{ t('home.blog_link') }}
+      </a>
+    </nav>
 
     <section class="mt-3">
       <StudentAssessmentList :student="student" />
     </section>
 
     <section class="mt-3">
-      <StudentAttendanceTable
-        :student="student"
-        :attendances="student.course.attendances"
-      />
+      <StudentAttendanceTable :student="student" :attendances="student.course.attendances" />
     </section>
   </div>
 

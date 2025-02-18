@@ -78,6 +78,7 @@
     "home.greeting": "Bienvenido, {name}!",
     "home.no_student": "Aún no estás asociado a ningún estudiante",
     "home.github_link": "Ir al repositorio de GitHub",
+    "home.blog_link": "Ir al blog de la materia",
 
     "switch_theme": "Cambiar Modo",
     " ": " "
