@@ -1,8 +1,7 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import { usePage } from '@inertiajs/vue3';
-import { shortDateFormat } from '../../Utils/dates.js';
-import AttendanceRow from './components/AttendanceRow.vue';
+import AttendanceTable from './components/AttendanceTable.vue';
 
 const props = defineProps({ students: [Object], attendances: [Object] });
 
@@ -11,36 +10,17 @@ const isAdmin = page.props.auth.isAdmin;
 
 const error = ref('');
 
-const sortedStudents = props.students.sort((a, b) =>
-  a.last_name.localeCompare(b.last_name),
-);
-
-// Get unique attendance dates and sort them
-const sortedDates = ref(
-  Array.from(
-    new Set(
-      props.attendances.map((attendance) =>
-        new Date(attendance.date).getTime(),
-      ),
-    ),
-  )
-    .sort((a, b) => a - b)
-    .map((timestamp) => new Date(timestamp)),
-);
-
 const createAttendanceDate = () => {
   const today = new Date();
   const todayString = today.toISOString().slice(0, 10);
 
   if (
-    sortedDates.value.find(
-      (date) => date.toISOString().slice(0, 10) === todayString,
-    )
+    props.attendances.find((attendance) => attendance.date === todayString)
   ) {
     return (error.value = 'You already took attendance today');
   }
 
-  sortedDates.value.push(today);
+  props.attendances.push({ date: todayString });
 };
 
 const updateAttendance = ({ studentId, date, isNowChecked }) => {
@@ -94,34 +74,8 @@ const updateAttendance = ({ studentId, date, isNowChecked }) => {
 
   <span v-if="error" class="text-danger">{{ error }}</span>
 
-  <table class="table table-striped border mt-3">
-    <thead class="table-primary">
-      <tr>
-        <th scope="col">
-          {{ $t('attendances.student') }}
-        </th>
-        <th scope="col" class="hoverable text-center">
-          {{ $t('attendances.total') }}
-        </th>
-        <th
-          v-for="date in sortedDates"
-          :key="date"
-          scope="col"
-          class="hoverable text-center"
-        >
-          {{ shortDateFormat(date) }}
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <AttendanceRow
-        v-for="student in sortedStudents"
-        :key="student.id"
-        :student="student"
-        :dates="sortedDates"
-        :attendances="props.attendances"
-        @update-attendance="updateAttendance"
-      />
-    </tbody>
-  </table>
+  <AttendanceTable
+    :students="students"
+    :attendances="attendances"
+  />
 </template>
