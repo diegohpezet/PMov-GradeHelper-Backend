@@ -36,6 +36,7 @@
     "exercises.submit": "Crear ejercicio",
     "exercises.submit_edit": "Editar ejercicio",
 
+    "grade": "Calificación",
     "grades": "Calificaciones",
     "grades.add": "Agregar calificación",
     "grades.assessment": "Ejercicio",
@@ -72,6 +73,10 @@
     "students.link_to_user": "Asociar estudiante con usuario",
     "students.submit": "Crear estudiante",
     "students.submit_edit": "Editar estudiante",
+
+    "home.greeting": "Bienvenido, {name}!",
+    "home.no_student": "Aún no estás asociado a ningún estudiante",
+    "home.github_link": "Ir al repositorio de GitHub",
 
     "switch_theme": "Cambiar Modo",
     " ": " "

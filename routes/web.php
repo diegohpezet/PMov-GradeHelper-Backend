@@ -10,13 +10,16 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function (Request $request) {
-    if ($request->user()) {
+    if ($request->user()->isAdmin()) {
         return redirect()->route('courses.index');
+    } else if ($request->user()) {
+        return redirect()->route('home');
     }
     return Inertia::render('Welcome');
 });
 
 Route::middleware('auth')->group(function () {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::resource('courses', CourseController::class)->except(['store', 'edit', 'update', 'destroy']);
     Route::resource('exercises', ExerciseController::class)->except(['index','store', 'edit', 'update', 'destroy']);
     Route::resource('students', StudentController::class)->except(['index', 'store', 'edit', 'update', 'destroy']);
