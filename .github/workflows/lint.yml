@@ -31,5 +31,4 @@ jobs:
       - name: Run linters
         uses: rkuykendall/lint-action@master
         with:
-          auto_fix: true
           eslint: true
