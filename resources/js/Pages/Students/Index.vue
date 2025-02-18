@@ -81,7 +81,7 @@ const openLinkModal = (student) => {
     <CreateStudentForm />
   </details>
 
-  <p v-if="!sortedStudents.length" class="text-muted">
+  <p v-if="!students.length" class="text-muted">
     {{ $t('students.empty') }}
   </p>
 
