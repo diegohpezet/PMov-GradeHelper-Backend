@@ -1,5 +1,8 @@
 <script setup>
 import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 defineProps({
   grade: { type: Object, required: true, default: () => ({}) },
@@ -28,7 +31,8 @@ const isPassFailGrade = (gradeable) => {
     >
       {{
         isPassFailGrade(grade)
-          ? (grade.gradable.value && 'Passed') || 'Failed'
+          ? (grade.gradable.value && t('grades.results.passed')) ||
+            t('grades.results.failed')
           : grade.gradable.value
       }}
     </div>
