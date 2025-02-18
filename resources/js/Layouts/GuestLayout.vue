@@ -5,7 +5,7 @@ import { Link, Head } from '@inertiajs/vue3';
 <template>
   <Head title="Welcome - Grade Helper" />
 
-  <nav class="navbar bg-light shadow-sm">
+  <nav class="navbar text-bg-secondary shadow-sm">
     <div class="container-fluid py-2 px-sm-5 d-flex justify-content-between">
       <div>
         <Link class="navbar-brand" href="/">
@@ -21,7 +21,7 @@ import { Link, Head } from '@inertiajs/vue3';
       </div>
 
       <div>
-        <Link class="btn btn-primary" href="/login">{{ $t('login') }}</Link>
+        <Link class="btn btn-secondary" href="/login">{{ $t('login') }}</Link>
       </div>
     </div>
   </nav>
