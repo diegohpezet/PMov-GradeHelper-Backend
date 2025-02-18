@@ -16,20 +16,9 @@ const editStudent = (id) => {
 <template>
   <form @submit.prevent="editStudent(student.id)">
     <div class="mb-3">
-      <label for="first_name" class="form-label">First Name</label>
-      <input
-        id="first_name"
-        v-model="form.first_name"
-        type="text"
-        class="form-control"
-      />
-      <span v-if="form.errors.first_name" class="text-danger">{{
-        form.errors.first_name
-      }}</span>
-    </div>
-
-    <div class="mb-3">
-      <label for="last_name" class="form-label">Last Name</label>
+      <label for="last_name" class="form-label">
+        {{ $t('students.field.last_name') }}
+      </label>
       <input
         id="last_name"
         v-model="form.last_name"
@@ -42,7 +31,24 @@ const editStudent = (id) => {
     </div>
 
     <div class="mb-3">
-      <label for="github_username" class="form-label">Github</label>
+      <label for="first_name" class="form-label">
+        {{ $t('students.field.first_name') }}
+      </label>
+      <input
+        id="first_name"
+        v-model="form.first_name"
+        type="text"
+        class="form-control"
+      />
+      <span v-if="form.errors.first_name" class="text-danger">{{
+        form.errors.first_name
+      }}</span>
+    </div>
+
+    <div class="mb-3">
+      <label for="github_username" class="form-label">
+        {{ $t('students.field.github_username') }}
+      </label>
       <input
         id="github_username"
         v-model="form.github_username"
@@ -55,9 +61,13 @@ const editStudent = (id) => {
     </div>
 
     <div class="mb-3">
-      <label for="course_id" class="form-label">Course</label>
+      <label for="course_id" class="form-label">
+        {{ $t('students.field.course') }}
+      </label>
       <select id="course_id" v-model="form.course_id" class="form-select">
-        <option value="" disabled>Select a course</option>
+        <option value="" disabled>
+          {{ $t('students.field.course_select') }}
+        </option>
         <option v-for="course in courses" :key="course.id" :value="course.id">
           {{ course.name }}
         </option>
@@ -67,6 +77,8 @@ const editStudent = (id) => {
       }}</span>
     </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">
+      {{ $t('students.submit_edit') }}
+    </button>
   </form>
 </template>

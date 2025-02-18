@@ -16,7 +16,7 @@ const toggleTheme = () => {
       :class="{ active: $page.url.startsWith('/courses') }"
     >
       <i class="ri-file-list-3-line me-2"></i>
-      Courses
+      {{ $t('courses') }}
     </Link>
 
     <Link
@@ -25,7 +25,7 @@ const toggleTheme = () => {
       :class="{ active: $page.url.startsWith('/exercises') }"
     >
       <i class="ri-question-answer-line me-2"></i>
-      Exercises
+      {{ $t('exercises') }}
     </Link>
 
     <Link
@@ -34,19 +34,21 @@ const toggleTheme = () => {
       :class="{ active: $page.url.startsWith('/students') }"
     >
       <i class="ri-graduation-cap-line me-2"></i>
-      Students
+      {{ $t('students') }}
     </Link>
 
     <hr />
     <button class="list-group-item text-start" @click="toggleTheme">
-      <i class="ri-sun-line me-2"></i>Switch theme
+      <i class="ri-sun-line me-2"></i>
+      {{ $t('switch_theme') }}
     </button>
     <Link
       class="list-group-item list-group-item-action rounded border-0 mb-1"
       href="/logout"
       method="post"
     >
-      <i class="ri-logout-circle-line me-2"></i>Log out
+      <i class="ri-logout-circle-line me-2"></i>
+      {{ $t('logout') }}
     </Link>
   </div>
 </template>

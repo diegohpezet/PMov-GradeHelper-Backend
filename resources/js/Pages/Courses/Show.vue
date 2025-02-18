@@ -25,9 +25,10 @@ const sortedAssessments = props.course.assessments.sort((a, b) =>
         aria-controls="students-tab-pane"
         aria-selected="true"
       >
-        Students
+        {{ $t('students') }}
       </button>
     </li>
+
     <li class="nav-item" role="presentation">
       <button
         id="exercises-tab"
@@ -39,9 +40,10 @@ const sortedAssessments = props.course.assessments.sort((a, b) =>
         aria-controls="exercises-tab-pane"
         aria-selected="false"
       >
-        Exercises
+        {{ $t('exercises') }}
       </button>
     </li>
+
     <li class="nav-item" role="presentation">
       <button
         id="grades-tab"
@@ -53,9 +55,10 @@ const sortedAssessments = props.course.assessments.sort((a, b) =>
         aria-controls="grades-tab-pane"
         aria-selected="false"
       >
-        Grades
+        {{ $t('grades') }}
       </button>
     </li>
+
     <li class="nav-item" role="presentation">
       <button
         id="attendance-tab"
@@ -67,7 +70,7 @@ const sortedAssessments = props.course.assessments.sort((a, b) =>
         aria-controls="attendance-tab-pane"
         aria-selected="false"
       >
-        Attendance
+        {{ $t('attendances') }}
       </button>
     </li>
   </ul>
@@ -90,7 +93,7 @@ const sortedAssessments = props.course.assessments.sort((a, b) =>
       aria-labelledby="exercises-tab"
       tabindex="0"
     >
-      <h2 class="mb-3">Exercises</h2>
+      <h2 class="mb-3">{{ $t('exercises') }}</h2>
       <ul class="list-group">
         <li
           v-for="assessment in sortedAssessments"

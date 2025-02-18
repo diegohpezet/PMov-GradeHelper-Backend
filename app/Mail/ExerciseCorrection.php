@@ -2,9 +2,8 @@
 
 namespace App\Mail;
 
-use App\Models\Grade;
+use App\Models\Gradeable;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -14,14 +13,14 @@ class ExerciseCorrection extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $grade;
+    public $gradeable;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(Grade $grade)
+    public function __construct(Gradeable $gradeable)
     {
-        $this->grade = $grade;
+        $this->gradeable = $gradeable;
     }
 
     /**

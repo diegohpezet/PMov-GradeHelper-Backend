@@ -65,8 +65,7 @@ const saveGrade = () => {
         type="submit"
         :disabled="form.processing"
       >
-        <i class="ri-add-line"></i>
-        Add Grade
+        {{ $t('grades.submit') }}
       </button>
       <button
         class="btn btn-secondary"
@@ -74,7 +73,8 @@ const saveGrade = () => {
         :disabled="form.processing"
         @click="$emit('close')"
       >
-        Cancel
+        >
+        {{ $t('cancel') }}
       </button>
     </div>
   </form>

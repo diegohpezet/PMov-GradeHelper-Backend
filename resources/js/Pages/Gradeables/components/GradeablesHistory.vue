@@ -24,7 +24,7 @@ watchEffect(() => {
 <template>
   <details v-if="student && assessment" class="mb-3">
     <summary role="button">
-      <span>History</span>
+      <span>{{ $t('grades.history') }}</span>
     </summary>
     <ul class="list-group list-group-flush">
       <GradeablesHistoryItem

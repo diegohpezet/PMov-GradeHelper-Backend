@@ -11,18 +11,16 @@ const isAdmin = computed(() => page.props.auth.isAdmin);
 </script>
 
 <template>
-  <h1 class="h2">Courses</h1>
+  <h1 class="h2">{{ $t('courses') }}</h1>
 
   <details v-if="isAdmin" class="mt-3">
     <summary role="button" class="btn btn-primary text-white">
-      <span><i class="ri-add-line"></i>Add new course</span>
+      <span><i class="ri-add-line"></i>{{ $t('courses.add') }}</span>
     </summary>
     <CreateCourseForm />
   </details>
 
-  <p v-if="!courses.length" class="text-muted">
-    There are no courses to show...
-  </p>
+  <p v-if="!courses.length" class="text-muted">{{ $t('courses.empty') }}</p>
 
   <div v-else class="row g-2 mt-2">
     <div v-for="course in courses" :key="course.id" class="col-12 col-lg-6">

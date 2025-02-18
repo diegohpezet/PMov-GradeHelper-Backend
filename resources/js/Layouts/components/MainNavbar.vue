@@ -50,22 +50,21 @@ const isAdmin = page.props.auth.isAdmin;
             <i class="ri-more-2-fill"></i>
           </button>
           <ul class="dropdown-menu dropdown-menu-end">
-            <li class="d-block d-sm-none list-group-item text-start p-2">
-              <i class="ri-graduation-cap-line me-2"></i>{{ user.name }}
+            <li class="d-block d-sm-none list-group-item p-2">
+              <i class="ri-graduation-cap-line me-2"></i>
+              {{ user.name }}
             </li>
             <hr class="dropdown-divider d-block d-sm-none" />
             <li>
-              <button class="list-group-item text-start p-2">
-                <i class="ri-sun-line me-2"></i>Switch theme
+              <button class="list-group-item p-2">
+                <i class="ri-sun-line me-2"></i>
+                {{ $t('switch_theme') }}
               </button>
             </li>
             <li>
-              <Link
-                class="list-group-item text-start p-2"
-                href="/logout"
-                method="post"
-              >
-                <i class="ri-logout-circle-line me-2"></i>Log out
+              <Link class="list-group-item p-2" href="/logout" method="post">
+                <i class="ri-logout-circle-line me-2"></i>
+                {{ $t('logout') }}
               </Link>
             </li>
           </ul>
