@@ -21,7 +21,7 @@ import { Link, Head } from '@inertiajs/vue3';
       </div>
 
       <div>
-        <Link class="btn btn-primary" href="/login">Login</Link>
+        <Link class="btn btn-primary" href="/login">{{ $t('login') }}</Link>
       </div>
     </div>
   </nav>

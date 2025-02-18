@@ -1,34 +1,27 @@
-<script>
-import { Link, useForm } from '@inertiajs/vue3';
+<script setup>
+import { useForm } from '@inertiajs/vue3';
 import GuestLayout from '../../Layouts/GuestLayout.vue';
 
-export default {
-  layout: GuestLayout,
-  props: {
-    canResetPassword: {
-      type: Boolean,
-      required: true,
-    },
-    status: {
-      type: String,
-      default: null,
-    },
+defineOptions({ layout: GuestLayout });
+
+const { status } = defineProps({
+  status: {
+    type: String,
+    default: null,
   },
-  data() {
-    return {
-      form: useForm({
-        email: '',
-        password: '',
-        remember: false,
-      }),
-    };
-  },
-  methods: {
-    submit() {
-      this.form.post('/login');
-    },
-  },
-};
+});
+
+const form = useForm({
+  email: '',
+  password: '',
+  remember: false,
+});
+
+function handleSubmit() {
+  form.post('/login', {
+    onSuccess: () => form.reset(),
+  });
+}
 </script>
 
 <template>
@@ -37,14 +30,17 @@ export default {
       {{ status }}
     </div>
 
-    <form @submit.prevent="submit">
+    <form @submit.prevent="handleSubmit">
       <div class="mb-3">
-        <label for="email" value="Email" class="form-label">Email</label>
+        <label for="email" value="Email" class="form-label">
+          {{ $t('login.fields.email') }}
+        </label>
         <input
           id="email"
           v-model="form.email"
           type="email"
           class="form-control"
+          :disabled="form.processing"
           autofocus
         />
         <span v-if="form.errors.email" class="text-danger">{{
@@ -53,12 +49,15 @@ export default {
       </div>
 
       <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
+        <label for="password" class="form-label">
+          {{ $t('login.fields.password') }}
+        </label>
         <input
           id="password"
           v-model="form.password"
           type="password"
           class="form-control"
+          :disabled="form.processing"
         />
         <span v-if="form.errors.password" class="text-danger">{{
           form.errors.password
@@ -72,18 +71,19 @@ export default {
           v-model:="form.remember"
           class="form-check-input"
         />
-        <label class="form-check-label ms-2" :for="`checkbox-remember`"
-          >Remember me</label
-        >
+        <label class="form-check-label ms-2" for="checkbox-remember">
+          {{ $t('login.fields.remember') }}
+        </label>
       </div>
 
       <div class="mb-3 d-flex align-items-center justify-content-end">
-        <input
+        <button
           type="submit"
           class="btn btn-primary ms-4"
           :disabled="form.processing"
-          value="Log in"
-        />
+        >
+          {{ $t('login') }}
+        </button>
       </div>
     </form>
   </div>

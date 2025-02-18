@@ -20,7 +20,7 @@ const showGradeForm = ref(false);
         class="btn btn-sm btn-outline-secondary ms-1"
         @click="showGradeForm = true"
       >
-        Add Grade
+        {{ $t('grades.add') }}
       </button>
     </div>
 
@@ -37,6 +37,8 @@ const showGradeForm = ref(false);
         <GradeRow :grade="gr" />
       </li>
     </ul>
-    <p v-else>No grades for this exercise.</p>
+    <p v-else class="text-muted">
+      {{ $t('grades.empty') }}
+    </p>
   </div>
 </template>

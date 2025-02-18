@@ -46,23 +46,40 @@ const editExercise = (id) => {
 <template>
   <form @submit.prevent="editExercise(exercise.id)">
     <div class="mb-3">
-      <label for="title" class="form-label">Title</label>
-      <input id="title" v-model="form.title" type="text" class="form-control" />
+      <label for="title" class="form-label">
+        {{ $t('exercises.field.title') }}
+      </label>
+      <input
+        id="title"
+        v-model="form.title"
+        type="text"
+        class="form-control"
+        :placeholder="$t('exercises.field.title_placeholder')"
+      />
       <span v-if="form.errors.title" class="text-danger">{{
         form.errors.title
       }}</span>
     </div>
 
     <div class="mb-3">
-      <label for="path" class="form-label">Path</label>
-      <input id="path" v-model="form.path" type="text" class="form-control" />
+      <label for="path" class="form-label">
+        {{ $t('exercises.field.path') }}
+      </label>
+      <input
+        id="path"
+        v-model="form.path"
+        type="text"
+        class="form-control"
+        :placeholder="$t('exercises.field.path_placeholder')"
+      />
       <span v-if="form.errors.path" class="text-danger">{{
         form.errors.path
       }}</span>
     </div>
 
     <div class="mb-3">
-      <label for="courses" class="form-label">Courses:</label>
+      <label for="courses" class="form-label">{{ $t('courses') }}</label>
+      <p class="text-muted">{{ $t('exercises.field.courses_description') }}</p>
       <ul class="list-group">
         <li
           v-for="(course, index) in courses"
@@ -81,7 +98,9 @@ const editExercise = (id) => {
           }}</label>
 
           <div v-if="form.selectedCourses.includes(course.id)">
-            <label :for="`due-at-${course.id}`">Due at</label>
+            <label :for="`due-at-${course.id}`">{{
+              $t('exercises.field.due_at')
+            }}</label>
             <input
               :id="`due-at-${course.id}`"
               type="datetime-local"
@@ -97,6 +116,8 @@ const editExercise = (id) => {
       }}</span>
     </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">
+      {{ $t('exercises.submit_edit') }}
+    </button>
   </form>
 </template>

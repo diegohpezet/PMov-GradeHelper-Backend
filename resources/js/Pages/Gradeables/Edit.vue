@@ -17,7 +17,7 @@ const editGradeable = () => form.put(`/gradeables/${props.gradeable.id}`);
 </script>
 
 <template>
-  <h1>Edit grade</h1>
+  <h1>{{ $t('grades.edit') }}</h1>
   <form @submit.prevent="editGradeable">
     <div v-if="gradableType in options" class="mb-3">
       <label class="form-label">Value</label>
@@ -49,7 +49,9 @@ const editGradeable = () => form.put(`/gradeables/${props.gradeable.id}`);
     </div>
 
     <div class="mb-3">
-      <label class="form-label" for="comment">Comment</label>
+      <label class="form-label" for="comment">
+        {{ $t('grades.field.comment') }}
+      </label>
       <input
         id="comment"
         v-model="form.comment"
@@ -58,6 +60,8 @@ const editGradeable = () => form.put(`/gradeables/${props.gradeable.id}`);
       />
     </div>
 
-    <button type="submit" class="btn btn-primary text-white">Submit</button>
+    <button type="submit" class="btn btn-primary text-white">
+      {{ $t('grades.submit_edit') }}
+    </button>
   </form>
 </template>
