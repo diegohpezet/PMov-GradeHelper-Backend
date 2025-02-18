@@ -55,7 +55,7 @@ const openLinkModal = (student) => {
 <template>
   <div class="d-flex align-items-center justify-content-between">
     <h1 class="fs-2">Students</h1>
-    <aside>
+    <div class="btn-group" role="group">
       <button
         v-for="field in SORT_FIELDS"
         :key="field"
@@ -63,12 +63,12 @@ const openLinkModal = (student) => {
         :class="{ active: sortField === field }"
         @click="handleSelectSort(field)"
       >
-        {{ field }}
         <span v-if="sortField === field">
           {{ sortInvert ? '↑' : '↓' }}
         </span>
+        {{ field }}
       </button>
-    </aside>
+    </div>
   </div>
 
   <details v-if="isAdmin" class="my-3">
