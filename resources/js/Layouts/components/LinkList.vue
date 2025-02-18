@@ -5,6 +5,7 @@ const toggleTheme = () => {
   const currentTheme = document.documentElement.dataset?.bsTheme || 'light';
   const newTheme = currentTheme === 'light' ? 'dark' : 'light';
   document.documentElement.dataset.bsTheme = newTheme;
+  localStorage.setItem('userTheme', newTheme);
 };
 </script>
 
