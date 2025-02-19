@@ -1,9 +1,7 @@
 <script setup>
 import ExerciseRow from './components/ExerciseRow.vue';
 
-const props = defineProps({
-  student: Object,
-});
+defineProps({ student: { type: Object, required: true, default: () => ({}) } });
 </script>
 
 <template>
@@ -13,9 +11,9 @@ const props = defineProps({
   </header>
   <main>
     <ExerciseRow
-      v-for="exercise in student.course.exercises"
-      :key="exercise.id"
-      :exercise="exercise"
+      v-for="assessment in student.course.assessments"
+      :key="assessment.id"
+      :assessment="assessment"
       :student-id="student.id"
     />
   </main>

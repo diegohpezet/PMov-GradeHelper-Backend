@@ -4,33 +4,37 @@ import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 
-const props = defineProps({
-  grade: Object,
+defineProps({
+  grade: { type: Object, required: true, default: () => ({}) },
 });
 
 const showTruncated = ref(true);
-
-const translatedGradeResults = {
-  failed: t('grades.results.failed'),
-  passed: t('grades.results.passed'),
-};
 
 const dateFormatter = new Intl.DateTimeFormat('es-AR', {
   dateStyle: 'short',
   timeStyle: 'short',
 });
+
+const isPassFailGrade = (gradeable) => {
+  return gradeable.gradable_type === 'App\\Models\\PassFailGrade';
+};
 </script>
 
 <template>
   <div class="row align-items-top" @click="showTruncated = !showTruncated">
     <div
-      class="col-auto"
+      class="col-1"
       :class="{
-        'text-danger': grade.result == 'failed',
-        'text-success': grade.result == 'passed',
+        'text-danger': isPassFailGrade(grade) && !grade.gradable.value,
+        'text-success': isPassFailGrade(grade) && grade.gradable.value,
       }"
     >
-      {{ translatedGradeResults[grade.result] }}
+      {{
+        isPassFailGrade(grade)
+          ? (grade.gradable.value && t('grades.results.passed')) ||
+            t('grades.results.failed')
+          : grade.gradable.value
+      }}
     </div>
     <div
       class="col"
@@ -38,7 +42,7 @@ const dateFormatter = new Intl.DateTimeFormat('es-AR', {
         'text-truncate': showTruncated,
       }"
     >
-      {{ grade.comment }}
+      {{ grade.gradable.comment }}
     </div>
     <div class="col-auto">
       {{ dateFormatter.format(new Date(grade.created_at)) }}
