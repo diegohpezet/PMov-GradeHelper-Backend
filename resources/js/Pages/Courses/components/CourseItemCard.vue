@@ -7,7 +7,7 @@ const { t } = useI18n();
 const page = usePage();
 const isAdmin = computed(() => page.props.auth.isAdmin);
 
-const props = defineProps({
+const { course } = defineProps({
   course: Object,
 });
 

@@ -31,7 +31,11 @@ const saveGrade = () => {
 <template>
   <form class="row g-3 align-items-center" @submit.prevent="saveGrade">
     <div class="col-auto">
-      <div v-for="option in gradeResultOptions" class="form-check">
+      <div
+        v-for="option in gradeResultOptions"
+        :key="option"
+        class="form-check"
+      >
         <input
           :id="`result-radio-${option}-${exerciseId}`"
           v-model="form.result"

@@ -3,9 +3,9 @@ import StudentsList from '../Students/Index.vue';
 import AttendanceIndex from '../Attendance/Index.vue';
 import GradesTable from '../Gradeables/Index.vue';
 
-const props = defineProps({ course: Object });
+const { course } = defineProps({ course: Object });
 
-const sortedAssessments = props.course.assessments.sort((a, b) =>
+const sortedAssessments = [...course.assessments].sort((a, b) =>
   a.exercise.title.localeCompare(b.exercise.title),
 );
 </script>

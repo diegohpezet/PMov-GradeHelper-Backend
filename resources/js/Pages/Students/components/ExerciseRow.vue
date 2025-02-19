@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import GradeRow from './GradeRow.vue';
 import AddGradeForm from './AddGradeForm.vue';
 
-const props = defineProps({
+const { studentId, exercise } = defineProps({
   studentId: String,
   exercise: Object,
 });
@@ -33,7 +33,8 @@ const showGradeForm = ref(false);
     />
 
     <ul v-if="exercise.grades.length" class="list-group">
-      <li v-for="gr in exercise.grades" class="list-group-item">
+      <li v-for="gr in exercise.grades" :key="gr" class="list-group-item">
+        <pre>{{ gr }}</pre>
         <GradeRow :grade="gr" />
       </li>
     </ul>
