@@ -75,7 +75,7 @@
     "students.submit": "Crear estudiante",
     "students.submit_edit": "Editar estudiante",
 
-    "home.greeting": "Bienvenido, {name}!",
+    "home.greeting": "Hola, {name}!",
     "home.no_student": "Aún no estás asociado a ningún estudiante",
     "home.github_link": "Ir al repositorio de GitHub",
     "home.blog_link": "Ir al blog de la materia",
