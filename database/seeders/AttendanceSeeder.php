@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Student;
 use App\Models\Attendance;
-use Carbon\Carbon;
 
 class AttendanceSeeder extends Seeder
 {
