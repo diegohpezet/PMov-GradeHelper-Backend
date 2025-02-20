@@ -5,7 +5,7 @@ import AssessmentItem from './AssessmentItem.vue';
 const { t } = useI18n();
 
 const props = defineProps({
-  student: { type: Object, required: true, default: () => ({}) },
+  student: { type: Object, required: true },
 });
 
 const assessments = props.student.course.assessments;
