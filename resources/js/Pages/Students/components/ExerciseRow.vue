@@ -45,6 +45,6 @@ const showGradeForm = ref(false);
         <GradeRow :grade="gradable" />
       </li>
     </ul>
-    <p v-else>No grades for this exercise.</p>
+    <p v-else>{{ $t('grades.empty') }}</p>
   </div>
 </template>
