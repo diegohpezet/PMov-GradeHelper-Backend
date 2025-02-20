@@ -13,9 +13,9 @@ const { student } = defineProps({
   </header>
   <main>
     <ExerciseRow
-      v-for="exercise in student.course.exercises"
-      :key="exercise.id"
-      :exercise="exercise"
+      v-for="assessment in student.course.assessments"
+      :key="assessment.id"
+      :assessment="assessment"
       :student-id="student.id"
     />
   </main>

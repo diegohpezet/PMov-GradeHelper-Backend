@@ -1,46 +1,30 @@
 <script setup>
 import { ref } from 'vue';
 import { usePage } from '@inertiajs/vue3';
-import { shortDateFormat } from '../../Utils/dates.js';
-import AttendanceRow from './components/AttendanceRow.vue';
+import AttendanceTable from './components/AttendanceTable.vue';
 
 const { students, attendances } = defineProps({
   students: [Object],
   attendances: [Object],
 });
 
+const attendanceList = ref(attendances);
+
 const page = usePage();
 const isAdmin = page.props.auth.isAdmin;
 const error = ref('');
-
-const sortedStudents = [...students].sort((a, b) =>
-  a.last_name.localeCompare(b.last_name),
-);
-
-// Get unique attendance dates and sort them
-const sortedDates = ref(
-  Array.from(
-    new Set(
-      attendances.map((attendance) => new Date(attendance.date).getTime()),
-    ),
-  )
-    .sort((a, b) => a - b)
-    .map((timestamp) => new Date(timestamp)),
-);
 
 const createAttendanceDate = () => {
   const today = new Date();
   const todayString = today.toISOString().slice(0, 10);
 
   if (
-    sortedDates.value.find(
-      (date) => date.toISOString().slice(0, 10) === todayString,
-    )
+    attendanceList.value.find((attendance) => attendance.date === todayString)
   ) {
     return (error.value = 'You already took attendance today');
   }
 
-  sortedDates.value.push(today);
+  attendanceList.value.push({ date: todayString });
 };
 
 // TODO: refactor this to avoid mutating prop
@@ -63,18 +47,18 @@ const updateAttendance = ({ studentId, date, isNowChecked }) => {
     }),
   }).then(() => {
     if (isNowChecked) {
-      attendances.push({
+      attendanceList.value.push({
         student_id: studentId,
         course_id: page.props.course.id,
         date: date.toISOString().slice(0, 10),
       });
     } else {
-      const index = attendances.findIndex(
+      const index = attendanceList.value.findIndex(
         (attendance) =>
           attendance.student_id === studentId &&
           attendance.date === date.toISOString().slice(0, 10),
       );
-      if (index > -1) attendances.splice(index, 1);
+      if (index > -1) attendanceList.value.splice(index, 1);
     }
   });
 };
@@ -95,34 +79,9 @@ const updateAttendance = ({ studentId, date, isNowChecked }) => {
 
   <span v-if="error" class="text-danger">{{ error }}</span>
 
-  <table class="table table-striped border mt-3">
-    <thead class="table-primary">
-      <tr>
-        <th scope="col">
-          {{ $t('attendances.student') }}
-        </th>
-        <th scope="col" class="hoverable text-center">
-          {{ $t('attendances.total') }}
-        </th>
-        <th
-          v-for="date in sortedDates"
-          :key="date"
-          scope="col"
-          class="hoverable text-center"
-        >
-          {{ shortDateFormat(date) }}
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <AttendanceRow
-        v-for="student in sortedStudents"
-        :key="student.id"
-        :student="student"
-        :dates="sortedDates"
-        :attendances="attendances"
-        @update-attendance="updateAttendance"
-      />
-    </tbody>
-  </table>
+  <AttendanceTable
+    :students="students"
+    :attendances="attendanceList"
+    @update-attendance="updateAttendance"
+  />
 </template>
