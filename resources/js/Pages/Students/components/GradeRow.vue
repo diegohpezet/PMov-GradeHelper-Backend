@@ -19,7 +19,7 @@ const isPassFailGrade = (gradeable) => {
   return gradeable.gradable_type === 'App\\Models\\PassFailGrade';
 };
 
-const handleGradeValue = (grade) => {
+const getGradeValue = (grade) => {
   if (!isPassFailGrade(grade)) {
     return grade.gradable.value;
   }
@@ -41,7 +41,7 @@ const gradeClass = (grade) => {
 <template>
   <div class="row align-items-top" @click="showTruncated = !showTruncated">
     <div class="col-1" :class="gradeClass(grade)">
-      {{ handleGradeValue(grade) }}
+      {{ getGradeValue(grade) }}
     </div>
     <div
       class="col"
