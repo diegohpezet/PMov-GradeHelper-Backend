@@ -1,5 +1,6 @@
 {
     "attendances": "Asistencias",
+    "attendances.empty": "No hay ninguna asistencia para mostrar",
     "attendances.take": "Tomar asistencia",
     "attendances.student": "Estudiante",
     "attendances.total": "Total",
@@ -36,6 +37,7 @@
     "exercises.submit": "Crear ejercicio",
     "exercises.submit_edit": "Editar ejercicio",
 
+    "grade": "Calificación",
     "grades": "Calificaciones",
     "grades.add": "Agregar calificación",
     "grades.assessment": "Ejercicio",
@@ -72,6 +74,11 @@
     "students.link_to_user": "Asociar estudiante con usuario",
     "students.submit": "Crear estudiante",
     "students.submit_edit": "Editar estudiante",
+
+    "home.greeting": "Hola, {name}!",
+    "home.no_student": "Aún no estás asociado a ningún estudiante",
+    "home.github_link": "Ir al repositorio de GitHub",
+    "home.blog_link": "Ir al blog de la materia",
 
     "switch_theme": "Cambiar Modo",
     " ": " "

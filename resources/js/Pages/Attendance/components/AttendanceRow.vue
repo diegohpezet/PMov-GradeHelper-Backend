@@ -3,9 +3,10 @@ import { usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
 const props = defineProps({
-  student: Object,
-  dates: Array,
-  attendances: Array,
+  student: { type: Object, required: true },
+  dates: { type: Array, required: true },
+  attendances: { type: Array, required: true },
+  showNames: { type: Boolean, default: true },
 });
 
 const emit = defineEmits(['update-attendance']);
@@ -47,7 +48,7 @@ const handleAttendanceChange = (date, isNowChecked) => {
 
 <template>
   <tr>
-    <td>{{ student.last_name + ' ' + student.first_name }}</td>
+    <td v-if="showNames">{{ student.last_name + ' ' + student.first_name }}</td>
     <td class="text-center">{{ attendancePercentage }}%</td>
     <td v-for="date in dates" :key="date" class="text-center">
       <input

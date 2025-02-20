@@ -2,11 +2,15 @@
 import { ref } from 'vue';
 import GradeRow from './GradeRow.vue';
 import AddGradeForm from './AddGradeForm.vue';
+import { usePage } from '@inertiajs/vue3';
 
-const props = defineProps({
-  studentId: String,
-  exercise: Object,
+defineProps({
+  studentId: { type: String, required: true, default: '' },
+  assessment: { type: Object, required: true, default: () => ({}) },
 });
+
+const page = usePage();
+const isAdmin = page.props.auth.isAdmin;
 
 const showGradeForm = ref(false);
 </script>
@@ -14,31 +18,33 @@ const showGradeForm = ref(false);
 <template>
   <div class="mb-3">
     <div class="d-flex align-items-center mb-2">
-      <h2 class="h3">{{ exercise.title }}</h2>
+      <h2 class="h3">{{ assessment.exercise.title }}</h2>
       <button
-        v-if="!showGradeForm"
+        v-if="isAdmin && !showGradeForm"
         class="btn btn-sm btn-outline-secondary ms-1"
         @click="showGradeForm = true"
       >
-        {{ $t('grades.add') }}
+        Add Grade
       </button>
     </div>
 
     <AddGradeForm
-      v-if="showGradeForm"
+      v-if="isAdmin && showGradeForm"
       class="mb-3"
       :student-id="studentId"
-      :exercise-id="exercise.id"
+      :exercise-id="assessment.id"
       @close="showGradeForm = false"
     />
 
-    <ul v-if="exercise.grades.length" class="list-group">
-      <li v-for="gr in exercise.grades" class="list-group-item">
-        <GradeRow :grade="gr" />
+    <ul v-if="assessment.gradeables.length" class="list-group">
+      <li
+        v-for="gradable in assessment.gradeables"
+        :key="gradable.id"
+        class="list-group-item"
+      >
+        <GradeRow :grade="gradable" />
       </li>
     </ul>
-    <p v-else class="text-muted">
-      {{ $t('grades.empty') }}
-    </p>
+    <p v-else>{{ $t('grades.empty') }}</p>
   </div>
 </template>
