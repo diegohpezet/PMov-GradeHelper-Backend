@@ -18,23 +18,30 @@ const dateFormatter = new Intl.DateTimeFormat('es-AR', {
 const isPassFailGrade = (gradeable) => {
   return gradeable.gradable_type === 'App\\Models\\PassFailGrade';
 };
+
+const handleGradeValue = (grade) => {
+  if (!isPassFailGrade(grade)) {
+    return grade.gradable.value;
+  }
+
+  return grade.gradable.value
+    ? t('grades.results.passed')
+    : t('grades.results.failed');
+};
+
+const gradeClass = (grade) => {
+  if (!isPassFailGrade(grade)) {
+    return '';
+  }
+
+  return grade.gradable.value ? 'text-success' : 'text-danger';
+};
 </script>
 
 <template>
   <div class="row align-items-top" @click="showTruncated = !showTruncated">
-    <div
-      class="col-1"
-      :class="{
-        'text-danger': isPassFailGrade(grade) && !grade.gradable.value,
-        'text-success': isPassFailGrade(grade) && grade.gradable.value,
-      }"
-    >
-      {{
-        isPassFailGrade(grade)
-          ? (grade.gradable.value && t('grades.results.passed')) ||
-            t('grades.results.failed')
-          : grade.gradable.value
-      }}
+    <div class="col-1" :class="gradeClass(grade)">
+      {{ handleGradeValue(grade) }}
     </div>
     <div
       class="col"
