@@ -1,35 +1,26 @@
-<script>
+<script setup>
 import { Link, useForm } from '@inertiajs/vue3';
 import GuestLayout from '../../Layouts/GuestLayout.vue';
 
-export default {
-  components: {
-    Link,
-  },
-  layout: GuestLayout,
-  data() {
-    return {
-      form: useForm({
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: '',
-      }),
-    };
-  },
-  methods: {
-    submit() {
-      this.form.post('/register', {
-        onFinish: () => this.form.reset('password', 'password_confirmation'),
-      });
-    },
-  },
-};
+defineOptions({ layout: GuestLayout });
+
+const form = useForm({
+  name: '',
+  email: '',
+  password: '',
+  password_confirmation: '',
+});
+
+function handleSubmit() {
+  form.post('/register', {
+    onFinish: () => form.reset('password', 'password_confirmation'),
+  });
+}
 </script>
 
 <template>
   <div class="container bg-light p-3 rounded border">
-    <form @submit.prevent="submit">
+    <form @submit.prevent="handleSubmit">
       <div class="mb-3">
         <label for="name" class="form-label">Name</label>
         <input

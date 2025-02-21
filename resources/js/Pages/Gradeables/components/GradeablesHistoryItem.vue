@@ -4,7 +4,9 @@ import { shortDateFormat } from '../../../Utils/dates';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
-const props = defineProps({ gradeable: Object });
+const { gradeable } = defineProps({
+  gradeable: Object,
+});
 const emit = defineEmits(['delete-gradeable']);
 
 const page = usePage();

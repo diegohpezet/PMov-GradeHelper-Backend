@@ -4,9 +4,9 @@ import GradeRow from './GradeRow.vue';
 import AddGradeForm from './AddGradeForm.vue';
 import { usePage } from '@inertiajs/vue3';
 
-defineProps({
-  studentId: { type: String, required: true, default: '' },
-  assessment: { type: Object, required: true, default: () => ({}) },
+const { studentId, assessment } = defineProps({
+  studentId: String,
+  assessment: Object,
 });
 
 const page = usePage();

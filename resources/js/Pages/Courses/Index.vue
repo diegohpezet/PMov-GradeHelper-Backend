@@ -1,10 +1,12 @@
 <script setup>
-import { Link, usePage } from '@inertiajs/vue3';
+import { usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 import CreateCourseForm from './components/CreateCourseForm.vue';
 import CourseItemCard from './components/CourseItemCard.vue';
 
-const props = defineProps({ courses: [Object] });
+const { courses } = defineProps({
+  courses: [Object],
+});
 
 const page = usePage();
 const isAdmin = computed(() => page.props.auth.isAdmin);
