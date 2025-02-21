@@ -81,11 +81,7 @@ const editExercise = (id) => {
       <label for="courses" class="form-label">{{ $t('courses') }}</label>
       <p class="text-muted">{{ $t('exercises.field.courses_description') }}</p>
       <ul class="list-group">
-        <li
-          v-for="(course, index) in courses"
-          :key="course.id"
-          class="list-group-item"
-        >
+        <li v-for="course in courses" :key="course.id" class="list-group-item">
           <input
             :id="`checkbox-${course.id}`"
             v-model="form.selectedCourses"

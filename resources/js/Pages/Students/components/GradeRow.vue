@@ -4,8 +4,8 @@ import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 
-defineProps({
-  grade: { type: Object, required: true, default: () => ({}) },
+const { grade } = defineProps({
+  grade: Object,
 });
 
 const showTruncated = ref(true);

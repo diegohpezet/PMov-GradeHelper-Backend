@@ -3,16 +3,15 @@ import { ref } from 'vue';
 import { usePage } from '@inertiajs/vue3';
 import AttendanceTable from './components/AttendanceTable.vue';
 
-const props = defineProps({
-  students: { type: Array, required: true },
-  attendances: { type: Array, required: true },
+const { students, attendances } = defineProps({
+  students: [Object],
+  attendances: [Object],
 });
 
-const attendanceList = ref(props.attendances);
+const attendanceList = ref(attendances);
 
 const page = usePage();
 const isAdmin = page.props.auth.isAdmin;
-
 const error = ref('');
 
 const createAttendanceDate = () => {
@@ -28,6 +27,7 @@ const createAttendanceDate = () => {
   attendanceList.value.push({ date: todayString });
 };
 
+// TODO: refactor this to avoid mutating prop
 const updateAttendance = ({ studentId, date, isNowChecked }) => {
   const method = isNowChecked ? 'POST' : 'DELETE';
 
