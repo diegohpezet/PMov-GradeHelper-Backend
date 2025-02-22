@@ -1,0 +1,72 @@
+<script setup>
+import { Link } from '@inertiajs/vue3';
+import { defineEmits } from 'vue';
+
+const emit = defineEmits(['link', 'edit', 'delete']);
+
+const { student } = defineProps({
+  student: {
+    type: Object,
+    required: true,
+  },
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+const handleLink = () => {
+  emit('link', student);
+};
+const handleDelete = () => {
+  emit('delete', student);
+};
+</script>
+
+<template>
+  <li
+    class="list-group-item list-group-item-action d-flex justify-content-between"
+  >
+    <div>
+      <Link
+        :href="`/students/${student.github_username}`"
+        class="card-title fs-4"
+      >
+        {{ student.last_name + ', ' + student.first_name }}
+      </Link>
+      <p class="card-text text-muted fst-italic">
+        {{ student.course ? student.course.name : 'No course' }} |
+        <a :href="`https://github.com/${student.github_username}`"
+          >@{{ student.github_username }}</a
+        >
+
+        <button
+          v-if="isAdmin"
+          class="btn btn-sm btn-outline-primary ms-2 rounded-circle"
+          @click="handleLink"
+        >
+          <i v-if="!student.user_id" class="ri ri-link"></i>
+          <i v-else class="ri-arrow-left-right-line"></i>
+        </button>
+      </p>
+    </div>
+
+    <div v-if="isAdmin" class="btn-group text-end my-auto">
+      <Link
+        class="btn btn-outline-secondary"
+        :href="`/students/${student.id}/edit`"
+        :title="$t('students.edit')"
+      >
+        <i class="ri ri-pencil-line"></i>
+      </Link>
+
+      <button
+        class="btn btn-outline-danger"
+        :title="$t('students.delete')"
+        @click="handleDelete"
+      >
+        <i class="ri ri-delete-bin-line"></i>
+      </button>
+    </div>
+  </li>
+</template>

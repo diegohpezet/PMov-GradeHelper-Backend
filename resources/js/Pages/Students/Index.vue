@@ -1,8 +1,9 @@
 <script setup>
 import { ref } from 'vue';
-import { Link, router, usePage } from '@inertiajs/vue3';
+import { router, usePage } from '@inertiajs/vue3';
 import CreateStudentForm from './components/CreateStudentForm.vue';
 import LinkStudentList from './components/LinkStudentList.vue';
+import StudentListItem from './components/StudentListItem.vue';
 import BaseModal from '../../Layouts/components/BaseModal.vue';
 import { useI18n } from 'vue-i18n';
 
@@ -40,9 +41,9 @@ const handleSelectSort = (selected) => {
 const page = usePage();
 const isAdmin = page.props.auth.isAdmin;
 
-const deleteStudent = (id) => {
+const deleteStudent = (student) => {
   if (confirm(t('students.delete_confirm'))) {
-    router.delete(`/students/${id}`);
+    router.delete(`/students/${student.id}`);
   }
 };
 
@@ -86,53 +87,14 @@ const openLinkModal = (student) => {
   </p>
 
   <ul v-else class="list-group">
-    <li
+    <StudentListItem
       v-for="student in sortedList(students)"
       :key="student.id"
-      class="list-group-item list-group-item-action d-flex justify-content-between"
-    >
-      <div>
-        <Link
-          :href="`/students/${student.github_username}`"
-          class="card-title fs-4"
-        >
-          {{ student.last_name + ', ' + student.first_name }}
-        </Link>
-        <p class="card-text text-muted fst-italic">
-          {{ student.course ? student.course.name : 'No course' }} |
-          <a :href="`https://github.com/${student.github_username}`"
-            >@{{ student.github_username }}</a
-          >
-
-          <button
-            v-if="isAdmin"
-            class="btn btn-sm btn-outline-primary ms-2 rounded-circle"
-            @click="openLinkModal(student)"
-          >
-            <i v-if="!student.user_id" class="ri ri-link"></i>
-            <i v-else class="ri-arrow-left-right-line"></i>
-          </button>
-        </p>
-      </div>
-
-      <div v-if="isAdmin" class="btn-group text-end my-auto">
-        <Link
-          class="btn btn-outline-secondary"
-          :href="`/students/${student.id}/edit`"
-          :title="$t('students.edit')"
-        >
-          <i class="ri ri-pencil-line"></i>
-        </Link>
-
-        <button
-          class="btn btn-outline-danger"
-          :title="$t('students.delete')"
-          @click="deleteStudent(student.id)"
-        >
-          <i class="ri ri-delete-bin-line"></i>
-        </button>
-      </div>
-    </li>
+      :student="student"
+      :is-admin="isAdmin"
+      @link="openLinkModal(student)"
+      @delete="deleteStudent(student)"
+    />
   </ul>
 
   <BaseModal v-if="isModalOpen" @close="isModalOpen = false">
