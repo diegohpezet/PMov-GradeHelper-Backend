@@ -11,9 +11,10 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function (Request $request) {
-    if ($request->user()->isAdmin()) {
-        return redirect()->route('courses.index');
-    } else if ($request->user()) {
+    if ($request->user()) {
+        if ($request->user()->isAdmin()) {
+            return redirect()->route('courses.index');
+        }
         return redirect()->route('home');
     }
     return Inertia::render('Welcome');
@@ -21,7 +22,7 @@ Route::get('/', function (Request $request) {
 
 Route::middleware('auth')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
-    
+
     Route::middleware('admin')->group(function () {
         Route::resource('courses', CourseController::class);
         Route::resource('exercises', ExerciseController::class);
