@@ -8,7 +8,7 @@
     },
     "devDependencies": {
         "@eslint/js": "^9.20.0",
-        "@inertiajs/vue3": "^1.0.0",
+        "@inertiajs/vue3": "^2.0.3",
         "@vitejs/plugin-vue": "^5.0.0",
         "@vue/eslint-config-prettier": "^10.2.0",
         "axios": "^1.7.4",
@@ -22,7 +22,6 @@
         "vue": "^3.4.0"
     },
     "dependencies": {
-        "@inertiajs/vue3": "^1.2.0",
         "@vitejs/plugin-vue": "^5.2.1",
         "bootstrap": "^5.3.3",
         "remixicon": "^4.5.0",
