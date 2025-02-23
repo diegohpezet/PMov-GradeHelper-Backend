@@ -1,24 +1,23 @@
 <script setup>
 import { useForm, usePage } from '@inertiajs/vue3';
 
+const { course } = defineProps({
+  course: {
+    type: Object,
+    default: () => null,
+  },
+});
+
 const form = useForm({
   first_name: '',
   last_name: '',
   github_username: '',
-  course_id: '',
+  course_id: course?.id,
 });
 
 // Get courses information
 const page = usePage();
 const courses = page.props.courses;
-
-// Get current course if on the course page
-const courseUrlParam = page.url.split('/')[2];
-const currentCourse = courses.find((course) => course.id === courseUrlParam);
-
-if (currentCourse) {
-  form.course_id = currentCourse.id;
-}
 
 function submit() {
   form.post('/students', {
@@ -73,7 +72,12 @@ function submit() {
         <label for="course_id" class="visually-hidden">
           {{ $t('students.field.course') }}
         </label>
-        <select id="course_id" v-model="form.course_id" class="form-select">
+        <select
+          id="course_id"
+          v-model="form.course_id"
+          class="form-select"
+          :disabled="course"
+        >
           <option value="" disabled>
             {{ $t('students.field.course_select') }}
           </option>
