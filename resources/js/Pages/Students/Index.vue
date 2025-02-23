@@ -40,6 +40,7 @@ const handleSelectSort = (selected) => {
 
 const page = usePage();
 const isAdmin = page.props.auth.isAdmin;
+const course = page.props.course;
 
 const deleteStudent = (student) => {
   if (confirm(t('students.delete_confirm'))) {
@@ -79,7 +80,7 @@ const openLinkModal = (student) => {
     <summary role="button" class="btn btn-primary text-white">
       <span><i class="ri-add-line"></i>{{ $t('students.add') }}</span>
     </summary>
-    <CreateStudentForm />
+    <CreateStudentForm :course="course" />
   </details>
 
   <p v-if="!students.length" class="text-muted">
