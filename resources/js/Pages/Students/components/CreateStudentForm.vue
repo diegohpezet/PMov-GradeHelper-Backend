@@ -60,13 +60,16 @@ function submit() {
         <label for="github_username" class="visually-hidden">
           {{ $t('students.field.github_username') }}
         </label>
-        <input
-          id="github_username"
-          v-model="form.github_username"
-          type="text"
-          class="form-control"
-          :placeholder="$t('students.field.github_username')"
-        />
+        <div class="input-group mb-3">
+          <span class="input-group-text">github.com/</span>
+          <input
+            id="github_username"
+            v-model="form.github_username"
+            type="text"
+            class="form-control"
+            :placeholder="$t('students.field.github_username')"
+          />
+        </div>
       </div>
 
       <div class="col-12 col-md-6">
