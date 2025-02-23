@@ -27,8 +27,8 @@ const handleDelete = () => {
   <li
     class="list-group-item list-group-item-action d-flex justify-content-between"
   >
-    <div class="row">
-      <div class="col align-self-center">
+    <div class="row g-2">
+      <div class="col align-self-center d-none d-md-block">
         <img
           v-if="student.github_username"
           :src="
