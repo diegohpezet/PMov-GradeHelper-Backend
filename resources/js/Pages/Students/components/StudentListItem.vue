@@ -27,7 +27,22 @@ const handleDelete = () => {
   <li
     class="list-group-item list-group-item-action d-flex justify-content-between"
   >
-    <div>
+    <div class="row">
+      <div class="col align-self-center">
+        <img
+          v-if="student.github_username"
+          :src="
+            'https://avatars.githubusercontent.com/' + student.github_username
+          "
+          class="profile-picture me-2"
+        />
+        <i
+          v-else
+          class="ri-user-3-line profile-picture fs-2 p-2 me-2 border"
+        ></i>
+      </div>
+    </div>
+    <div class="col">
       <Link
         :href="`/students/${student.github_username}`"
         class="card-title fs-4"
@@ -35,10 +50,14 @@ const handleDelete = () => {
         {{ student.last_name + ', ' + student.first_name }}
       </Link>
       <p class="card-text text-muted fst-italic">
-        {{ student.course ? student.course.name : 'No course' }} |
-        <a :href="`https://github.com/${student.github_username}`"
-          >@{{ student.github_username }}</a
-        >
+        <span>{{ student.course ? student.course.name : 'No course' }}</span>
+
+        <template v-if="student.github_username">
+          |
+          <a :href="`https://github.com/${student.github_username}`"
+            >@{{ student.github_username }}</a
+          >
+        </template>
 
         <button
           v-if="isAdmin"
@@ -70,3 +89,11 @@ const handleDelete = () => {
     </div>
   </li>
 </template>
+
+<style scoped>
+.profile-picture {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+</style>
