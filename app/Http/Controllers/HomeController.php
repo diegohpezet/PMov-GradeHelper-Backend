@@ -11,6 +11,10 @@ class HomeController extends Controller
   {
     $student = $request->user()->student;
 
+    if (!$student) {
+      return Inertia::render('Home/HomeView');
+    }
+
     $student->load([
       'course',
       'course.assessments.exercise',

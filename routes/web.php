@@ -34,14 +34,4 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-Route::get('/giveMeIOMA', function (Request $request) {
-    $request->user()->assignRole('admin');
-    return redirect()->back()->with('success', 'You are now an admin');
-});
-
-Route::get('/javierAppeared', function (Request $request) {
-    $request->user()->removeRole('admin');
-    return redirect()->back()->with('success', 'You are no longer an admin');
-})->middleware('admin');
-
 require __DIR__.'/auth.php';
