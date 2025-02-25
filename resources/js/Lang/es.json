@@ -60,6 +60,21 @@
     "login.fields.remember": "Recordarme",
     "logout": "Cerrar Sesión",
 
+    "register": "Registrarme",
+    "register.fields.name": "Nombre",
+    "register.fields.email": "Email",
+    "register.fields.password": "Contraseña",
+    "register.fields.password_confirmation": "Confirmar Contraseña",
+    "register.submit": "Registrarme",
+
+    "password.forgot": "Olvidaste tu contraseña?",
+    "password.description": "Ingresa tu email y te enviaremos un enlace para restablecer tu contraseña",
+    "password.send": "Enviar",
+    "password.email": "Email",
+    "password.password": "Contraseña",
+    "password.password_confirmation": "Confirmar Contraseña",
+    "password.submit": "Restablecer Contraseña",
+
     "students": "Estudiantes",
     "students.add": "Agregar nuevo estudiante",
     "students.delete": "Eliminar estudiante",
