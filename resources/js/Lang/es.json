@@ -44,6 +44,8 @@
     "grades.delete_confirm": "Está seguro que quiere eliminar esta calificación?",
     "grades.edit": "Editar calificación",
     "grades.empty": "No hay ninguna calificación para este ejercicio",
+    "grades.no_students": "No hay estudiantes para calificar",
+    "grades.no_assessments": "No hay ejercicios para calificar",
     "grades.field.comment": "Comentario",
     "grades.field.gradeable_type": "Tipo de calificación",
     "grades.history": "Historial de Calificaciones",

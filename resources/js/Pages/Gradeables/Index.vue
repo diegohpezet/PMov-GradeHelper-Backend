@@ -70,68 +70,74 @@ const setGradeFormValues = (student, assessment) => {
 <template>
   <h1 class="h2">{{ $t('grades') }}</h1>
 
-  <CreateGradeableForm
-    v-if="isAdmin"
-    :student="studentToGrade"
-    :assessment="assessmentToGrade"
-  />
+  <p v-if="!students.length">{{ $t('grades.no_students') }}</p>
 
-  <GradeablesHistory
-    :student="studentToGrade"
-    :assessment="assessmentToGrade"
-  />
+  <p v-else-if="!assessments.length">{{ $t('grades.no_assessments') }}</p>
 
-  <table class="table table-striped border">
-    <thead class="table-primary">
-      <tr>
-        <th scope="col">{{ $t('grades.student') }}</th>
-        <th
-          v-for="assessment in filteredAssessments"
-          :key="assessment.id"
-          scope="col"
-          class="hoverable"
-          @click="applyAssessmentListFilter(assessment)"
-        >
-          {{ assessment.exercise.title }}
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="student in filteredStudents" :key="student.id">
-        <th
-          scope="row"
-          class="hoverable"
-          @click="applyStudentListFilter(student)"
-        >
-          {{ student.last_name }} {{ student.first_name }}
-        </th>
+  <div v-else>
+    <CreateGradeableForm
+      v-if="isAdmin"
+      :student="studentToGrade"
+      :assessment="assessmentToGrade"
+    />
 
-        <td
-          v-for="assessment in filteredAssessments"
-          :key="assessment.id"
-          class="hoverable"
-          @click="setGradeFormValues(student, assessment)"
-        >
-          <div class="d-flex">
-            <CheckOnlineStatus
-              :student-username="student.github_username"
-              :exercise-path="assesment?.exercise?.path"
-            />
-            <span>
-              <a
-                v-if="assessment"
-                :href="`https://${student.github_username}.github.io/plataformas-moviles-entregas/${assessment.exercise.path}`"
-                class="mx-1"
-              >
-                Link
-              </a>
-              | {{ getLastGradeable(student, assessment) }}
-            </span>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+    <GradeablesHistory
+      :student="studentToGrade"
+      :assessment="assessmentToGrade"
+    />
+
+    <table class="table table-striped border">
+      <thead class="table-primary">
+        <tr>
+          <th scope="col">{{ $t('grades.student') }}</th>
+          <th
+            v-for="assessment in filteredAssessments"
+            :key="assessment.id"
+            scope="col"
+            class="hoverable"
+            @click="applyAssessmentListFilter(assessment)"
+          >
+            {{ assessment.exercise.title }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="student in filteredStudents" :key="student.id">
+          <th
+            scope="row"
+            class="hoverable"
+            @click="applyStudentListFilter(student)"
+          >
+            {{ student.last_name }} {{ student.first_name }}
+          </th>
+
+          <td
+            v-for="assessment in filteredAssessments"
+            :key="assessment.id"
+            class="hoverable"
+            @click="setGradeFormValues(student, assessment)"
+          >
+            <div class="d-flex">
+              <CheckOnlineStatus
+                :student-username="student.github_username"
+                :exercise-path="assesment?.exercise?.path"
+              />
+              <span>
+                <a
+                  v-if="assessment"
+                  :href="`https://${student.github_username}.github.io/plataformas-moviles-entregas/${assessment.exercise.path}`"
+                  class="mx-1"
+                >
+                  Link
+                </a>
+                | {{ getLastGradeable(student, assessment) }}
+              </span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 
 <style scoped>
