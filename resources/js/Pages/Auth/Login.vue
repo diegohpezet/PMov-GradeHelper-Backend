@@ -1,5 +1,5 @@
 <script setup>
-import { useForm } from '@inertiajs/vue3';
+import { Link, useForm } from '@inertiajs/vue3';
 import GuestLayout from '../../Layouts/GuestLayout.vue';
 
 defineOptions({ layout: GuestLayout });
@@ -26,7 +26,7 @@ function handleSubmit() {
 
 <template>
   <div class="container">
-    <div v-if="status" class="mb-4 text-success">
+    <div v-if="status" class="mb-4 text-success text-center">
       {{ status }}
     </div>
 
@@ -88,6 +88,17 @@ function handleSubmit() {
             </button>
           </div>
         </form>
+
+        <hr />
+
+        <div class="d-flex align-items-center justify-content-center">
+          <Link href="/register" class="me-3">
+            {{ $t('register') }}
+          </Link>
+          <Link href="/forgot-password" class="me-3">
+            {{ $t('password.forgot') }}
+          </Link>
+        </div>
       </div>
     </div>
   </div>
