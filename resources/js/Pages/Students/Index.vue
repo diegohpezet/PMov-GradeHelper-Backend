@@ -4,6 +4,7 @@ import { router, usePage } from '@inertiajs/vue3';
 import CreateStudentForm from './components/CreateStudentForm.vue';
 import LinkStudentList from './components/LinkStudentList.vue';
 import StudentListItem from './components/StudentListItem.vue';
+import SearchStudent from './components/SearchStudent.vue';
 import BaseModal from '../../Layouts/components/BaseModal.vue';
 import { useI18n } from 'vue-i18n';
 
@@ -36,6 +37,17 @@ const handleSelectSort = (selected) => {
     sortField.value = selected;
     sortInvert.value = false;
   }
+};
+
+const filteredStudents = ref([...students]);
+
+const handleSearch = (query) => {
+  filteredStudents.value = students.filter((student) => {
+    return (
+      student.first_name.toLowerCase().includes(query.toLowerCase()) ||
+      student.last_name.toLowerCase().includes(query.toLowerCase())
+    );
+  });
 };
 
 const page = usePage();
@@ -80,16 +92,18 @@ const openLinkModal = (student) => {
     <summary role="button" class="btn btn-primary text-white">
       <span><i class="ri-add-line"></i>{{ $t('students.add') }}</span>
     </summary>
-    <CreateStudentForm :course="course" />
+    <CreateStudentForm :course="course" class="my-3" />
   </details>
 
-  <p v-if="!students.length" class="text-muted">
+  <SearchStudent @search="handleSearch" />
+
+  <p v-if="!filteredStudents.length" class="text-muted">
     {{ $t('students.empty') }}
   </p>
 
   <ul v-else class="list-group">
     <StudentListItem
-      v-for="student in sortedList(students)"
+      v-for="student in sortedList(filteredStudents)"
       :key="student.id"
       :student="student"
       :is-admin="isAdmin"
