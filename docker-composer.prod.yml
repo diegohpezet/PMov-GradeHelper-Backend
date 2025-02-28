@@ -1,0 +1,38 @@
+# Docker compose file for production environment
+# docker compose network create grades_net
+services:
+  web:
+    image: serversideup/php:8.2-fpm-nginx
+    ports:
+      - 80:8080
+      - 443:8443
+    depends_on:
+      - postgres
+    volumes:
+      - .:/var/www/html
+    environment:
+      # - DEBUG_OUTPUT: true
+      - PHP_MAX_EXECUTION_TIME: "300"
+      - PHP_MEMORY_LIMIT: "1024M"
+      - AUTORUN_ENABLED: true
+      - SSL_MODE: false
+      - PHP_DATE_TIMEZONE: "America/Argentina/Buenos_Aires"
+    networks:
+      - grades_net
+
+  postgres:
+    image: postgres:16
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    environment:
+      - POSTGRES_DB=app
+      - POSTGRES_USER=laravel
+      - POSTGRES_PASSWORD=secret
+    volumes:
+      - ./data/database:/var/lib/postgresql/data
+    networks:
+      - grades_net
+
+networks:
+  grades_net:
+    external: true
