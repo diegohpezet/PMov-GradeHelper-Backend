@@ -15,7 +15,7 @@ class PassFailGrade extends Model
 
     public function gradeable()
     {
-        return $this->morphOne(Gradeable::class, 'gradable');
+        return $this->morphOne(Grade::class, 'gradeable');
     }
 }
 
