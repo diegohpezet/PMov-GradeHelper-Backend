@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Course extends Model
 {
@@ -27,9 +27,13 @@ class Course extends Model
         return $this->hasMany(Assessment::class);
     }
 
-    public function exercises(): HasManyThrough
+    public function exercises(): BelongsToMany
     {
-        return $this->hasManyThrough(Exercise::class, Assessment::class);
+        return $this->belongsToMany(Exercise::class, 'assessments')
+            ->withPivot('due_at')
+            ->withTimestamps()
+            ->using(Assessment::class)
+            ->orderBy('title');
     }
 
     public function attendances(): HasMany

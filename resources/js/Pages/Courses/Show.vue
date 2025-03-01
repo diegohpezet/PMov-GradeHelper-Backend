@@ -3,11 +3,12 @@ import StudentsList from '../Students/Index.vue';
 import AttendanceIndex from '../Attendance/Index.vue';
 import GradesTable from '../Gradeables/Index.vue';
 
-const { course } = defineProps({ course: Object });
-
-const sortedAssessments = [...course.assessments].sort((a, b) =>
-  a.exercise.title.localeCompare(b.exercise.title),
-);
+const { course } = defineProps({
+  course: {
+    type: Object,
+    required: true,
+  },
+});
 </script>
 
 <template>
@@ -96,13 +97,13 @@ const sortedAssessments = [...course.assessments].sort((a, b) =>
       <h2 class="mb-3">{{ $t('exercises') }}</h2>
       <ul class="list-group">
         <li
-          v-for="assessment in sortedAssessments"
-          :key="assessment.id"
+          v-for="exercise in course.exercises"
+          :key="exercise.id"
           class="list-group-item"
         >
-          <span class="lead me-3">{{ assessment.exercise.title }}</span>
+          <span class="lead me-3">{{ exercise.title }}</span>
           <span class="text-muted"
-            >Due Date: {{ new Date(assessment.due_at).toLocaleString() }}</span
+            >Due Date: {{ new Date(exercise.pivot.due_at).toLocaleString() }}</span
           >
         </li>
       </ul>
