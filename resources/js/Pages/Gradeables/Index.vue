@@ -51,6 +51,7 @@ const getLastGradeable = (student, exercise) => {
   const firstExerciseGrade = student.grades.find(
     (grade) => grade.assessment_id === exercise.assessment.id,
   );
+  // TODO(Tehuel): format gradeable by type
   return firstExerciseGrade?.gradeable?.value;
 };
 
