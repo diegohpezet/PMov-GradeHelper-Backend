@@ -27,7 +27,7 @@ const getGradeToDisplay = (grade) => {
 
 function handleDelete(gradeId) {
   if (confirm(t('grades.delete_confirm'))) {
-    router.delete(`/gradeables/${gradeId}`, {
+    router.delete(`/grades/${gradeId}`, {
       onSuccess: () => emit('deleted', gradeId),
     });
   }

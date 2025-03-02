@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\GradeableType;
 use App\Http\Requests\StoreGradeRequest;
-use App\Http\Requests\UpdateGradeableRequest;
+use App\Http\Requests\UpdateGradeRequest;
 use App\Mail\ExerciseCorrection;
 use App\Models\Grade;
 use Illuminate\Support\Facades\Mail;
@@ -53,31 +53,31 @@ class GradesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Gradeable $gradeable)
+    public function edit(Grade $grade)
     {
         return Inertia::render('Gradeables/Edit', [
-            'gradeable' => $gradeable->load('gradeable'),
+            'grade' => $grade,
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateGradeableRequest $request, Gradeable $gradeable)
+    public function update(UpdateGradeRequest $request, Grade $grade)
     {
-        $gradeable->gradeable->update($request->validated());
+        $grade->gradeable->update($request->validated());
 
         return redirect()
-            ->route('grades.index')
+            ->back()
             ->with('success', __('grades.updated'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Gradeable $gradeable)
+    public function destroy(Grade $grade)
     {
-        $gradeable->delete();
+        $grade->delete();
 
         return redirect()
             ->back()
