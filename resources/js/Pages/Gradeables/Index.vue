@@ -6,7 +6,7 @@ import CreateGradeableForm from './components/CreateGradeableForm.vue';
 import GradeablesHistory from './components/GradeablesHistory.vue';
 import { usePage } from '@inertiajs/vue3';
 
-const props = defineProps({
+const { students, exercises } = defineProps({
   students: {
     type: Array,
     default: () => [],
@@ -21,27 +21,16 @@ const page = usePage();
 const isAdmin = page.props.auth.isAdmin;
 
 // Filter functionality
-const selectedAssessment = ref(null);
+const selectedExercise = ref(null);
 const selectedStudent = ref(null);
 
 const filteredStudents = computed(() => {
-  return filterStudents(
-    props.students,
-    selectedStudent.value,
-    selectedAssessment.value,
-  );
+  return students;
 });
 
-const filteredAssessments = computed(() => {
-  return filterAssessments(props.assessments, selectedAssessment.value);
+const filteredExercises = computed(() => {
+  return exercises;
 });
-
-const applyAssessmentListFilter = (assessment) => {
-  selectedAssessment.value =
-    selectedAssessment.value && selectedAssessment.value.id === assessment.id
-      ? null
-      : assessment;
-};
 
 const applyStudentListFilter = (student) => {
   selectedStudent.value =
@@ -50,26 +39,28 @@ const applyStudentListFilter = (student) => {
       : student;
 };
 
-// Get gradeable value for assessment
-const getLastGradeable = (student, assessment) => {
-  const gradeable = student.gradeables.find(
-    (gradeable) => gradeable.assessment_id === assessment.id,
+const applyExerciseListFilter = (exercise) => {
+  selectedExercise.value =
+    selectedExercise.value && selectedExercise.value.id === exercise.id
+      ? null
+      : exercise;
+};
+
+// Get gradeable value for exercise
+const getLastGradeable = (student, exercise) => {
+  const firstExerciseGrade = student.grades.find(
+    (grade) => grade.assessment_id === exercise.assessment.id
   );
-
-  if (gradeable && gradeable.gradable_type === 'App\\Models\\PassFailGrade') {
-    return gradeable.gradable.value ? 'Passed' : 'Failed';
-  }
-
-  return gradeable ? gradeable.gradable.value : '-';
+  return firstExerciseGrade?.gradeable?.value;
 };
 
 // Form functionality
 const studentToGrade = ref(null);
-const assessmentToGrade = ref(null);
+const exerciseToGrade = ref(null);
 
-const setGradeFormValues = (student, assessment) => {
+const setGradeFormValues = (student, exercise) => {
   studentToGrade.value = student;
-  assessmentToGrade.value = assessment;
+  exerciseToGrade.value = exercise;
 };
 </script>
 
@@ -79,12 +70,12 @@ const setGradeFormValues = (student, assessment) => {
   <CreateGradeableForm
     v-if="isAdmin"
     :student="studentToGrade"
-    :assessment="assessmentToGrade"
+    :exercise="exerciseToGrade"
   />
 
   <GradeablesHistory
     :student="studentToGrade"
-    :assessment="assessmentToGrade"
+    :exercise="exerciseToGrade"
   />
 
   <table class="table table-striped border">
@@ -92,13 +83,13 @@ const setGradeFormValues = (student, assessment) => {
       <tr>
         <th scope="col">{{ $t('grades.student') }}</th>
         <th
-          v-for="assessment in filteredAssessments"
-          :key="assessment.id"
+          v-for="excercise in filteredExercises"
+          :key="excercise.id"
           scope="col"
           class="hoverable"
-          @click="applyAssessmentListFilter(assessment)"
+          @click="applyExerciseListFilter(excercise)"
         >
-          {{ assessment.exercise.title }}
+          {{ excercise.title }}
         </th>
       </tr>
     </thead>
@@ -113,10 +104,10 @@ const setGradeFormValues = (student, assessment) => {
         </th>
 
         <td
-          v-for="assessment in filteredAssessments"
-          :key="assessment.id"
+          v-for="excercise in filteredExercises"
+          :key="excercise.id"
           class="hoverable"
-          @click="setGradeFormValues(student, assessment)"
+          @click="setGradeFormValues(student, excercise)"
         >
           <div class="d-flex">
             <CheckOnlineStatus
@@ -125,13 +116,13 @@ const setGradeFormValues = (student, assessment) => {
             />
             <span>
               <a
-                v-if="assessment"
-                :href="`https://${student.github_username}.github.io/plataformas-moviles-entregas/${assessment.exercise.path}`"
+                v-if="excercise"
+                :href="`https://${student.github_username}.github.io/plataformas-moviles-entregas/${excercise.path}`"
                 class="mx-1"
               >
                 Link
               </a>
-              | {{ getLastGradeable(student, assessment) }}
+              | {{ getLastGradeable(student, excercise) }}
             </span>
           </div>
         </td>
