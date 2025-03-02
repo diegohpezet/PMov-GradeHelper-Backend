@@ -3,6 +3,7 @@ import { useForm } from '@inertiajs/vue3';
 
 const form = useForm({
   name: '',
+  description: '',
   school_year: new Date().getFullYear(),
 });
 
@@ -26,6 +27,19 @@ function submit() {
           type="text"
           class="form-control"
           :placeholder="$t('courses.field.name_placeholder')"
+        />
+      </div>
+
+      <div class="col-12 col-md-6">
+        <label for="description" class="visually-hidden">
+          {{ $t('courses.field.description') }}
+        </label>
+        <input
+          id="description"
+          v-model="form.description"
+          type="text"
+          class="form-control"
+          :placeholder="$t('courses.field.description_placeholder')"
         />
       </div>
 
