@@ -2,6 +2,10 @@
 import StudentsList from '../Students/Index.vue';
 import AttendanceIndex from '../Attendance/Index.vue';
 import GradesTable from '../Gradeables/Index.vue';
+import CourseAdminActions from './components/CourseAdminActions.vue';
+import { usePage } from '@inertiajs/vue3';
+
+const isAdmin = usePage().props.auth.isAdmin;
 
 const { course } = defineProps({ course: Object });
 
@@ -11,7 +15,15 @@ const sortedAssessments = [...course.assessments].sort((a, b) =>
 </script>
 
 <template>
-  <h1>{{ course.name }}</h1>
+  <div class="row">
+    <div class="col">
+      <h1>{{ course.name }}</h1>
+      <p>{{ course.description }}</p>
+    </div>
+    <div class="col-auto">
+      <CourseAdminActions v-if="isAdmin" :course="course" />
+    </div>
+  </div>
 
   <ul id="courseTabs" class="nav nav-tabs" role="tablist">
     <li class="nav-item" role="presentation">
