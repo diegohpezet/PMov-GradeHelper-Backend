@@ -1,6 +1,5 @@
 <script setup>
 import { computed, ref } from 'vue';
-import { filterStudents, filterAssessments } from './utils/filters';
 import CheckOnlineStatus from './components/CheckOnlineStatus.vue';
 import CreateGradeableForm from './components/CreateGradeableForm.vue';
 import GradeablesHistory from './components/GradeablesHistory.vue';
