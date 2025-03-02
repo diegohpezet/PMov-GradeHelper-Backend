@@ -11,6 +11,8 @@ class Grade extends Model
     
     protected $fillable = ['assessment_id', 'student_id', 'gradable_id', 'gradable_type'];
 
+    protected $with = ['gradeable'];
+
     public function gradeable()
     {
         return $this->morphTo();
