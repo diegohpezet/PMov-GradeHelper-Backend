@@ -20,7 +20,7 @@ const passFailGradeResultOptions = [true, false];
 
 const form = useForm({
   student_id: student?.id || null,
-  exercise_id: exercise?.id || null,
+  assessment_id: exercise?.assessment?.id || null,
   value: '',
   comment: '',
   gradeable_type: gradeableTypes[0],
@@ -29,12 +29,12 @@ const form = useForm({
 watchEffect(() => {
   if (student && exercise) {
     form.student_id = student.id;
-    form.exercise_id = exercise.id;
+    form.assessment_id = exercise.assessment.id;
   }
 });
 
 const handleSubmit = () => {
-  form.post('/gradeables', {
+  form.post('/grades', {
     onSuccess: () => {
       form.reset();
     },
@@ -73,7 +73,7 @@ const handleSubmit = () => {
       <!-- Dropdown for selecting gradeable type -->
       <div class="col-6">
         <label for="gradeable_type" class="visually-hidden">
-          {{ $t('grades.fields.gradeable_type') }}
+          {{ $t('grades.field.gradeable_type') }}
         </label>
         <select
           id="gradeable_type"
@@ -146,7 +146,7 @@ const handleSubmit = () => {
 
       <div class="col-12">
         <label for="comment" class="visually-hidden">
-          {{ $t('grades.fields.comment') }}
+          {{ $t('grades.field.comment') }}
         </label>
         <input
           id="comment"

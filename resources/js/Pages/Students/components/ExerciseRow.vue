@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import GradeRow from './GradeRow.vue';
-import AddGradeForm from './AddGradeForm.vue';
+import CreateGradeForm from '../../Gradeables/components/CreateGradeForm.vue';
 import { usePage } from '@inertiajs/vue3';
 
 const { exercise, grades } = defineProps({
@@ -29,11 +29,11 @@ const showGradeForm = ref(false);
       </button>
     </div>
 
-    <AddGradeForm
+    <CreateGradeForm
       v-if="isAdmin && showGradeForm"
       class="mb-3"
-      :student-id="student.id"
-      :exercise-id="exercise.id"
+      :student="student"
+      :exercise="exercise"
       @close="showGradeForm = false"
     />
 

@@ -1,7 +1,7 @@
 <script setup>
 import { computed, ref } from 'vue';
 import CheckOnlineStatus from './components/CheckOnlineStatus.vue';
-import CreateGradeableForm from './components/CreateGradeableForm.vue';
+import CreateGradeForm from './components/CreateGradeForm.vue';
 import GradeablesHistory from './components/GradeablesHistory.vue';
 import { usePage } from '@inertiajs/vue3';
 
@@ -67,7 +67,7 @@ const setGradeFormValues = (student, exercise) => {
 <template>
   <h1 class="h2">{{ $t('grades') }}</h1>
 
-  <CreateGradeableForm
+  <CreateGradeForm
     v-if="isAdmin"
     :student="studentToGrade"
     :exercise="exerciseToGrade"

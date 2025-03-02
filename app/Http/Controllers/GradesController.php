@@ -3,19 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Enums\GradeableType;
-use App\Http\Requests\StoreGradeableRequest;
+use App\Http\Requests\StoreGradeRequest;
 use App\Http\Requests\UpdateGradeableRequest;
 use App\Mail\ExerciseCorrection;
-use App\Models\Gradeable;
+use App\Models\Grade;
 use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 
-class GradeableController extends Controller
+class GradesController extends Controller
 {
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreGradeableRequest $request)
+    public function store(StoreGradeRequest $request)
     {
         $validated = $request->validated();
         
@@ -26,19 +26,18 @@ class GradeableController extends Controller
             return redirect()->back()->withErrors(['gradeable_type' => 'Invalid grade type']);
         }
     
-        // Create grade model instance
-        $gradeModel = new ($gradeableType->model())([
+        $gradeableModel = new ($gradeableType->model())([
             'value' => $validated['value'],
             'comment' => $validated['comment'],
         ]);
-        $gradeModel->save();
+        $gradeableModel->save();
 
         // Create gradeable
-        $gradeable = Gradeable::create([
+        $gradeable = Grade::create([
             'assessment_id' => $validated['assessment_id'],
             'student_id' => $validated['student_id'],
-            'gradable_type' => $gradeableType->model(),
-            'gradable_id' => $gradeModel->id,
+            'gradeable_type' => $gradeableType->model(),
+            'gradeable_id' => $gradeableModel->id,
         ]);
     
         // Send email to student
@@ -57,7 +56,7 @@ class GradeableController extends Controller
     public function edit(Gradeable $gradeable)
     {
         return Inertia::render('Gradeables/Edit', [
-            'gradeable' => $gradeable->load('gradable'),
+            'gradeable' => $gradeable->load('gradeable'),
         ]);
     }
 
@@ -66,7 +65,7 @@ class GradeableController extends Controller
      */
     public function update(UpdateGradeableRequest $request, Gradeable $gradeable)
     {
-        $gradeable->gradable->update($request->validated());
+        $gradeable->gradeable->update($request->validated());
 
         return redirect()
             ->route('grades.index')

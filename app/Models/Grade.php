@@ -9,7 +9,7 @@ class Grade extends Model
 {
     use HasUuids;
     
-    protected $fillable = ['assessment_id', 'student_id', 'gradable_id', 'gradable_type'];
+    protected $fillable = ['assessment_id', 'student_id', 'gradeable_id', 'gradeable_type'];
 
     protected $with = ['gradeable'];
 
