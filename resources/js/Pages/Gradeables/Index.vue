@@ -73,10 +73,7 @@ const setGradeFormValues = (student, exercise) => {
     :exercise="exerciseToGrade"
   />
 
-  <GradeablesHistory
-    :student="studentToGrade"
-    :exercise="exerciseToGrade"
-  />
+  <GradeablesHistory :student="studentToGrade" :exercise="exerciseToGrade" />
 
   <table class="table table-striped border">
     <thead class="table-primary">
