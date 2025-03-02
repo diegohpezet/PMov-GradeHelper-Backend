@@ -2,9 +2,15 @@
 import { watchEffect } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 
-const props = defineProps({
-  student: Object,
-  assessment: Object,
+const { student, exercise } = defineProps({
+  student: {
+    type: Object,
+    default: () => null,
+  },
+  exercise: {
+    type: Object,
+    default: () => null,
+  },
 });
 
 const gradeableTypes = ['PassFailGrade', 'NumericGrade', 'TEGrade'];
@@ -13,17 +19,17 @@ const teGradeResultOptions = ['TEA', 'TEP', 'TED'];
 const passFailGradeResultOptions = [true, false];
 
 const form = useForm({
-  student_id: props.student?.id || '',
-  assessment_id: props.assessment?.id || '',
+  student_id: student?.id || null,
+  exercise_id: exercise?.id || null,
   value: '',
   comment: '',
-  gradeable_type: 'PassFailGrade',
+  gradeable_type: gradeableTypes[0],
 });
 
 watchEffect(() => {
-  if (props.student && props.assessment) {
-    form.student_id = props.student.id;
-    form.assessment_id = props.assessment.id;
+  if (student && exercise) {
+    form.student_id = student.id;
+    form.exercise_id = exercise.id;
   }
 });
 
@@ -46,19 +52,19 @@ const saveGrade = () => {
         <input
           id="student_id"
           type="text"
-          :value="props.student?.last_name || ''"
+          :value="student?.last_name || ''"
           disabled
           class="form-control"
         />
       </div>
       <div class="col-6">
-        <label for="assessment_id" class="visually-hidden">
-          {{ $t('grades.assessment') }}
+        <label for="exercise_id" class="visually-hidden">
+          {{ $t('grades.exercise') }}
         </label>
         <input
-          id="assessment_id"
+          id="exercise_id"
           type="text"
-          :value="props.assessment?.exercise.title || ''"
+          :value="exercise?.title || ''"
           disabled
           class="form-control"
         />
