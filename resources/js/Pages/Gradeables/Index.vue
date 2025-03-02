@@ -38,16 +38,12 @@ const filteredExercises = computed(() => {
 
 const applyStudentListFilter = (student) => {
   selectedStudent.value =
-    selectedStudent.value && selectedStudent.value.id === student.id
-      ? null
-      : student;
+    selectedStudent.value?.id === student.id ? null : student;
 };
 
 const applyExerciseListFilter = (exercise) => {
   selectedExercise.value =
-    selectedExercise.value && selectedExercise.value.id === exercise.id
-      ? null
-      : exercise;
+    selectedExercise.value?.id === exercise.id ? null : exercise;
 };
 
 // Get gradeable value for exercise
