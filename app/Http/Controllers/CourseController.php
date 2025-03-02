@@ -55,9 +55,8 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-        // TODO(Tehuel): try to load less data
         $course->load([
-            'students.grades.gradeable',
+            'students.grades',
             'exercises',
             'attendances'
         ]);
