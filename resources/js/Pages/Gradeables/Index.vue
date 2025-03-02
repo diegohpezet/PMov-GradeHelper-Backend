@@ -25,11 +25,15 @@ const selectedExercise = ref(null);
 const selectedStudent = ref(null);
 
 const filteredStudents = computed(() => {
-  return students;
+  return selectedStudent.value
+    ? students.filter((s) => s.id === selectedStudent.value.id)
+    : students;
 });
 
 const filteredExercises = computed(() => {
-  return exercises;
+  return selectedExercise.value
+    ? exercises.filter((e) => e.id === selectedExercise.value.id)
+    : exercises;
 });
 
 const applyStudentListFilter = (student) => {
@@ -49,7 +53,7 @@ const applyExerciseListFilter = (exercise) => {
 // Get gradeable value for exercise
 const getLastGradeable = (student, exercise) => {
   const firstExerciseGrade = student.grades.find(
-    (grade) => grade.assessment_id === exercise.assessment.id
+    (grade) => grade.assessment_id === exercise.assessment.id,
   );
   return firstExerciseGrade?.gradeable?.value;
 };
