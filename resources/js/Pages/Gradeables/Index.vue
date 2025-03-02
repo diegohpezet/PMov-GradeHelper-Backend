@@ -80,13 +80,13 @@ const setGradeFormValues = (student, exercise) => {
       <tr>
         <th scope="col">{{ $t('grades.student') }}</th>
         <th
-          v-for="excercise in filteredExercises"
-          :key="excercise.id"
+          v-for="exercise in filteredExercises"
+          :key="exercise.id"
           scope="col"
           class="hoverable"
-          @click="applyExerciseListFilter(excercise)"
+          @click="applyExerciseListFilter(exercise)"
         >
-          {{ excercise.title }}
+          {{ exercise.title }}
         </th>
       </tr>
     </thead>
@@ -101,25 +101,25 @@ const setGradeFormValues = (student, exercise) => {
         </th>
 
         <td
-          v-for="excercise in filteredExercises"
-          :key="excercise.id"
+          v-for="exercise in filteredExercises"
+          :key="exercise.id"
           class="hoverable"
-          @click="setGradeFormValues(student, excercise)"
+          @click="setGradeFormValues(student, exercise)"
         >
           <div class="d-flex">
             <CheckOnlineStatus
               :student-username="student.github_username"
-              :exercise-path="assesment?.exercise?.path"
+              :exercise-path="exercise?.path"
             />
             <span>
               <a
-                v-if="excercise"
-                :href="`https://${student.github_username}.github.io/plataformas-moviles-entregas/${excercise.path}`"
+                v-if="exercise"
+                :href="`https://${student.github_username}.github.io/plataformas-moviles-entregas/${exercise.path}`"
                 class="mx-1"
               >
                 Link
               </a>
-              | {{ getLastGradeable(student, excercise) }}
+              | {{ getLastGradeable(student, exercise) }}
             </span>
           </div>
         </td>
