@@ -7,8 +7,14 @@ import GradeablesHistory from './components/GradeablesHistory.vue';
 import { usePage } from '@inertiajs/vue3';
 
 const props = defineProps({
-  students: [Object],
-  assessments: [Object],
+  students: {
+    type: Array,
+    default: () => [],
+  },
+  exercises: {
+    type: Array,
+    default: () => [],
+  },
 });
 
 const page = usePage();

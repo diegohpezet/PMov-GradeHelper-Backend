@@ -103,7 +103,7 @@ const { course } = defineProps({
         >
           <span class="lead me-3">{{ exercise.title }}</span>
           <span class="text-muted"
-            >Due Date: {{ new Date(exercise.pivot.due_at).toLocaleString() }}</span
+            >Due Date: {{ new Date(exercise.assessment.due_at).toLocaleString() }}</span
           >
         </li>
       </ul>
@@ -118,7 +118,7 @@ const { course } = defineProps({
     >
       <GradesTable
         :students="course.students"
-        :assessments="course.assessments"
+        :exercises="course.exercises"
       />
     </div>
 
