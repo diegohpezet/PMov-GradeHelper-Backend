@@ -52,7 +52,7 @@ const saveGrade = () => {
         <input
           id="student_id"
           type="text"
-          :value="student?.last_name || ''"
+          :value="student?.last_name"
           disabled
           class="form-control"
         />
