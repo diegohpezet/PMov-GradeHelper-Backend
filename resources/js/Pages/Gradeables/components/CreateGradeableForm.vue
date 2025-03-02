@@ -33,7 +33,7 @@ watchEffect(() => {
   }
 });
 
-const saveGrade = () => {
+const handleSubmit = () => {
   form.post('/gradeables', {
     onSuccess: () => {
       form.reset();
@@ -43,7 +43,7 @@ const saveGrade = () => {
 </script>
 
 <template>
-  <form @submit.prevent="saveGrade">
+  <form @submit.prevent="handleSubmit">
     <div class="row g-3 mb-3">
       <div class="col-6">
         <label for="student_id" class="visually-hidden">
