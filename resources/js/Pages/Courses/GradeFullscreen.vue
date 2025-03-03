@@ -24,7 +24,7 @@ const getStudentName = (student) => {
       <table class="table table-borderless table-striped m-0">
         <thead>
           <tr>
-            <th scope="col" class="student-header"></th>
+            <th scope="col"></th>
             <th v-for="exercise in exercises" :key="exercise.id" scope="col">
               {{ exercise.title }}
             </th>
@@ -79,7 +79,7 @@ const getStudentName = (student) => {
 
   td,
   th {
-    width: max(180px, 30vw);
+    width: max(300px, 35vw);
   }
 
   td:nth-child(1),
