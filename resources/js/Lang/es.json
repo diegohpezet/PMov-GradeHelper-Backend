@@ -16,6 +16,8 @@
     "courses.empty": "No hay ningún curso para mostrar",
     "courses.field.name": "Nombre",
     "courses.field.name_placeholder": "Nombre del curso",
+    "courses.field.description": "Descripción",
+    "courses.field.description_placeholder": "El curso de los lunes a las 18hs...",
     "courses.field.school_year": "Ciclo lectivo",
     "courses.field.school_year_placeholder": "Ciclo lectivo",
     "courses.submit": "Crear curso",

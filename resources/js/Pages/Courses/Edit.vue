@@ -1,7 +1,12 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3';
 
-const props = defineProps({ course: Object });
+const props = defineProps({
+  course: {
+    type: Object,
+    required: true,
+  },
+});
 
 const form = useForm(props.course);
 
@@ -25,6 +30,22 @@ const editCourse = (id) => {
       />
       <span v-if="form.errors.name" class="text-danger">{{
         form.errors.name
+      }}</span>
+    </div>
+
+    <div class="mb-3">
+      <label for="description" class="form-label">
+        {{ $t('courses.field.description') }}
+      </label>
+      <input
+        id="description"
+        v-model="form.description"
+        type="text"
+        class="form-control"
+        :placeholder="$t('courses.field.description_placeholder')"
+      />
+      <span v-if="form.errors.description" class="text-danger">{{
+        form.errors.description
       }}</span>
     </div>
 
