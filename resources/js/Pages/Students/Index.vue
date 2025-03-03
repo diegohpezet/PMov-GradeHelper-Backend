@@ -4,7 +4,7 @@ import { router, usePage } from '@inertiajs/vue3';
 import CreateStudentForm from './components/CreateStudentForm.vue';
 import LinkStudentList from './components/LinkStudentList.vue';
 import StudentListItem from './components/StudentListItem.vue';
-import SearchStudent from './components/SearchStudent.vue';
+import StudentSearchInput from './components/StudentSearchInput.vue';
 import BaseModal from '../../Layouts/components/BaseModal.vue';
 import { useI18n } from 'vue-i18n';
 
@@ -95,7 +95,7 @@ const openLinkModal = (student) => {
     <CreateStudentForm :course="course" class="my-3" />
   </details>
 
-  <SearchStudent @search="handleSearch" />
+  <StudentSearchInput @search="handleSearch" />
 
   <p v-if="!filteredStudents.length" class="text-muted">
     {{ $t('students.empty') }}
