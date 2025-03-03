@@ -36,19 +36,17 @@ const getStudentName = (student) => {
               {{ getStudentName(student) }}
             </td>
             <td v-for="exercise in exercises" :key="exercise.id">
-              <div class="mb-3">
-                <label
-                  :for="`comment-feedback-${student.id}-${exercise.id}`"
-                  class="form-label"
-                >
-                  <span>{{ $t('grades.field.comment') }}</span>
-                </label>
-                <textarea
-                  :id="`comment-feedback-${student.id}-${exercise.id}`"
-                  class="form-control"
-                  rows="3"
-                ></textarea>
-              </div>
+              <label
+                :for="`comment-feedback-${student.id}-${exercise.id}`"
+                class="form-label"
+              >
+                <span>{{ $t('grades.field.comment') }}</span>
+              </label>
+              <textarea
+                :id="`comment-feedback-${student.id}-${exercise.id}`"
+                class="form-control"
+                rows="3"
+              ></textarea>
             </td>
           </tr>
         </tbody>
