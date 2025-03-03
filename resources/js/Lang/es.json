@@ -87,6 +87,7 @@
     "students.field.course": "Curso",
     "students.field.course_select": "Selecciona un curso",
     "students.link_to_user": "Asociar estudiante con usuario",
+    "students.find": "Buscar estudiante...",
     "students.submit": "Crear estudiante",
     "students.submit_edit": "Editar estudiante",
 
