@@ -45,7 +45,8 @@ const handleSearch = (query) => {
   filteredStudents.value = students.filter((student) => {
     return (
       student.first_name.toLowerCase().includes(query.toLowerCase()) ||
-      student.last_name.toLowerCase().includes(query.toLowerCase())
+      student.last_name.toLowerCase().includes(query.toLowerCase()) ||
+      student.github_username.toLowerCase().includes(query.toLowerCase())
     );
   });
 };
