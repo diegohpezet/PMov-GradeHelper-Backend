@@ -56,9 +56,8 @@ class CourseController extends Controller
     public function show(Course $course)
     {
         $course->load([
-            'students.course',
-            'assessments.exercise',
-            'students.gradeables.gradable',
+            'students.grades',
+            'exercises',
             'attendances'
         ]);
 

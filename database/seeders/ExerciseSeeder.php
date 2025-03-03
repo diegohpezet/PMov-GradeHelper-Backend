@@ -14,7 +14,7 @@ class ExerciseSeeder extends Seeder
     $exercises = Exercise::factory()->count(3)->create();
 
     $exercises->each(function (Exercise $exercise) use ($courses) {
-      // select 2 courses to attach each exercise
+      // select 2 courses to attach each exercise onto
       $courses->random(2)->each(function (Course $course) use ($exercise) {
         $exercise->courses()
           ->attach($course, [

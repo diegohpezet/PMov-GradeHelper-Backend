@@ -4,6 +4,12 @@ import ExerciseRow from './components/ExerciseRow.vue';
 const { student } = defineProps({
   student: Object,
 });
+
+const getGradesForExercise = (exercise) => {
+  return student.grades.filter((g) => {
+    return g.assessment_id === exercise.assessment.id;
+  });
+};
 </script>
 
 <template>
@@ -13,10 +19,11 @@ const { student } = defineProps({
   </header>
   <main>
     <ExerciseRow
-      v-for="assessment in student.course.assessments"
-      :key="assessment.id"
-      :assessment="assessment"
-      :student-id="student.id"
+      v-for="exercise in student.course.exercises"
+      :key="exercise.id"
+      :exercise="exercise"
+      :grades="getGradesForExercise(exercise)"
+      :student="student"
     />
   </main>
 </template>

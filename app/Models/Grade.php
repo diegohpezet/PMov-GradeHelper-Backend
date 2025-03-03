@@ -5,15 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 
-class Gradeable extends Model
+class Grade extends Model
 {
     use HasUuids;
     
-    protected $fillable = ['assessment_id', 'student_id', 'gradable_id', 'gradable_type'];
+    protected $fillable = ['assessment_id', 'student_id', 'gradeable_id', 'gradeable_type'];
 
-    public function gradable()
+    protected $with = ['gradeable'];
+
+    public function gradeable()
     {
-        return $this->morphTo('gradable', 'gradable_type', 'gradable_id');
+        return $this->morphTo();
     }
 
     public function assessment()
