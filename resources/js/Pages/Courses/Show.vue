@@ -14,6 +14,10 @@ const { course } = defineProps({
 <template>
   <h1>{{ course.name }}</h1>
 
+  <p>
+    <a :href="`/courses/${course.id}/grade`">Grade Fullscreen</a>
+  </p>
+
   <ul id="courseTabs" class="nav nav-tabs" role="tablist">
     <li class="nav-item" role="presentation">
       <button

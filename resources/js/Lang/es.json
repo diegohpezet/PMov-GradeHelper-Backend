@@ -52,6 +52,7 @@
     "grades.results.passed": "aprobado",
     "grades.student": "Estudiante",
     "grades.submit": "Calificar",
+    "grades.submit_all": "Calificar Todos",
     "grades.submit_edit": "Editar calificación",
 
     "login": "Iniciar Sesión",
