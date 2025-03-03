@@ -22,8 +22,9 @@ class UpdateCourseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'nullable|required_without:school_year|min:3',
-            'school_year' => 'nullable|required_without:name|min:4|max:4'
+            'name' => 'required|min:3',
+            'description' => 'nullable|string',
+            'school_year' => 'required|min:4|max:4'
         ];
     }
 }

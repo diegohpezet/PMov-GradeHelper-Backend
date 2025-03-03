@@ -14,7 +14,8 @@ class Course extends Model
 
     protected $fillable = [
         'name',
-        'school_year'
+        'description',
+        'school_year',
     ];
 
     public function students(): HasMany
