@@ -20,43 +20,40 @@ const getStudentName = (student) => {
   <Head title="Full Screen - Grade Helper" />
 
   <div class="container-fluid">
-    <table class="table table-borderless">
-      <thead>
-        <tr>
-          <th scope="col" width="10%"></th>
-          <th
-            v-for="exercise in exercises"
-            :key="exercise.id"
-            scope="col"
-            class="sticky-top"
-          >
-            {{ exercise.title }}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="student in students" :key="student.id">
-          <th scope="row" class="sticky-top">
-            {{ getStudentName(student) }}
-          </th>
-          <td v-for="exercise in exercises" :key="exercise.id">
-            <div class="mb-3">
-              <label
-                :for="`comment-feedback-${student.id}-${exercise.id}`"
-                class="form-label"
-              >
-                <span>{{ $t('grades.field.comment') }}</span>
-              </label>
-              <textarea
-                :id="`comment-feedback-${student.id}-${exercise.id}`"
-                class="form-control"
-                rows="3"
-              ></textarea>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-container">
+      <table class="table table-borderless table-striped m-0">
+        <thead>
+          <tr>
+            <th scope="col" class="student-header"></th>
+            <th v-for="exercise in exercises" :key="exercise.id" scope="col">
+              {{ exercise.title }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="student in students" :key="student.id">
+            <td class="sticky-top">
+              {{ getStudentName(student) }}
+            </td>
+            <td v-for="exercise in exercises" :key="exercise.id">
+              <div class="mb-3">
+                <label
+                  :for="`comment-feedback-${student.id}-${exercise.id}`"
+                  class="form-label"
+                >
+                  <span>{{ $t('grades.field.comment') }}</span>
+                </label>
+                <textarea
+                  :id="`comment-feedback-${student.id}-${exercise.id}`"
+                  class="form-control"
+                  rows="3"
+                ></textarea>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
   <div class="sticky-bottom bg-body bg-body-tertiary">
@@ -72,3 +69,33 @@ const getStudentName = (student) => {
     </div>
   </div>
 </template>
+
+<style lang="scss">
+.table-container {
+  overflow: auto;
+  height: calc(100vh - 3rem);
+}
+
+.table {
+  table-layout: fixed;
+
+  td,
+  th {
+    width: max(180px, 30vw);
+  }
+
+  td:nth-child(1),
+  th:nth-child(1) {
+    width: 150px;
+    position: sticky;
+    left: 0;
+    z-index: 3;
+  }
+
+  th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+}
+</style>
