@@ -1,6 +1,8 @@
 <script setup>
-import { Head } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
 import FullscreenLayout from '../../Layouts/FullscreenLayout.vue';
+import StudentExerciseGradeForm from './StudentExerciseGradeForm.vue';
+
 defineOptions({ layout: FullscreenLayout });
 
 const { course } = defineProps({
@@ -9,18 +11,39 @@ const { course } = defineProps({
     required: true,
   },
 });
+
 const { exercises, students } = course;
 
 const getStudentName = (student) => {
   return `${student.last_name}, ${student.first_name}`;
 };
+
+const getFormKey = (student, exercise) => `${student.id}-${exercise.id}`;
+
+const getInitialFormData = () => {
+  const formData = {};
+  students.forEach((student) => {
+    exercises.forEach((exercise) => {
+      const key = getFormKey(student, exercise);
+      formData[key] = {
+        comment: null,
+      };
+    });
+  });
+  return formData;
+};
+
+const form = useForm(getInitialFormData());
+
+const handleSubmit = () => {
+  console.log('handleSubmit', form);
+};
 </script>
 
 <template>
   <Head title="Full Screen - Grade Helper" />
-
-  <div class="container-fluid">
-    <div class="table-container">
+  <div class="d-flex flex-column flex-grow-1 vh-100">
+    <div class="flex-grow-1 overflow-auto" style="">
       <table class="table table-borderless table-striped m-0">
         <thead>
           <tr>
@@ -36,45 +59,35 @@ const getStudentName = (student) => {
               {{ getStudentName(student) }}
             </td>
             <td v-for="exercise in exercises" :key="exercise.id">
-              <label
-                :for="`comment-feedback-${student.id}-${exercise.id}`"
-                class="form-label"
-              >
-                <span>{{ $t('grades.field.comment') }}</span>
-              </label>
-              <textarea
-                :id="`comment-feedback-${student.id}-${exercise.id}`"
-                class="form-control"
-                rows="3"
-              ></textarea>
+              <StudentExerciseGradeForm
+                v-model="form[getFormKey(student, exercise)]"
+                :student="student"
+                :exercise="exercise"
+                :form-key="getFormKey(student, exercise)"
+              />
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-  </div>
-
-  <div class="sticky-bottom bg-body bg-body-tertiary">
-    <div class="container-fluid py-2">
-      <div class="d-flex gap-1 justify-content-end">
+    <div class="container-fluid">
+      <form
+        class="d-flex gap-3 justify-content-end py-2"
+        @submit.prevent="handleSubmit"
+      >
         <button type="button" class="btn btn-outline-secondary">
           {{ $t('cancel') }}
         </button>
-        <button type="button" class="btn btn-primary">
+        <button type="submit" class="btn btn-primary">
           {{ $t('grades.submit_all') }}
         </button>
-      </div>
+      </form>
     </div>
   </div>
 </template>
 
 <style lang="scss">
-.table-container {
-  overflow: auto;
-  height: calc(100vh - 3rem);
-}
-
-.table {
+table.table {
   table-layout: fixed;
 
   td,
@@ -82,6 +95,7 @@ const getStudentName = (student) => {
     width: max(300px, 35vw);
   }
 
+  // fixed first column
   td:nth-child(1),
   th:nth-child(1) {
     width: 150px;
@@ -90,6 +104,7 @@ const getStudentName = (student) => {
     z-index: 3;
   }
 
+  // fixed column headers
   th {
     position: sticky;
     top: 0;

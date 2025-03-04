@@ -14,7 +14,7 @@ class GradeFullscreenController extends Controller
             'exercises',
             'students.grades',
         ]);
-        return Inertia::render('Courses/GradeFullscreen', [
+        return Inertia::render('GradeFullscreen/GradeFullscreenPage', [
             'course' => $course,
         ]);
     }
