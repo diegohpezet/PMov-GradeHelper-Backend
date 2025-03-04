@@ -61,7 +61,10 @@ const handleSubmit = () => {
   <Head title="Full Screen - Grade Helper" />
   <div class="d-flex flex-column flex-grow-1 vh-100">
     <div class="flex-grow-1 overflow-auto" style="">
-      <table class="table table-borderless table-striped m-0">
+      <table
+        id="fullscreen-grades-table"
+        class="table table-borderless table-striped m-0"
+      >
         <thead>
           <tr>
             <th scope="col"></th>
@@ -119,7 +122,7 @@ const handleSubmit = () => {
 </template>
 
 <style lang="scss">
-table.table {
+table#fullscreen-grades-table {
   table-layout: fixed;
 
   td,
