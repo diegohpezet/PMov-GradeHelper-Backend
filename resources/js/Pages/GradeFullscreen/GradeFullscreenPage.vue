@@ -1,5 +1,5 @@
 <script setup>
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 import FullscreenLayout from '../../Layouts/FullscreenLayout.vue';
 import StudentExerciseGradeForm from './StudentExerciseGradeForm.vue';
 import { useArrayFilter } from '../../Utils/useArrayFilter.js';
@@ -100,9 +100,9 @@ const handleSubmit = () => {
         class="d-flex gap-3 justify-content-end py-2"
         @submit.prevent="handleSubmit"
       >
-        <button type="button" class="btn btn-outline-secondary">
+        <Link :href="`/courses/${course.id}`" class="btn btn-outline-secondary">
           {{ $t('cancel') }}
-        </button>
+        </Link>
         <button type="submit" class="btn btn-primary">
           {{ $t('grades.submit_all') }}
         </button>
