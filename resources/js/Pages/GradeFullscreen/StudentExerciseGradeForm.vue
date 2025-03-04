@@ -1,13 +1,5 @@
 <script setup>
-const { student, exercise, formKey } = defineProps({
-  student: {
-    type: Object,
-    required: true,
-  },
-  exercise: {
-    type: Object,
-    required: true,
-  },
+const { formKey } = defineProps({
   formKey: {
     type: String,
     required: true,

@@ -61,8 +61,6 @@ const handleSubmit = () => {
             <td v-for="exercise in exercises" :key="exercise.id">
               <StudentExerciseGradeForm
                 v-model="form[getFormKey(student, exercise)]"
-                :student="student"
-                :exercise="exercise"
                 :form-key="getFormKey(student, exercise)"
               />
             </td>
