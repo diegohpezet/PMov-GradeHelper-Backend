@@ -35,6 +35,8 @@ const getInitialFormData = () => {
     exercises.forEach((exercise) => {
       const key = getFormKey(student, exercise);
       formData[key] = {
+        student: student.id,
+        exercise: exercise.id,
         comment: null,
       };
     });
@@ -45,7 +47,13 @@ const getInitialFormData = () => {
 const form = useForm(getInitialFormData());
 
 const handleSubmit = () => {
-  console.log('handleSubmit', form);
+  form
+    .transform((data) => {
+      return {
+        grades: Object.values(data),
+      };
+    })
+    .post('/grades/batchGrade');
 };
 </script>
 

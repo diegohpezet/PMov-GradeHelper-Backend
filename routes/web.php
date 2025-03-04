@@ -29,6 +29,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('courses', CourseController::class);
         Route::resource('exercises', ExerciseController::class);
         Route::resource('students', StudentController::class);
+
+        Route::post('grades/batchGrade', [GradeFullscreenController::class, 'batchGrade']);
         Route::resource('grades', GradesController::class);
 
         Route::post('attendances', [AttendanceController::class, 'store'])->name('attendances.store');
