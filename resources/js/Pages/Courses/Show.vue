@@ -26,6 +26,10 @@ const { course } = defineProps({
     </div>
   </div>
 
+  <p>
+    <a :href="`/courses/${course.id}/grade`">Grade Fullscreen</a>
+  </p>
+
   <ul id="courseTabs" class="nav nav-tabs" role="tablist">
     <li class="nav-item" role="presentation">
       <button
