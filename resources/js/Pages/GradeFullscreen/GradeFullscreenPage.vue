@@ -2,6 +2,7 @@
 import { Head, useForm } from '@inertiajs/vue3';
 import FullscreenLayout from '../../Layouts/FullscreenLayout.vue';
 import StudentExerciseGradeForm from './StudentExerciseGradeForm.vue';
+import { useArrayFilter } from '../../Utils/useArrayFilter.js';
 
 defineOptions({ layout: FullscreenLayout });
 
@@ -13,6 +14,15 @@ const { course } = defineProps({
 });
 
 const { exercises, students } = course;
+
+const [filteredExercise, applyExerciseFilter, selectedExercise] =
+  useArrayFilter({
+    array: exercises,
+  });
+
+const [filteredStudents, applyStudentFilter, selectedStudent] = useArrayFilter({
+  array: students,
+});
 
 const getStudentName = (student) => {
   return `${student.last_name}, ${student.first_name}`;
@@ -48,17 +58,34 @@ const handleSubmit = () => {
         <thead>
           <tr>
             <th scope="col"></th>
-            <th v-for="exercise in exercises" :key="exercise.id" scope="col">
+            <th
+              v-for="exercise in filteredExercise"
+              :key="exercise.id"
+              scope="col"
+            >
               {{ exercise.title }}
+
+              <button
+                class="btn btn-secondary btn-sm"
+                @click="applyExerciseFilter(exercise.id)"
+              >
+                {{ selectedExercise === exercise.id ? 'show all' : 'solo' }}
+              </button>
             </th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="student in students" :key="student.id">
+          <tr v-for="student in filteredStudents" :key="student.id">
             <td class="sticky-top">
               {{ getStudentName(student) }}
+              <button
+                class="btn btn-secondary btn-sm"
+                @click="applyStudentFilter(student.id)"
+              >
+                {{ selectedStudent === student.id ? 'show all' : 'solo' }}
+              </button>
             </td>
-            <td v-for="exercise in exercises" :key="exercise.id">
+            <td v-for="exercise in filteredExercise" :key="exercise.id">
               <StudentExerciseGradeForm
                 v-model="form[getFormKey(student, exercise)]"
                 :form-key="getFormKey(student, exercise)"
