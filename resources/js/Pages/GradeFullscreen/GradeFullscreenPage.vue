@@ -15,12 +15,11 @@ const { course } = defineProps({
 
 const { exercises, students } = course;
 
-const [filteredExercise, applyExerciseFilter, selectedExercise] =
-  useArrayFilter({
-    array: exercises,
-  });
+const [filteredExercises, applyExercisesFilter, currExercise] = useArrayFilter({
+  array: exercises,
+});
 
-const [filteredStudents, applyStudentFilter, selectedStudent] = useArrayFilter({
+const [filteredStudents, applyStudentsFilter, currStudent] = useArrayFilter({
   array: students,
 });
 
@@ -59,7 +58,7 @@ const handleSubmit = () => {
           <tr>
             <th scope="col"></th>
             <th
-              v-for="exercise in filteredExercise"
+              v-for="exercise in filteredExercises"
               :key="exercise.id"
               scope="col"
             >
@@ -67,9 +66,9 @@ const handleSubmit = () => {
 
               <button
                 class="btn btn-secondary btn-sm"
-                @click="applyExerciseFilter(exercise.id)"
+                @click="applyExercisesFilter(exercise.id)"
               >
-                {{ selectedExercise === exercise.id ? 'show all' : 'solo' }}
+                {{ currExercise === exercise.id ? 'show all' : 'solo' }}
               </button>
             </th>
           </tr>
@@ -80,12 +79,12 @@ const handleSubmit = () => {
               {{ getStudentName(student) }}
               <button
                 class="btn btn-secondary btn-sm"
-                @click="applyStudentFilter(student.id)"
+                @click="applyStudentsFilter(student.id)"
               >
-                {{ selectedStudent === student.id ? 'show all' : 'solo' }}
+                {{ currStudent === student.id ? 'show all' : 'solo' }}
               </button>
             </td>
-            <td v-for="exercise in filteredExercise" :key="exercise.id">
+            <td v-for="exercise in filteredExercises" :key="exercise.id">
               <StudentExerciseGradeForm
                 v-model="form[getFormKey(student, exercise)]"
                 :form-key="getFormKey(student, exercise)"
