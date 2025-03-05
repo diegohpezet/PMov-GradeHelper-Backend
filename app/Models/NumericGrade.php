@@ -13,9 +13,9 @@ class NumericGrade extends Model
 
     protected $fillable = ['value', 'comment'];
 
-    public function gradeable()
+    public function grade()
     {
-        return $this->morphOne(Gradeable::class, 'gradable');
+        return $this->morphOne(Grade::class, 'gradeable');
     }
 }
 

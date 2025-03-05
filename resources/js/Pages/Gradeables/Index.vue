@@ -1,69 +1,66 @@
 <script setup>
 import { computed, ref } from 'vue';
-import { filterStudents, filterAssessments } from './utils/filters';
 import CheckOnlineStatus from './components/CheckOnlineStatus.vue';
-import CreateGradeableForm from './components/CreateGradeableForm.vue';
+import CreateGradeForm from './components/CreateGradeForm.vue';
 import GradeablesHistory from './components/GradeablesHistory.vue';
 import { usePage } from '@inertiajs/vue3';
 
-const props = defineProps({
-  students: [Object],
-  assessments: [Object],
+const { students, exercises } = defineProps({
+  students: {
+    type: Array,
+    default: () => [],
+  },
+  exercises: {
+    type: Array,
+    default: () => [],
+  },
 });
 
 const page = usePage();
 const isAdmin = page.props.auth.isAdmin;
 
 // Filter functionality
-const selectedAssessment = ref(null);
+const selectedExercise = ref(null);
 const selectedStudent = ref(null);
 
 const filteredStudents = computed(() => {
-  return filterStudents(
-    props.students,
-    selectedStudent.value,
-    selectedAssessment.value,
-  );
+  return selectedStudent.value
+    ? students.filter((s) => s.id === selectedStudent.value.id)
+    : students;
 });
 
-const filteredAssessments = computed(() => {
-  return filterAssessments(props.assessments, selectedAssessment.value);
+const filteredExercises = computed(() => {
+  return selectedExercise.value
+    ? exercises.filter((e) => e.id === selectedExercise.value.id)
+    : exercises;
 });
-
-const applyAssessmentListFilter = (assessment) => {
-  selectedAssessment.value =
-    selectedAssessment.value && selectedAssessment.value.id === assessment.id
-      ? null
-      : assessment;
-};
 
 const applyStudentListFilter = (student) => {
   selectedStudent.value =
-    selectedStudent.value && selectedStudent.value.id === student.id
-      ? null
-      : student;
+    selectedStudent.value?.id === student.id ? null : student;
 };
 
-// Get gradeable value for assessment
-const getLastGradeable = (student, assessment) => {
-  const gradeable = student.gradeables.find(
-    (gradeable) => gradeable.assessment_id === assessment.id,
+const applyExerciseListFilter = (exercise) => {
+  selectedExercise.value =
+    selectedExercise.value?.id === exercise.id ? null : exercise;
+};
+
+// Get gradeable value for exercise
+const getLastGradeable = (student, exercise) => {
+  const firstExerciseGrade = student.grades.find(
+    (grade) => grade.assessment_id === exercise.assessment.id,
   );
-
-  if (gradeable && gradeable.gradable_type === 'App\\Models\\PassFailGrade') {
-    return gradeable.gradable.value ? 'Passed' : 'Failed';
-  }
-
-  return gradeable ? gradeable.gradable.value : '-';
+  // TODO(Tehuel): format gradeable by type
+  return firstExerciseGrade?.gradeable?.value;
 };
 
 // Form functionality
 const studentToGrade = ref(null);
-const assessmentToGrade = ref(null);
+const exerciseToGrade = ref(null);
 
-const setGradeFormValues = (student, assessment) => {
+const setGradeFormValues = (student, exercise) => {
   studentToGrade.value = student;
-  assessmentToGrade.value = assessment;
+  exerciseToGrade.value = exercise;
 };
 </script>
 
@@ -72,32 +69,29 @@ const setGradeFormValues = (student, assessment) => {
 
   <p v-if="!students.length">{{ $t('grades.no_students') }}</p>
 
-  <p v-else-if="!assessments.length">{{ $t('grades.no_assessments') }}</p>
+  <p v-else-if="!exercises.length">{{ $t('grades.no_exercises') }}</p>
 
   <div v-else>
-    <CreateGradeableForm
+    <CreateGradeForm
       v-if="isAdmin"
       :student="studentToGrade"
-      :assessment="assessmentToGrade"
+      :exercise="exerciseToGrade"
     />
 
-    <GradeablesHistory
-      :student="studentToGrade"
-      :assessment="assessmentToGrade"
-    />
+    <GradeablesHistory :student="studentToGrade" :exercise="exerciseToGrade" />
 
     <table class="table table-striped border">
       <thead class="table-primary">
         <tr>
           <th scope="col">{{ $t('grades.student') }}</th>
           <th
-            v-for="assessment in filteredAssessments"
-            :key="assessment.id"
+            v-for="exercise in filteredExercises"
+            :key="exercise.id"
             scope="col"
             class="hoverable"
-            @click="applyAssessmentListFilter(assessment)"
+            @click="applyExerciseListFilter(exercise)"
           >
-            {{ assessment.exercise.title }}
+            {{ exercise.title }}
           </th>
         </tr>
       </thead>
@@ -112,25 +106,25 @@ const setGradeFormValues = (student, assessment) => {
           </th>
 
           <td
-            v-for="assessment in filteredAssessments"
-            :key="assessment.id"
+            v-for="exercise in filteredExercises"
+            :key="exercise.id"
             class="hoverable"
-            @click="setGradeFormValues(student, assessment)"
+            @click="setGradeFormValues(student, exercise)"
           >
             <div class="d-flex">
               <CheckOnlineStatus
                 :student-username="student.github_username"
-                :exercise-path="assesment?.exercise?.path"
+                :exercise-path="exercise?.path"
               />
               <span>
                 <a
-                  v-if="assessment"
-                  :href="`https://${student.github_username}.github.io/plataformas-moviles-entregas/${assessment.exercise.path}`"
+                  v-if="exercise"
+                  :href="`https://${student.github_username}.github.io/plataformas-moviles-entregas/${exercise.path}`"
                   class="mx-1"
                 >
                   Link
                 </a>
-                | {{ getLastGradeable(student, assessment) }}
+                | {{ getLastGradeable(student, exercise) }}
               </span>
             </div>
           </td>

@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Assessment;
-use App\Models\Gradeable;
+use App\Models\Grade;
 use App\Models\NumericGrade;
 use App\Models\PassFailGrade;
 use App\Models\Student;
@@ -11,7 +11,7 @@ use App\Models\TEGrade;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class GradeableSeeder extends Seeder
+class GradeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -24,15 +24,18 @@ class GradeableSeeder extends Seeder
         foreach ($students as $student) {
             foreach ($assessments as $assessment) {
                 // Select a random grade type & create it
-                $gradeType = collect([NumericGrade::class, PassFailGrade::class, TEGrade::class])->random();
-                $grade = $gradeType::factory()->create();
+                $gradeType = collect([
+                    NumericGrade::class,
+                    PassFailGrade::class,
+                    TEGrade::class,
+                ])->random();
 
-                // Associate the grade with the assessment
-                Gradeable::create([
+                $concreteGrade = $gradeType::factory()->create();
+
+                $student->grades()->create([
                     'assessment_id' => $assessment->id,
-                    'student_id' => $student->id,
-                    'gradable_id' => $grade->id,
-                    'gradable_type' => $gradeType,
+                    'gradeable_type' => $gradeType,
+                    'gradeable_id' => $concreteGrade->id,
                 ]);
             }
         }

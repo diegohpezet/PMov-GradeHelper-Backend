@@ -1,28 +1,34 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3';
 
-const props = defineProps({ gradeable: Object });
-const form = useForm({
-  value: props.gradeable.gradable.value,
-  comment: props.gradeable.gradable.comment,
+const { grade } = defineProps({
+  grade: {
+    type: Object,
+    required: true,
+  },
 });
-const gradableType = props.gradeable.gradable_type.split('\\').pop();
+
+const form = useForm({
+  value: grade.gradeable.value,
+  comment: grade.gradeable.comment,
+});
+const gradeableType = grade.gradeable_type.split('\\').pop();
 
 const options = {
   TEGrade: ['TEA', 'TEP', 'TED'],
   PassFailGrade: [true, false],
 };
 
-const editGradeable = () => form.put(`/gradeables/${props.gradeable.id}`);
+const handleSubmit = () => form.put(`/grades/${grade.id}`);
 </script>
 
 <template>
   <h1>{{ $t('grades.edit') }}</h1>
-  <form @submit.prevent="editGradeable">
-    <div v-if="gradableType in options" class="mb-3">
+  <form @submit.prevent="handleSubmit">
+    <div v-if="gradeableType in options" class="mb-3">
       <label class="form-label">Value</label>
       <div
-        v-for="option in options[gradableType]"
+        v-for="option in options[gradeableType]"
         :key="option"
         class="form-check"
       >
@@ -31,6 +37,7 @@ const editGradeable = () => form.put(`/gradeables/${props.gradeable.id}`);
           class="form-check-input"
           type="radio"
           :value="option"
+          :checked="option == form.value"
         />
         <label class="form-check-label">{{
           option === true ? 'Passed' : option === false ? 'Failed' : option
@@ -38,7 +45,7 @@ const editGradeable = () => form.put(`/gradeables/${props.gradeable.id}`);
       </div>
     </div>
 
-    <div v-else-if="gradableType === 'NumericGrade'" class="mb-3">
+    <div v-else-if="gradeableType === 'NumericGrade'" class="mb-3">
       <label class="form-label" for="value">Value</label>
       <input
         id="value"

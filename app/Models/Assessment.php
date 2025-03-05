@@ -32,8 +32,8 @@ class Assessment extends Pivot
         return $this->belongsTo(Course::class);
     }
 
-    public function gradeables(): HasMany
+    public function grades(): HasMany
     {
-        return $this->hasMany(Gradeable::class, 'assessment_id')->latest();
+        return $this->hasMany(Grade::class)->latest();
     }
 }

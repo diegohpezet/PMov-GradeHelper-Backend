@@ -3,7 +3,7 @@
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ExerciseController;
-use App\Http\Controllers\GradeableController;
+use App\Http\Controllers\GradesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Http\Request;
@@ -27,7 +27,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('courses', CourseController::class);
         Route::resource('exercises', ExerciseController::class);
         Route::resource('students', StudentController::class);
-        Route::resource('gradeables', GradeableController::class);
+        Route::resource('grades', GradesController::class);
 
         Route::post('attendances', [AttendanceController::class, 'store'])->name('attendances.store');
         Route::delete('attendances', [AttendanceController::class, 'destroy'])->name('attendances.destroy');

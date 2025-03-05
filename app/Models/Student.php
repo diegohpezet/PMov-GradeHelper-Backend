@@ -30,9 +30,9 @@ class Student extends Model
         return $this->belongsTo(Course::class);
     }
 
-    public function gradeables(): HasMany
+    public function grades(): HasMany
     {
-        return $this->hasMany(Gradeable::class)->latest();
+        return $this->hasMany(Grade::class)->latest();
     }
 
     public function attendances(): HasMany

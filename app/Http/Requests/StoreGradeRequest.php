@@ -6,7 +6,7 @@ use App\Enums\GradeableType;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Enum;
 
-class StoreGradeableRequest extends FormRequest
+class StoreGradeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

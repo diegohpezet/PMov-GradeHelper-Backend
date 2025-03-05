@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('gradeables', function (Blueprint $table) {
+        Schema::create('grades', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('assessment_id')->constrained()->onDelete('cascade');
             $table->foreignUuid('student_id')->constrained()->onDelete('cascade');
-            $table->morphs('gradable');
+            $table->morphs('gradeable');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('gradeables');
+        Schema::dropIfExists('grades');
     }
 };

@@ -15,16 +15,16 @@ const dateFormatter = new Intl.DateTimeFormat('es-AR', {
   timeStyle: 'short',
 });
 
-const isPassFailGrade = (gradeable) => {
-  return gradeable.gradable_type === 'App\\Models\\PassFailGrade';
+const isPassFailGrade = (grade) => {
+  return grade.gradeable_type === 'App\\Models\\PassFailGrade';
 };
 
 const getGradeValue = (grade) => {
   if (!isPassFailGrade(grade)) {
-    return grade.gradable.value;
+    return grade.gradeable.value;
   }
 
-  return grade.gradable.value
+  return grade.gradeable.value
     ? t('grades.results.passed')
     : t('grades.results.failed');
 };
@@ -34,13 +34,13 @@ const gradeClass = (grade) => {
     return '';
   }
 
-  return grade.gradable.value ? 'text-success' : 'text-danger';
+  return grade.gradeable.value ? 'text-success' : 'text-danger';
 };
 </script>
 
 <template>
   <div class="row align-items-top" @click="showTruncated = !showTruncated">
-    <div class="col-1" :class="gradeClass(grade)">
+    <div class="col-auto" :class="gradeClass(grade)">
       {{ getGradeValue(grade) }}
     </div>
     <div
@@ -49,7 +49,7 @@ const gradeClass = (grade) => {
         'text-truncate': showTruncated,
       }"
     >
-      {{ grade.gradable.comment }}
+      {{ grade.gradeable.comment }}
     </div>
     <div class="col-auto">
       {{ dateFormatter.format(new Date(grade.created_at)) }}

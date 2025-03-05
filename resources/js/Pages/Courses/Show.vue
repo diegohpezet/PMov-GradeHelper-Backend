@@ -2,16 +2,29 @@
 import StudentsList from '../Students/Index.vue';
 import AttendanceIndex from '../Attendance/Index.vue';
 import GradesTable from '../Gradeables/Index.vue';
+import CourseAdminActions from './components/CourseAdminActions.vue';
+import { usePage } from '@inertiajs/vue3';
 
-const { course } = defineProps({ course: Object });
+const isAdmin = usePage().props.auth.isAdmin;
 
-const sortedAssessments = [...course.assessments].sort((a, b) =>
-  a.exercise.title.localeCompare(b.exercise.title),
-);
+const { course } = defineProps({
+  course: {
+    type: Object,
+    required: true,
+  },
+});
 </script>
 
 <template>
-  <h1>{{ course.name }}</h1>
+  <div class="row">
+    <div class="col">
+      <h1>{{ course.name }}</h1>
+      <p>{{ course.description }}</p>
+    </div>
+    <div class="col-auto">
+      <CourseAdminActions v-if="isAdmin" :course="course" />
+    </div>
+  </div>
 
   <ul id="courseTabs" class="nav nav-tabs" role="tablist">
     <li class="nav-item" role="presentation">
@@ -96,13 +109,13 @@ const sortedAssessments = [...course.assessments].sort((a, b) =>
       <h2 class="mb-3">{{ $t('exercises') }}</h2>
       <ul class="list-group">
         <li
-          v-for="assessment in sortedAssessments"
-          :key="assessment.id"
+          v-for="exercise in course.exercises"
+          :key="exercise.id"
           class="list-group-item"
         >
-          <span class="lead me-3">{{ assessment.exercise.title }}</span>
+          <span class="lead me-3">{{ exercise.title }}</span>
           <span class="text-muted"
-            >Due Date: {{ new Date(assessment.due_at).toLocaleString() }}</span
+            >Due Date: {{ new Date(exercise.assessment.due_at).toLocaleString() }}</span
           >
         </li>
       </ul>
@@ -117,7 +130,7 @@ const sortedAssessments = [...course.assessments].sort((a, b) =>
     >
       <GradesTable
         :students="course.students"
-        :assessments="course.assessments"
+        :exercises="course.exercises"
       />
     </div>
 
