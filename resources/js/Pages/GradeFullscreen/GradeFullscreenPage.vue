@@ -58,11 +58,9 @@ const form = useForm(getInitialMatrixValue());
 
 const handleSubmit = () => {
   form
-    .transform((data) => {
-      return {
-        grades: Object.values(data),
-      };
-    })
+    .transform((data) => ({
+      grades: Object.values(data),
+    }))
     .post('/grades/batchGrade');
 };
 </script>
