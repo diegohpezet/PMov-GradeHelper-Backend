@@ -27,24 +27,34 @@ const getStudentName = (student) => {
   return `${student.last_name}, ${student.first_name}`;
 };
 
+/**
+ * Combine student and exercise ids into a single unique id
+ * @param {Object} student
+ * @param {Object} exercise
+ */
 const getFormKey = (student, exercise) => `${student.id}-${exercise.id}`;
 
-const getInitialFormData = () => {
-  const formData = {};
+/**
+ * Generates an object to store all combinations of student x exercise
+ */
+const getInitialMatrixValue = () => {
+  const initialMatrix = {};
   students.forEach((student) => {
     exercises.forEach((exercise) => {
       const key = getFormKey(student, exercise);
-      formData[key] = {
+      initialMatrix[key] = {
         student: student.id,
         exercise: exercise.id,
-        comment: null,
+        comment: '',
+        grade_type: '',
+        grade_value: null,
       };
     });
   });
-  return formData;
+  return initialMatrix;
 };
 
-const form = useForm(getInitialFormData());
+const form = useForm(getInitialMatrixValue());
 
 const handleSubmit = () => {
   form
