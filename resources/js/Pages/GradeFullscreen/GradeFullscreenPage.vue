@@ -69,10 +69,7 @@ const handleSubmit = () => {
   <Head title="Full Screen - Grade Helper" />
   <div class="d-flex flex-column flex-grow-1 vh-100">
     <div class="flex-grow-1 overflow-auto" style="">
-      <table
-        id="fullscreen-grades-table"
-        class="table table-borderless table-striped m-0"
-      >
+      <table id="fullscreen-grades-table" class="table table-striped m-0">
         <thead>
           <tr>
             <th scope="col"></th>
@@ -135,7 +132,7 @@ table#fullscreen-grades-table {
 
   td,
   th {
-    width: max(300px, 35vw);
+    width: max(350px, 25vw);
   }
 
   // fixed first column
