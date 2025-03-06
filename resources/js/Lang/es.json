@@ -42,6 +42,7 @@
     "grade": "Calificación",
     "grades": "Calificaciones",
     "grades.add": "Agregar calificación",
+    "grades.batch_add": "Calificar en pantalla completa",
     "grades.delete_confirm": "Está seguro que quiere eliminar esta calificación?",
     "grades.edit": "Editar calificación",
     "grades.empty": "No hay ninguna calificación para este ejercicio",
