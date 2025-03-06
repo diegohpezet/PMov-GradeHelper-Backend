@@ -19,7 +19,7 @@ class BatchGradeController extends Controller
             'students',
         ]);
 
-        return Inertia::render('GradeFullscreen/GradeFullscreenPage', [
+        return Inertia::render('BatchGrades/GradeFullscreenPage', [
             'course' => $course,
         ]);
     }
