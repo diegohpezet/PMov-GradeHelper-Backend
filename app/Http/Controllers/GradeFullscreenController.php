@@ -30,6 +30,7 @@ class GradeFullscreenController extends Controller
         // - user is in course
         // - every student and exercise are in course
 
+        // get course assessments, map from exercise id to assessment id
         $assessmentIdByExerciseId = $course
             ->assessments()
             ->get(['id', 'exercise_id'])
