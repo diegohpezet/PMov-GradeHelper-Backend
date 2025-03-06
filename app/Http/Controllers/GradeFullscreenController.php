@@ -58,7 +58,7 @@ class GradeFullscreenController extends Controller
             });
 
         return redirect()
-            ->back()
+            ->route('courses.show', $course)
             ->with('success', __('grades.batchUpdated'));
     }
 }
