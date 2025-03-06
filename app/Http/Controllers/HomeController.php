@@ -18,10 +18,10 @@ class HomeController extends Controller
     $student->load([
       'course',
       'course.assessments.exercise',
-      'course.assessments.gradeables' => function ($query) use ($student) {
+      'course.assessments.grades' => function ($query) use ($student) {
         $query->where('student_id', $student->id);
       },
-      'course.assessments.gradeables.gradable',
+      'course.assessments.grades.gradeable',
       'course.attendances'
     ]);
 
