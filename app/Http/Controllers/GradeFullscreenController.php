@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\GradeableType;
+use App\Http\Requests\BatchGradeRequest;
 use App\Models\Assessment;
 use App\Models\Course;
 use App\Models\Grade;
-use App\Enums\GradeableType;
-use App\Http\Requests\BatchGradeRequest;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -18,6 +18,7 @@ class GradeFullscreenController extends Controller
             'exercises',
             'students.grades',
         ]);
+
         return Inertia::render('GradeFullscreen/GradeFullscreenPage', [
             'course' => $course,
         ]);
@@ -52,9 +53,9 @@ class GradeFullscreenController extends Controller
                 // TODO: mass create all grades at once
                 Grade::create([
                     'assessment_id' => $assessmentIdByExerciseId[$requestGrade['exercise']],
-                    'student_id' => $requestGrade['student'], 
+                    'student_id' => $requestGrade['student'],
                     'gradeable_id' => $gradeableInstance->id,
-                    'gradeable_type'=> $gradeableTypeModel,
+                    'gradeable_type' => $gradeableTypeModel,
                 ]);
             });
 
