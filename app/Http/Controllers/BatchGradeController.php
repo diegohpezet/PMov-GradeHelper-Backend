@@ -16,7 +16,7 @@ class BatchGradeController extends Controller
     {
         $course->load([
             'exercises',
-            'students.grades',
+            'students',
         ]);
 
         return Inertia::render('GradeFullscreen/GradeFullscreenPage', [
