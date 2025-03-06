@@ -42,7 +42,7 @@ defineProps({
           {{ shortDateFormat(new Date(assessment.due_at)) }}
         </span>
 
-        <GradeableList :gradeables="assessment.gradeables" />
+        <GradeableList :grades="assessment.grades" />
       </div>
     </div>
   </div>
