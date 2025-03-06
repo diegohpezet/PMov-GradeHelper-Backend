@@ -30,8 +30,6 @@ class GradeFullscreenController extends Controller
         // - user is in course
         // - every student and exercise are in course
 
-        $gradesRequest = collect($request->grades);
-
         $assessmentIdByExerciseId = $course
             ->assessments()
             ->get(['id', 'exercise_id'])
@@ -39,23 +37,22 @@ class GradeFullscreenController extends Controller
                 return [$assessment['exercise_id'] => $assessment['id']];
             });
 
-        $gradesRequest->each(function ($gradeRequest) use ($assessmentIdByExerciseId) {
-            $gradeableTypeModel = GradeableType::from($gradeRequest['grade_type'])->model();
+        collect($request->grades)->each(function ($requestGrade) use ($assessmentIdByExerciseId) {
+            $gradeableTypeModel = GradeableType::from($requestGrade['grade_type'])->model();
 
             // creates a new gradeable
             $gradeableInstance = ($gradeableTypeModel)::create([
-                'value' => $gradeRequest['grade_value'],
-                'comment' => $gradeRequest['comment'],
-            ]);
-
-            Grade::create([
-                'assessment_id' => $assessmentIdByExerciseId[$gradeRequest['exercise']],
-                'student_id' => $gradeRequest['student'], 
-                'gradeable_id' => $gradeableInstance->id,
-                'gradeable_type'=> $gradeableTypeModel,
+                'value' => $requestGrade['grade_value'],
+                'comment' => $requestGrade['comment'],
             ]);
 
             // TODO: mass create all grades at once
+            Grade::create([
+                'assessment_id' => $assessmentIdByExerciseId[$requestGrade['exercise']],
+                'student_id' => $requestGrade['student'], 
+                'gradeable_id' => $gradeableInstance->id,
+                'gradeable_type'=> $gradeableTypeModel,
+            ]);
         });
 
         return redirect()
