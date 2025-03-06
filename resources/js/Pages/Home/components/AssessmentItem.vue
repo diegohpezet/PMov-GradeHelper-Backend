@@ -2,7 +2,7 @@
 import { shortDateFormat } from '@/Utils/dates';
 import { useI18n } from 'vue-i18n';
 import CheckOnlineStatus from '../../Gradeables/components/CheckOnlineStatus.vue';
-import GradeableList from './GradeableList.vue';
+import GradeList from './GradeList.vue';
 
 const { t } = useI18n();
 
@@ -42,7 +42,7 @@ defineProps({
           {{ shortDateFormat(new Date(assessment.due_at)) }}
         </span>
 
-        <GradeableList :grades="assessment.grades" />
+        <GradeList :grades="assessment.grades" />
       </div>
     </div>
   </div>
