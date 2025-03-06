@@ -27,7 +27,7 @@ const user = page.props.auth.user;
       >
         {{ t('home.github_link') }}
       </a>
-      <a class="nav-link" href="#">
+      <a class="nav-link" href="https://plataformas-moviles.vercel.app/temas/">
         {{ t('home.blog_link') }}
       </a>
     </nav>
