@@ -61,7 +61,7 @@ const handleSubmit = () => {
     .transform((data) => ({
       grades: Object.values(data),
     }))
-    .post('/grades/batchGrade');
+    .post(`/courses/${course.id}/batchGrade`);
 };
 </script>
 

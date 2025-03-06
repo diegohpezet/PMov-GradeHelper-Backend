@@ -20,7 +20,7 @@ class GradeFullscreenController extends Controller
         ]);
     }
 
-    public function batchGrade(BatchGradeRequest $request)
+    public function batchGrade(Course $course, BatchGradeRequest $request)
     {
         dd($request);
 

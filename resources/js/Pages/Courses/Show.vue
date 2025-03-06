@@ -27,7 +27,9 @@ const { course } = defineProps({
   </div>
 
   <p>
-    <a :href="`/courses/${course.id}/grade`">Grade Fullscreen</a>
+    <a :href="`/courses/${course.id}/batchGrade`">
+      {{ $t('course.batch_grade') }}
+    </a>
   </p>
 
   <ul id="courseTabs" class="nav nav-tabs" role="tablist">

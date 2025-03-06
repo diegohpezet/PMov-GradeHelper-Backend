@@ -25,12 +25,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     Route::middleware('admin')->group(function () {
-        Route::get('courses/{course}/grade', [GradeFullscreenController::class, 'show']);
+        Route::get('courses/{course}/batchGrade', [GradeFullscreenController::class, 'show']);
+        Route::post('courses/{course}/batchGrade', [GradeFullscreenController::class, 'batchGrade']);
+
         Route::resource('courses', CourseController::class);
         Route::resource('exercises', ExerciseController::class);
         Route::resource('students', StudentController::class);
 
-        Route::post('grades/batchGrade', [GradeFullscreenController::class, 'batchGrade']);
         Route::resource('grades', GradesController::class);
 
         Route::post('attendances', [AttendanceController::class, 'store'])->name('attendances.store');
