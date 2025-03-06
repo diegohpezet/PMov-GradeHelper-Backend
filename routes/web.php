@@ -4,7 +4,7 @@ use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\GradesController;
-use App\Http\Controllers\GradeFullscreenController;
+use App\Http\Controllers\BatchGradeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Http\Request;
@@ -25,8 +25,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     Route::middleware('admin')->group(function () {
-        Route::get('courses/{course}/batchGrade', [GradeFullscreenController::class, 'show']);
-        Route::post('courses/{course}/batchGrade', [GradeFullscreenController::class, 'batchGrade']);
+        Route::get('courses/{course}/batchGrade', [BatchGradeController::class, 'show']);
+        Route::post('courses/{course}/batchGrade', [BatchGradeController::class, 'batchGrade']);
 
         Route::resource('courses', CourseController::class);
         Route::resource('exercises', ExerciseController::class);

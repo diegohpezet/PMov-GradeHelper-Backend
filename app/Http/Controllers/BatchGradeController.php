@@ -10,7 +10,7 @@ use App\Models\Grade;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class GradeFullscreenController extends Controller
+class BatchGradeController extends Controller
 {
     public function show(Course $course, Request $request)
     {
