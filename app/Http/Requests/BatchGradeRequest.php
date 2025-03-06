@@ -31,10 +31,11 @@ class BatchGradeRequest extends FormRequest
                 'string',
             ],
             'grades.*.grade_type' => [
+                'nullable',
                 'string',
             ],
             'grades.*.grade_value' => [
-                'string',
+                'nullable',
             ],
         ];
     }
