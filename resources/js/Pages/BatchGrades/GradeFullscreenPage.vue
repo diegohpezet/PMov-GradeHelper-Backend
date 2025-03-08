@@ -101,6 +101,16 @@ const handleSubmit = () => {
               </button>
             </td>
             <td v-for="exercise in filteredExercises" :key="exercise.id">
+              <span>
+                <CheckOnlineStatus
+                  :student-username="student.github_username"
+                  :exercise-path="exercise.path"
+                />
+                <a
+                  :href="`https://${student.github_username}.github.io/plataformas-moviles-entregas/${exercise.path}`"
+                  >Link
+                </a>
+              </span>
               <StudentExerciseGradeForm
                 v-model="form[getFormKey(student, exercise)]"
                 :form-key="getFormKey(student, exercise)"
