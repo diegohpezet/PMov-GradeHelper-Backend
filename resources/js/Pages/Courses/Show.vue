@@ -3,7 +3,7 @@ import StudentsList from '../Students/Index.vue';
 import AttendanceIndex from '../Attendance/Index.vue';
 import GradesTable from '../Gradeables/Index.vue';
 import CourseAdminActions from './components/CourseAdminActions.vue';
-import { usePage } from '@inertiajs/vue3';
+import { usePage, Link } from '@inertiajs/vue3';
 
 const isAdmin = usePage().props.auth.isAdmin;
 
@@ -115,7 +115,8 @@ const { course } = defineProps({
         >
           <span class="lead me-3">{{ exercise.title }}</span>
           <span class="text-muted"
-            >Due Date: {{ new Date(exercise.assessment.due_at).toLocaleString() }}</span
+            >Due Date:
+            {{ new Date(exercise.assessment.due_at).toLocaleString() }}</span
           >
         </li>
       </ul>
@@ -128,10 +129,10 @@ const { course } = defineProps({
       aria-labelledby="grades-tab"
       tabindex="0"
     >
-      <GradesTable
-        :students="course.students"
-        :exercises="course.exercises"
-      />
+      <GradesTable :students="course.students" :exercises="course.exercises" />
+      <Link :href="`/courses/${course.id}/batchGrade`">
+        {{ $t('grades.batch_add') }}
+      </Link>
     </div>
 
     <div
