@@ -11,22 +11,14 @@ class HomeController extends Controller
   {
     $student = $request->user()->student;
 
-    if (!$student) {
-      return Inertia::render('Home/HomeView');
-    }
-
-    $student->load([
-      'course',
-      'course.assessments.exercise',
-      'course.assessments.gradeables' => function ($query) use ($student) {
-        $query->where('student_id', $student->id);
-      },
-      'course.assessments.gradeables.gradable',
-      'course.attendances'
+    $student?->load([
+      'grades',
+      'attendances',
+      'course' => ['exercises', 'attendances'],
     ]);
 
     return Inertia::render('Home/HomeView', [
-      'student' => $student
+      'student' => $student,
     ]);
   }
 }
