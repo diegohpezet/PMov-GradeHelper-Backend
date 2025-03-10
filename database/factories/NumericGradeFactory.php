@@ -18,7 +18,7 @@ class NumericGradeFactory extends Factory
     {
         return [
             'value' => $this->faker->numberBetween(1, 10),
-            'comment' => $this->faker->sentence()
+            'comment' => $this->faker->sentence(),
         ];
     }
 }

@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Attendance;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\AttendanceRequest;
+use App\Models\Attendance;
 
 class AttendanceController extends Controller
 {
@@ -26,7 +25,7 @@ class AttendanceController extends Controller
         Attendance::where([
             'student_id' => $request->student_id,
             'course_id' => $request->course_id,
-            'date' => $request->date
+            'date' => $request->date,
         ])->delete();
 
         return response()->json(null, 204);

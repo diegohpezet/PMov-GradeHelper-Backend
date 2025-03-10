@@ -23,7 +23,7 @@ class StoreExerciseRequest extends FormRequest
     {
         return [
             'title' => 'required',
-            'path' => 'required|regex:/^[a-z0-9-]+$/'  // Slug regex
+            'path' => 'required|regex:/^[a-z0-9-]+$/',  // Slug regex
         ];
     }
 }

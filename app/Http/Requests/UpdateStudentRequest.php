@@ -22,16 +22,16 @@ class UpdateStudentRequest extends FormRequest
      */
     public function rules(): array
     {
-      return [
-          'first_name' => 'nullable|string|max:255',
-          'last_name' => 'nullable|string|max:255',
-          'github_username' => [
-            'nullable',
-            'string',
-            Rule::unique('students')->ignore(request()->route('student')),
-          ],
-          'user_id' => 'nullable|exists:users,id',
-          'course_id' => 'nullable|exists:courses,id',
-      ];
+        return [
+            'first_name' => 'nullable|string|max:255',
+            'last_name' => 'nullable|string|max:255',
+            'github_username' => [
+                'nullable',
+                'string',
+                Rule::unique('students')->ignore(request()->route('student')),
+            ],
+            'user_id' => 'nullable|exists:users,id',
+            'course_id' => 'nullable|exists:courses,id',
+        ];
     }
 }

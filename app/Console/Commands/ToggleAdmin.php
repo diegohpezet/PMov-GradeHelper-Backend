@@ -29,14 +29,16 @@ class ToggleAdmin extends Command
         $email = $this->argument('email');
         $user = User::where('email', $email)->first();
 
-        if (!$user) {
+        if (! $user) {
             $this->error("User with email {$email} not found.");
+
             return;
         }
 
         if ($user->hasRole('admin')) {
             $user->removeRole('admin');
             $this->info("User {$email} is no longer an admin.");
+
             return;
         }
 

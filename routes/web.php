@@ -1,10 +1,10 @@
 <?php
 
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\BatchGradeController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\GradesController;
-use App\Http\Controllers\BatchGradeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Http\Request;
@@ -16,8 +16,10 @@ Route::get('/', function (Request $request) {
         if ($request->user()->isAdmin()) {
             return redirect()->route('courses.index');
         }
+
         return redirect()->route('home');
     }
+
     return Inertia::render('Welcome');
 });
 

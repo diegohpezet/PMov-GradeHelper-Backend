@@ -14,8 +14,8 @@ class ExerciseFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => 'Exercise ' . self::$counter,
-            'path' => 'tp-' . self::$counter++,
+            'title' => 'Exercise '.self::$counter,
+            'path' => 'tp-'.self::$counter++,
         ];
     }
 }

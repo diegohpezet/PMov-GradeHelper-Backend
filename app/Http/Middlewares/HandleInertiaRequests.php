@@ -37,7 +37,7 @@ class HandleInertiaRequests extends Middleware
             'gradeResultOptions' => GradeResult::values(),
             'auth' => [
                 'user' => $request->user(),
-                'isAdmin' => $request->user() && $request->user()->isAdmin()
+                'isAdmin' => $request->user() && $request->user()->isAdmin(),
             ],
         ];
     }

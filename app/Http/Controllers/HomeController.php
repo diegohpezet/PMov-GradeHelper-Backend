@@ -7,18 +7,18 @@ use Inertia\Inertia;
 
 class HomeController extends Controller
 {
-  public function index(Request $request)
-  {
-    $student = $request->user()->student;
+    public function index(Request $request)
+    {
+        $student = $request->user()->student;
 
-    $student?->load([
-      'grades',
-      'attendances',
-      'course' => ['exercises', 'attendances'],
-    ]);
+        $student?->load([
+            'grades',
+            'attendances',
+            'course' => ['exercises', 'attendances'],
+        ]);
 
-    return Inertia::render('Home/HomeView', [
-      'student' => $student,
-    ]);
-  }
+        return Inertia::render('Home/HomeView', [
+            'student' => $student,
+        ]);
+    }
 }

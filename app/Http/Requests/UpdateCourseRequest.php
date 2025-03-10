@@ -24,7 +24,7 @@ class UpdateCourseRequest extends FormRequest
         return [
             'name' => 'required|min:3',
             'description' => 'nullable|string',
-            'school_year' => 'required|min:4|max:4'
+            'school_year' => 'required|min:4|max:4',
         ];
     }
 }

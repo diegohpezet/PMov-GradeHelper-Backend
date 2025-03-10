@@ -18,7 +18,7 @@ class PassFailGradeFactory extends Factory
     {
         return [
             'value' => $this->faker->boolean(),
-            'comment' => $this->faker->sentence()
+            'comment' => $this->faker->sentence(),
         ];
     }
 }

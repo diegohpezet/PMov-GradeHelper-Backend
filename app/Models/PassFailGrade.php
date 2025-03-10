@@ -18,4 +18,3 @@ class PassFailGrade extends Model
         return $this->morphOne(Grade::class, 'gradeable');
     }
 }
-
