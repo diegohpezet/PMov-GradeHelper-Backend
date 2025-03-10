@@ -4,23 +4,23 @@ import AssessmentItem from './AssessmentItem.vue';
 
 const { t } = useI18n();
 
-const props = defineProps({
+const { student } = defineProps({
   student: { type: Object, required: true },
 });
 
-const assessments = props.student.course.assessments;
+const { exercises } = student.course;
 </script>
 
 <template>
   <h2>{{ t('exercises') }}</h2>
 
-  <p v-if="!assessments.length">{{ t('exercises.empty') }}</p>
+  <p v-if="!exercises.length">{{ t('exercises.empty') }}</p>
   <div id="assessmentsAccordion" class="accordion">
     <AssessmentItem
-      v-for="assessment in assessments"
-      :key="assessment.id"
+      v-for="exercise in exercises"
+      :key="exercise.id"
       :student="student"
-      :assessment="assessment"
+      :exercise="exercise"
     />
   </div>
 </template>
