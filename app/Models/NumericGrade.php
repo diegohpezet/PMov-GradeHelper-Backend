@@ -18,4 +18,3 @@ class NumericGrade extends Model
         return $this->morphOne(Grade::class, 'gradeable');
     }
 }
-

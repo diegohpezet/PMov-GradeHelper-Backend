@@ -8,7 +8,6 @@ use App\Models\NumericGrade;
 use App\Models\PassFailGrade;
 use App\Models\Student;
 use App\Models\TEGrade;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class GradeSeeder extends Seeder

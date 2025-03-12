@@ -10,7 +10,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class CourseFactory extends Factory
 {
     private static array $divisions = ['1ro', '2do', '3ro', '4to', '5to', '6to', '7mo'];
+
     private static array $sections = ['1ra', '2da', '3ra', '4ta'];
+
     private static array $orientations = ['Programación', 'Informática'];
 
     public function definition(): array
@@ -21,7 +23,7 @@ class CourseFactory extends Factory
         ];
     }
 
-    private static function generateCourseName ()
+    private static function generateCourseName()
     {
         $division = fake()->randomElement(self::$divisions);
         $section = fake()->randomElement(self::$sections);

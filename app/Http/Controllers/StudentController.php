@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Student;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
-use App\Http\Controllers\Controller;
+use App\Models\Student;
 use Inertia\Inertia;
 
 class StudentController extends Controller
@@ -18,7 +17,7 @@ class StudentController extends Controller
         $students = Student::with('course')->get();
 
         return Inertia::render('Students/Index', [
-            'students' => $students
+            'students' => $students,
         ]);
     }
 
@@ -52,9 +51,10 @@ class StudentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Student $student) {
+    public function edit(Student $student)
+    {
         return Inertia::render('Students/Edit', [
-            'student' => $student
+            'student' => $student,
         ]);
     }
 

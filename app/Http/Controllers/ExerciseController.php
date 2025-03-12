@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Exercise;
 use App\Http\Requests\StoreExerciseRequest;
 use App\Http\Requests\UpdateExerciseRequest;
+use App\Models\Exercise;
 use Inertia\Inertia;
 
 class ExerciseController extends Controller
@@ -17,7 +17,7 @@ class ExerciseController extends Controller
         $exercises = Exercise::with('courses')->get();
 
         return Inertia::render('Exercises/Index', [
-            'exercises' => $exercises
+            'exercises' => $exercises,
         ]);
     }
 
@@ -39,7 +39,7 @@ class ExerciseController extends Controller
     public function show(Exercise $exercise)
     {
         return Inertia::render('Exercises/Show', [
-            'exercise' => $exercise
+            'exercise' => $exercise,
         ]);
     }
 
@@ -49,7 +49,7 @@ class ExerciseController extends Controller
     public function edit(Exercise $exercise)
     {
         return Inertia::render('Exercises/Edit', [
-            'exercise' => $exercise->load('courses')
+            'exercise' => $exercise->load('courses'),
         ]);
     }
 

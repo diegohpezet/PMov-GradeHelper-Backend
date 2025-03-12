@@ -15,7 +15,7 @@ class UpdateGradeRequest extends FormRequest
     {
         $rules = [
             'value' => 'required',
-            'comment' => 'nullable|string|max:255'
+            'comment' => 'nullable|string|max:255',
         ];
 
         // switch ($this->route('gradeable')->gradeable_type) {

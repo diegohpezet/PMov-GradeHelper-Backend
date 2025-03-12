@@ -26,7 +26,7 @@ class CourseController extends Controller
         }
 
         return Inertia::render('Courses/Index', [
-            'courses' => $courses
+            'courses' => $courses,
         ]);
     }
 
@@ -58,11 +58,11 @@ class CourseController extends Controller
         $course->load([
             'students.grades',
             'exercises',
-            'attendances'
+            'attendances',
         ]);
 
         return inertia('Courses/Show', [
-            'course' => $course
+            'course' => $course,
         ]);
     }
 
@@ -72,7 +72,7 @@ class CourseController extends Controller
     public function edit(Course $course)
     {
         return Inertia::render('Courses/Edit', [
-            'course' => $course
+            'course' => $course,
         ]);
     }
 

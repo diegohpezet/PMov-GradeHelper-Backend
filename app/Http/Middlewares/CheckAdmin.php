@@ -12,7 +12,7 @@ class CheckAdmin
     {
         $user = request()->user();
 
-        if (!$user || !$user->hasRole('admin')) {
+        if (! $user || ! $user->hasRole('admin')) {
             return redirect()->back()->with('error', 'Unauthorized');
         }
 
