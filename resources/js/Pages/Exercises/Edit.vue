@@ -1,5 +1,5 @@
 <script setup>
-import { useForm, usePage } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3';
 import { watch } from 'vue';
 import {
   formatDate,
@@ -8,16 +8,24 @@ import {
   setDueDate,
 } from './utils/dates.js';
 
-const props = defineProps({ exercise: Object });
-const courses = usePage().props.courses;
+const { exercise, courses } = defineProps({
+  exercise: {
+    type: Object,
+    required: true,
+  },
+  courses: {
+    type: Array,
+    required: true,
+  },
+});
 
 const form = useForm({
-  ...props.exercise,
-  courses: props.exercise.courses.map((course) => ({
+  ...exercise,
+  courses: exercise.courses.map((course) => ({
     course_id: course.id,
     due_at: formatDate(course.pivot?.due_at) || getDefaultDueDate(),
   })),
-  selectedCourses: props.exercise.courses.map((course) => course.id),
+  selectedCourses: exercise.courses.map((course) => course.id),
 });
 
 watch(

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreExerciseRequest;
 use App\Http\Requests\UpdateExerciseRequest;
+use App\Models\Course;
 use App\Models\Exercise;
 use Inertia\Inertia;
 
@@ -50,6 +51,7 @@ class ExerciseController extends Controller
     {
         return Inertia::render('Exercises/Edit', [
             'exercise' => $exercise->load('courses'),
+            'courses' => Course::all(),
         ]);
     }
 
