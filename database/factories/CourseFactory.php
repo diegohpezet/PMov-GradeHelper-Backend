@@ -19,6 +19,7 @@ class CourseFactory extends Factory
     {
         return [
             'name' => self::generateCourseName(),
+            'description' => fake()->sentence(),
             'school_year' => now()->year,
         ];
     }
