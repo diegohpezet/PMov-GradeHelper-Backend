@@ -2,12 +2,16 @@
 import { useForm } from '@inertiajs/vue3';
 import { formatDate, getDefaultDueDate } from './utils/dates.js';
 
-const { exercise, courses } = defineProps({
+const { exercise, courses, gradeTypes } = defineProps({
   exercise: {
     type: Object,
     required: true,
   },
   courses: {
+    type: Array,
+    required: true,
+  },
+  gradeTypes: {
     type: Array,
     required: true,
   },
@@ -24,6 +28,7 @@ const getMergedCourses = () => {
       description: c.description,
       school_year: c.school_year,
       selected: Boolean(exerciseCourse),
+      grade_type: exerciseCourse?.assessment?.grade_type || gradeTypes[0],
       due_at:
         formatDate(exerciseCourse?.assessment?.due_at) || getDefaultDueDate(),
     };
@@ -95,21 +100,43 @@ const editExercise = (id) => {
           }}</label>
 
           <div v-if="course.selected">
-            <label :for="`due-at-${course.id}`">{{
-              $t('exercises.field.due_at')
-            }}</label>
-            <input
-              :id="`due-at-${course.id}`"
-              v-model="course.due_at"
-              type="datetime-local"
-              class="form-control"
-            />
-            <span
-              v-if="form.errors[`courses.${index}.due_at`]"
-              class="text-danger"
-            >
-              {{ form.errors[`courses.${index}.due_at`] }}
-            </span>
+            <div>
+              <label :for="`due-at-${course.id}`">{{
+                $t('exercises.field.due_at')
+              }}</label>
+              <input
+                :id="`due-at-${course.id}`"
+                v-model="course.due_at"
+                type="datetime-local"
+                class="form-control"
+              />
+              <span
+                v-if="form.errors[`courses.${index}.due_at`]"
+                class="text-danger"
+              >
+                {{ form.errors[`courses.${index}.due_at`] }}
+              </span>
+            </div>
+            <div>
+              <label :for="`grade_type-${course.id}`">{{
+                $t('exercises.field.grade_type')
+              }}</label>
+              <select
+                :id="`grade_type-${course.id}`"
+                v-model="course.grade_type"
+                class="form-select"
+              >
+                <option v-for="gradeType in gradeTypes" :key="gradeType">
+                  {{ gradeType }}
+                </option>
+              </select>
+              <span
+                v-if="form.errors[`courses.${index}.grade_type`]"
+                class="text-danger"
+              >
+                {{ form.errors[`courses.${index}.grade_type`] }}
+              </span>
+            </div>
           </div>
         </li>
       </ul>

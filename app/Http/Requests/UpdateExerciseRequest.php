@@ -28,6 +28,7 @@ class UpdateExerciseRequest extends FormRequest
             'courses.*.id' => 'required|exists:courses,id',
             'courses.*.selected' => 'required|boolean',
             'courses.*.due_at' => 'required|date|after:today',
+            'courses.*.grade_type' => 'required',
         ];
     }
 }
