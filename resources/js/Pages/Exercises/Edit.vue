@@ -31,7 +31,8 @@ const getMergedCourses = () => {
 };
 
 const form = useForm({
-  ...exercise,
+  title: exercise.title,
+  path: exercise.path,
   courses: getMergedCourses(),
 });
 
