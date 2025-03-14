@@ -65,10 +65,12 @@ class ExerciseController extends Controller
             'path' => $request->input('path'),
         ]);
 
-        $coursesData = [];
-        foreach ($request->input('courses', []) as $course) {
-            $coursesData[$course['course_id']] = ['due_at' => $course['due_at']];
-        }
+        $coursesData = collect($request->courses)
+            ->where('selected', true)
+            ->select(['id', 'due_at'])
+            ->mapWithKeys(function ($course) {
+                return [$course['id'] => ['due_at' => $course['due_at']]];
+            });
 
         $exercise->courses()->sync($coursesData);
 
