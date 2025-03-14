@@ -80,7 +80,7 @@ const editExercise = (id) => {
       <p class="text-muted">{{ $t('exercises.field.courses_description') }}</p>
       <ul class="list-group">
         <li
-          v-for="course in form.courses"
+          v-for="(course, index) in form.courses"
           :key="course.id"
           class="list-group-item"
         >
@@ -104,12 +104,15 @@ const editExercise = (id) => {
               type="datetime-local"
               class="form-control"
             />
+            <span
+              v-if="form.errors[`courses.${index}.due_at`]"
+              class="text-danger"
+            >
+              {{ form.errors[`courses.${index}.due_at`] }}
+            </span>
           </div>
         </li>
       </ul>
-      <span v-if="form.errors.courses" class="text-danger">{{
-        form.errors.courses
-      }}</span>
     </div>
 
     <button type="submit" class="btn btn-primary">
