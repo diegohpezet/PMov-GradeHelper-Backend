@@ -1,6 +1,9 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3';
 import { formatDate } from './utils/dates';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const props = defineProps({
   course: { type: Object, required: true },
@@ -23,12 +26,12 @@ const handleSubmit = () => {
 </script>
 
 <template>
-  <h1 class="h2">Link new exercise to {{ course.name }}</h1>
+  <h1 class="h2">{{ t('exercises.link.to') }} {{ course.name }}</h1>
 
   <form class="row g-3" @submit.prevent="handleSubmit">
     <div class="col-12 col-lg-6">
       <select id="exercise" v-model="form.exercise" class="form-select">
-        <option value="">Select an exercise to link</option>
+        <option value="">{{ t('exercises.select') }}</option>
         <option
           v-for="exercise in unlinkedExercises"
           :key="exercise.id"
@@ -43,7 +46,9 @@ const handleSubmit = () => {
     </div>
 
     <div class="col-12 col-lg-4">
-      <label for="due-date" class="form-label d-none">Due date:</label>
+      <label for="due-date" class="form-label d-none">
+        {{ t('exercises.field.due_at') }}
+      </label>
       <input
         id="due-date"
         v-model="form.due_at"
@@ -56,12 +61,14 @@ const handleSubmit = () => {
     </div>
 
     <div class="col-12 col-lg-2">
-      <button type="submit" class="btn btn-primary text-white">Link</button>
+      <button type="submit" class="btn btn-primary text-white">
+        {{ t('exercises.link.action') }}
+      </button>
     </div>
   </form>
 
   <section class="mt-5">
-    <h3 class="h5">Current exercises</h3>
+    <h3 class="h5">{{ t('exercises.linked') }}</h3>
     <ul class="list-group list-group-flush">
       <li
         v-for="exercise in linkedExercises"
@@ -73,7 +80,7 @@ const handleSubmit = () => {
           {{ exercise.path }}
         </div>
         <span>
-          Due at:
+          {{ t('exercises.field.due_at') }}:
           {{
             new Date(formatDate(exercise.assessment.due_at)).toLocaleString()
           }}
