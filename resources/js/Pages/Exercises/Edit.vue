@@ -1,42 +1,45 @@
 <script setup>
-import { useForm, usePage } from '@inertiajs/vue3';
-import { watch } from 'vue';
-import {
-  formatDate,
-  getDefaultDueDate,
-  getDueDate,
-  setDueDate,
-} from './utils/dates.js';
+import { useForm } from '@inertiajs/vue3';
+import { formatDate, getDefaultDueDate } from './utils/dates.js';
 
-const props = defineProps({ exercise: Object });
-const courses = usePage().props.courses;
-
-const form = useForm({
-  ...props.exercise,
-  courses: props.exercise.courses.map((course) => ({
-    course_id: course.id,
-    due_at: formatDate(course.pivot?.due_at) || getDefaultDueDate(),
-  })),
-  selectedCourses: props.exercise.courses.map((course) => course.id),
+const { exercise, courses, gradeTypes } = defineProps({
+  exercise: {
+    type: Object,
+    required: true,
+  },
+  courses: {
+    type: Array,
+    required: true,
+  },
+  gradeTypes: {
+    type: Array,
+    required: true,
+  },
 });
 
-watch(
-  () => form.selectedCourses,
-  (newSelectedCourses) => {
-    form.courses = form.courses.filter((course) =>
-      newSelectedCourses.includes(course.course_id),
-    );
+// Generates initial value for `form.courses`
+// using a combination of all courses + exercise courses
+const getMergedCourses = () => {
+  return courses.map((c) => {
+    const exerciseCourse = exercise.courses.find((ec) => ec.id === c.id);
+    return {
+      id: c.id,
+      name: c.name,
+      description: c.description,
+      school_year: c.school_year,
+      selected: Boolean(exerciseCourse),
+      grade_type: exerciseCourse?.assessment?.grade_type || gradeTypes[0],
+      due_at:
+        formatDate(exerciseCourse?.assessment?.due_at) || getDefaultDueDate(),
+    };
+  });
+};
 
-    newSelectedCourses.forEach((courseId) => {
-      if (!form.courses.some((course) => course.course_id === courseId)) {
-        form.courses.push({
-          course_id: courseId,
-          due_at: getDefaultDueDate(),
-        });
-      }
-    });
-  },
-);
+const form = useForm({
+  title: exercise.title,
+  path: exercise.path,
+  courses: getMergedCourses(),
+});
 
 const editExercise = (id) => {
   form.put(`/exercises/${id}`);
@@ -81,35 +84,62 @@ const editExercise = (id) => {
       <label for="courses" class="form-label">{{ $t('courses') }}</label>
       <p class="text-muted">{{ $t('exercises.field.courses_description') }}</p>
       <ul class="list-group">
-        <li v-for="course in courses" :key="course.id" class="list-group-item">
+        <li
+          v-for="(course, index) in form.courses"
+          :key="course.id"
+          class="list-group-item"
+        >
           <input
             :id="`checkbox-${course.id}`"
-            v-model="form.selectedCourses"
+            v-model="course.selected"
             type="checkbox"
-            :value="course.id"
             class="form-check-input"
           />
           <label class="form-check-label ms-2" :for="`checkbox-${course.id}`">{{
             course.name
           }}</label>
 
-          <div v-if="form.selectedCourses.includes(course.id)">
-            <label :for="`due-at-${course.id}`">{{
-              $t('exercises.field.due_at')
-            }}</label>
-            <input
-              :id="`due-at-${course.id}`"
-              type="datetime-local"
-              :value="getDueDate(form.courses, course.id)"
-              class="form-control"
-              @input="setDueDate(form.courses, course.id, $event.target.value)"
-            />
+          <div v-if="course.selected">
+            <div>
+              <label :for="`due-at-${course.id}`">{{
+                $t('exercises.field.due_at')
+              }}</label>
+              <input
+                :id="`due-at-${course.id}`"
+                v-model="course.due_at"
+                type="datetime-local"
+                class="form-control"
+              />
+              <span
+                v-if="form.errors[`courses.${index}.due_at`]"
+                class="text-danger"
+              >
+                {{ form.errors[`courses.${index}.due_at`] }}
+              </span>
+            </div>
+            <div>
+              <label :for="`grade_type-${course.id}`">{{
+                $t('exercises.field.grade_type')
+              }}</label>
+              <select
+                :id="`grade_type-${course.id}`"
+                v-model="course.grade_type"
+                class="form-select"
+              >
+                <option v-for="gradeType in gradeTypes" :key="gradeType">
+                  {{ gradeType }}
+                </option>
+              </select>
+              <span
+                v-if="form.errors[`courses.${index}.grade_type`]"
+                class="text-danger"
+              >
+                {{ form.errors[`courses.${index}.grade_type`] }}
+              </span>
+            </div>
           </div>
         </li>
       </ul>
-      <span v-if="form.errors.courses" class="text-danger">{{
-        form.errors.courses
-      }}</span>
     </div>
 
     <button type="submit" class="btn btn-primary">

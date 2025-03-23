@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "faaca04d08dde72d071c88ede575eb9f",
+    "content-hash": "c553d7c9549c8f33300f18317e8799b6",
     "packages": [
         {
             "name": "brick/math",
@@ -509,6 +509,56 @@
                 }
             ],
             "time": "2024-12-27T00:36:43+00:00"
+        },
+        {
+            "name": "emreyarligan/enum-concern",
+            "version": "1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/emreyarligan/enum-concern.git",
+                "reference": "7d030fc0948f64954b08ee61f26c95eaeb319c2b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/emreyarligan/enum-concern/zipball/7d030fc0948f64954b08ee61f26c95eaeb319c2b",
+                "reference": "7d030fc0948f64954b08ee61f26c95eaeb319c2b",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/collections": "^8.65 || ^9.0 || ^10.0 || ^11.0 || ^12.0",
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^10.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "EmreYarligan\\EnumConcern\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Emre Yarlıgan"
+                }
+            ],
+            "description": "A PHP package for effortless Enumeration handling with Laravel Collections 📦 ✨",
+            "homepage": "https://github.com/emreyarligan/enum-concern",
+            "keywords": [
+                "concern",
+                "enum",
+                "enumeration",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/emreyarligan/enum-concern/issues",
+                "source": "https://github.com/emreyarligan/enum-concern/tree/1.0.5"
+            },
+            "time": "2025-03-13T15:05:24+00:00"
         },
         {
             "name": "firebase/php-jwt",

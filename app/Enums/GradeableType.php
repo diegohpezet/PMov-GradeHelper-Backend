@@ -2,8 +2,12 @@
 
 namespace App\Enums;
 
+use EmreYarligan\EnumConcern\EnumConcern;
+
 enum GradeableType: string
 {
+    use EnumConcern;
+
     case PassFailGrade = 'PassFailGrade';
     case NumericGrade = 'NumericGrade';
     case TEGrade = 'TEGrade';

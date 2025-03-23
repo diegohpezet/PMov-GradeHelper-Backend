@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\GradeableType;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -15,10 +16,13 @@ class Assessment extends Pivot
 
     public $timestamps = true;
 
+    protected $fillable = ['due_at', 'grade_type'];
+
     protected function casts(): array
     {
         return [
             'due_at' => 'datetime',
+            'grade_type' => GradeableType::class,
         ];
     }
 
