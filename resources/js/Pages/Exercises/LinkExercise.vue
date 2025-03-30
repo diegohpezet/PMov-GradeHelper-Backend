@@ -7,7 +7,6 @@ const { t } = useI18n();
 
 const props = defineProps({
   course: { type: Object, required: true },
-  linkedExercises: { type: Array, required: true },
   unlinkedExercises: { type: Array, required: true },
 });
 
@@ -82,7 +81,7 @@ const unLinkExercise = (exercise) => {
     <h3 class="h5">{{ t('exercises.linked') }}</h3>
     <ul class="list-group list-group-flush">
       <li
-        v-for="exercise in linkedExercises"
+        v-for="exercise in course.exercises"
         :key="exercise.id"
         class="list-group-item list-group-item-action d-flex justify-content-between"
       >

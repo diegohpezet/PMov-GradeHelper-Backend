@@ -83,8 +83,7 @@ class ExerciseController extends Controller
      */
     public function showLinkView(Request $request, Course $course) {
         return Inertia::render('Exercises/LinkExercise', [
-            'course' => $course,
-            'linkedExercises' => $course->exercises()->get(),
+            'course' => $course->load('exercises'),
             'unlinkedExercises' => Exercise::whereNotIn('exercises.id', $course->exercises()->pluck('exercises.id'))->get(),
         ]);
     }
