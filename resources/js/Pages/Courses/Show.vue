@@ -107,6 +107,12 @@ const { course } = defineProps({
       tabindex="0"
     >
       <h2 class="mb-3">{{ $t('exercises') }}</h2>
+      <Link
+        :href="`/courses/${course.id}/exercises/link`"
+        class="btn btn-outline-primary mb-3"
+      >
+        Vincular ejercicio
+      </Link>
       <ul class="list-group">
         <li
           v-for="exercise in course.exercises"

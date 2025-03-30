@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LinkExerciseRequest;
 use App\Http\Requests\StoreExerciseRequest;
 use App\Http\Requests\UpdateExerciseRequest;
+use App\Models\Course;
 use App\Models\Exercise;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class ExerciseController extends Controller
@@ -73,6 +76,35 @@ class ExerciseController extends Controller
         return redirect()
             ->route('exercises.index')
             ->with('success', __('exercises.updated'));
+    }
+
+    /**
+     * Show the form for linking an exercise to a course.
+     */
+    public function showLinkView(Request $request, Course $course) {
+        return Inertia::render('Exercises/LinkExercise', [
+            'course' => $course->load('exercises'),
+            'unlinkedExercises' => Exercise::whereNotIn('exercises.id', $course->exercises()->pluck('exercises.id'))->get(),
+        ]);
+    }
+
+    public function link(LinkExerciseRequest $request, Course $course) {
+        $course->assessments()->create([
+            'exercise_id' => $request->input('exercise'),
+            'due_at' => $request->input('due_at'),
+        ]);
+
+        return redirect()
+            ->back()
+            ->with('success', __('exercises.linked'));
+    }
+
+    public function unlink(Request $request, Course $course) {
+        $course->assessments()->where('exercise_id', $request->input('exercise'))->delete();
+
+        return redirect()
+            ->back()
+            ->with('success', __('exercises.unlinked'));
     }
 
     /**

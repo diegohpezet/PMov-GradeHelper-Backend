@@ -29,6 +29,9 @@ Route::middleware('auth')->group(function () {
     Route::middleware('admin')->group(function () {
         Route::get('courses/{course}/batchGrade', [BatchGradeController::class, 'show']);
         Route::post('courses/{course}/batchGrade', [BatchGradeController::class, 'batchGrade']);
+        Route::get('/courses/{course}/exercises/link', [ExerciseController::class, 'showLinkView']);
+        Route::post('/courses/{course}/exercises/link', [ExerciseController::class, 'link']);
+        Route::delete('/courses/{course}/exercises/unlink', [ExerciseController::class, 'unlink']);
 
         Route::resource('courses', CourseController::class);
         Route::resource('exercises', ExerciseController::class);
