@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\GradeableType;
 use App\Http\Requests\StoreExerciseRequest;
 use App\Http\Requests\UpdateExerciseRequest;
+use App\Models\Course;
 use App\Models\Exercise;
 use Inertia\Inertia;
 
@@ -50,6 +52,8 @@ class ExerciseController extends Controller
     {
         return Inertia::render('Exercises/Edit', [
             'exercise' => $exercise->load('courses'),
+            'courses' => Course::all(),
+            'gradeTypes' => GradeableType::casesArray(),
         ]);
     }
 
@@ -63,10 +67,15 @@ class ExerciseController extends Controller
             'path' => $request->input('path'),
         ]);
 
-        $coursesData = [];
-        foreach ($request->input('courses', []) as $course) {
-            $coursesData[$course['course_id']] = ['due_at' => $course['due_at']];
-        }
+        $coursesData = collect($request->courses)
+            ->where('selected', true)
+            ->select(['id', 'due_at', 'grade_type'])
+            ->mapWithKeys(function ($course) {
+                return [$course['id'] => [
+                    'due_at' => $course['due_at'],
+                    'grade_type' => $course['grade_type'],
+                ]];
+            });
 
         $exercise->courses()->sync($coursesData);
 

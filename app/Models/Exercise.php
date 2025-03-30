@@ -25,7 +25,7 @@ class Exercise extends Model
     public function courses(): BelongsToMany
     {
         return $this->belongsToMany(Course::class, 'assessments')
-            ->withPivot(['id', 'due_at'])
+            ->withPivot(['id', 'due_at', 'grade_type'])
             ->withTimestamps()
             ->using(Assessment::class)
             ->as('assessment');

@@ -46,7 +46,7 @@ const getInitialMatrixValue = () => {
         student: student.id,
         exercise: exercise.id,
         comment: '',
-        grade_type: '',
+        grade_type: exercise.assessment.grade_type,
         grade_value: null,
       };
     });
@@ -67,6 +67,7 @@ const handleSubmit = () => {
 
 <template>
   <Head title="Full Screen - Grade Helper" />
+  <pre>{{ exercises }}</pre>
   <div class="d-flex flex-column flex-grow-1 vh-100">
     <div class="flex-grow-1 overflow-auto" style="">
       <table id="fullscreen-grades-table" class="table table-striped m-0">

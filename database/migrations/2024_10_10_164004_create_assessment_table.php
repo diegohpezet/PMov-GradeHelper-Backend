@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\GradeableType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,6 +16,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuid('course_id')->constrained('courses')->onDelete('cascade');
             $table->foreignUuid('exercise_id')->constrained('exercises')->onDelete('cascade');
+            $table->enum('grade_type', GradeableType::toArray())->nullable();
 
             $table->timestamp('due_at')->nullable();
 

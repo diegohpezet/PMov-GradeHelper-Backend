@@ -23,13 +23,14 @@ const form = useForm({
   assessment_id: exercise?.assessment?.id || null,
   value: '',
   comment: '',
-  gradeable_type: gradeableTypes[0],
+  gradeable_type: exercise?.assessment?.grade_type || gradeableTypes[0],
 });
 
 watchEffect(() => {
   if (student && exercise) {
     form.student_id = student.id;
     form.assessment_id = exercise.assessment.id;
+    form.gradeable_type = exercise?.assessment?.grade_type;
   }
 });
 
