@@ -90,11 +90,22 @@ class ExerciseController extends Controller
     }
 
     public function link(LinkExerciseRequest $request, Course $course) {
-        $course->exercises()->syncWithoutDetaching($request->input('exercise'));
+        $course->assessments()->create([
+            'exercise_id' => $request->input('exercise'),
+            'due_at' => $request->input('due_at'),
+        ]);
 
         return redirect()
             ->back()
             ->with('success', __('exercises.linked'));
+    }
+
+    public function unlink(Request $request, Course $course) {
+        $course->assessments()->where('exercise_id', $request->input('exercise'))->delete();
+
+        return redirect()
+            ->back()
+            ->with('success', __('exercises.unlinked'));
     }
 
     /**

@@ -1,5 +1,5 @@
 <script setup>
-import { useForm } from '@inertiajs/vue3';
+import { router, useForm } from '@inertiajs/vue3';
 import { formatDate } from './utils/dates';
 import { useI18n } from 'vue-i18n';
 
@@ -22,6 +22,17 @@ const handleSubmit = () => {
       form.reset();
     },
   });
+};
+
+const unLinkExercise = (exercise) => {
+  if (confirm(t('exercises.delete_confirm'))) {
+    router.delete(`/courses/${props.course.id}/exercises/unlink`, {
+      data: { exercise },
+      onSuccess: () => {
+        form.reset();
+      },
+    });
+  }
 };
 </script>
 
@@ -79,12 +90,18 @@ const handleSubmit = () => {
           <div class="fw-bold">{{ exercise.title }}</div>
           {{ exercise.path }}
         </div>
-        <span>
-          {{ t('exercises.field.due_at') }}:
-          {{
-            new Date(formatDate(exercise.assessment.due_at)).toLocaleString()
-          }}
-        </span>
+
+        <div class="d-flex align-items-center">
+          <span>
+            {{ t('exercises.field.due_at') }}:
+            {{
+              new Date(formatDate(exercise.assessment.due_at)).toLocaleString()
+            }}
+          </span>
+          <button class="btn btn-danger ms-3" @click="unLinkExercise(exercise)">
+            <i class="ri ri-delete-bin-line"></i>
+          </button>
+        </div>
       </li>
     </ul>
   </section>
